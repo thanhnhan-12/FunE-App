@@ -55,10 +55,10 @@ const MenuNavigation = () => {
                 }}
             />
             <Tab.Screen
-                name="Profile"
+                name="Account"
                 component={ProfileScreen}
                 options={{
-                    tabBarLabel: 'Profile',
+                    tabBarLabel: 'Account',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="account" color={color} size={26} />
                     ),
