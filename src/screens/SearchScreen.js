@@ -94,12 +94,7 @@ const SearchScreen = () => {
                             title={item.title}
                             subTitle={item.subtitle}
                             isFree={item.isFree}
-                            onPress={() =>
-                                navigation.navigate('GameDetails', {
-                                    title: item.title,
-                                    id: item.id,
-                                })
-                            }
+
                         />
                     ))}
                 {gamesTab == 2 &&
@@ -111,12 +106,7 @@ const SearchScreen = () => {
                             subTitle={item.subtitle}
                             isFree={item.isFree}
                             price={item.price}
-                            onPress={() =>
-                                navigation.navigate('GameDetails', {
-                                    title: item.title,
-                                    id: item.id,
-                                })
-                            }
+
                         />
                     ))}
             </ScrollView>
