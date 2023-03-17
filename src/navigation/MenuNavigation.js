@@ -8,8 +8,9 @@ import QRScanScreen from '../screens/QRScanScreen';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 const Tab = createMaterialBottomTabNavigator();
 
