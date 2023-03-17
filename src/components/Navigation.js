@@ -11,8 +11,7 @@ const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
     const { userInfo } = useContext(AuthContext);
-
-    console.log("test", userInfo)
+    console.log(userInfo)
 
     return (
         <NavigationContainer>
