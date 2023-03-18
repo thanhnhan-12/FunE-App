@@ -32,8 +32,9 @@ com.fune.app-merged_res-30 D:\xampp\htdocs\TTTN\FunE-App\android\app\build\inter
 com.fune.app-debug-31 D:\xampp\htdocs\TTTN\FunE-App\android\app\src\debug\res
 com.fune.app-main-32 D:\xampp\htdocs\TTTN\FunE-App\android\app\src\main\res
 com.fune.app-packaged_res-33 D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug
-com.fune.app-packaged_res-34 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-date-picker\android\build\intermediates\packaged_res\debug
-com.fune.app-packaged_res-35 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
-com.fune.app-packaged_res-36 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
-com.fune.app-packaged_res-37 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug
-com.fune.app-packaged_res-38 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug
+com.fune.app-packaged_res-34 D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-picker\picker\android\build\intermediates\packaged_res\debug
+com.fune.app-packaged_res-35 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-date-picker\android\build\intermediates\packaged_res\debug
+com.fune.app-packaged_res-36 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
+com.fune.app-packaged_res-37 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
+com.fune.app-packaged_res-38 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug
+com.fune.app-packaged_res-39 D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug

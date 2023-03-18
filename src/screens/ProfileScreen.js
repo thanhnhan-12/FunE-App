@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { AuthContext } from '../context/AuthContext';
-2
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Gaming from '../assets/images/misc/gaming.svg';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
 
     return (
@@ -70,6 +70,7 @@ const ProfileScreen = () => {
                             borderBottomColor: 'black',
                             borderBottomWidth: 1,
                         }}
+                        onPress={() => navigation.navigate('EditProfile')}
                     >
                         <View style={{
                             flexDirection: 'row'
