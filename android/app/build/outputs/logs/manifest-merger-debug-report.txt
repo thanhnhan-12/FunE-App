@@ -10,6 +10,7 @@ MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.125.0] C:\Users\DELL\.
 MERGED from [com.facebook.flipper:flipper:0.125.0] C:\Users\DELL\.gradle\caches\transforms-3\fafd183758d3345458ca134509e8f09e\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:8:1-18:12
 MERGED from [:react-native-vector-icons] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-async-storage_async-storage] D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-picker_picker] D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-picker\picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-date-picker] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -186,6 +187,8 @@ MERGED from [:react-native-vector-icons] D:\xampp\htdocs\TTTN\FunE-App\node_modu
 MERGED from [:react-native-vector-icons] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-async-storage_async-storage] D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-async-storage_async-storage] D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-picker_picker] D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-picker\picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-picker_picker] D:\xampp\htdocs\TTTN\FunE-App\node_modules\@react-native-picker\picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-date-picker] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-date-picker] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] D:\xampp\htdocs\TTTN\FunE-App\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41

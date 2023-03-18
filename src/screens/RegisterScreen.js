@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import Toast from 'react-native-toast-message';
 import {
     SafeAreaView,
     ScrollView,
