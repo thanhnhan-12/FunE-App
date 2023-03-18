@@ -21,14 +21,14 @@ import { AuthContext } from '../context/AuthContext';
 
 const SearchScreen = () => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
-    const [gamesTab, setGamesTab] = useState(1);
+    const [chooseTab, setChooseTab] = useState(1);
 
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
 
     const onSelectSwitch = value => {
-        setGamesTab(value);
+        setChooseTab(value);
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -86,7 +86,7 @@ const SearchScreen = () => {
                     />
                 </View>
 
-                {gamesTab == 1 &&
+                {chooseTab == 1 &&
                     freeGames.map(item => (
                         <ListItem
                             key={item.id}
@@ -97,7 +97,7 @@ const SearchScreen = () => {
 
                         />
                     ))}
-                {gamesTab == 2 &&
+                {chooseTab == 2 &&
                     paidGames.map(item => (
                         <ListItem
                             key={item.id}
