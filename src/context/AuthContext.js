@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     const [userInfo, setUserInfo] = useState({});
+    const [dataPost, setDataPost] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
     const register = async (firstName, lastName, email, password, birthday) => {
@@ -51,9 +52,14 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const transmissionPropsPost = (data) => {
+        setDataPost({});
+        setDataPost(data);
+    }
+
     return (
         <AuthContext.Provider
-            value={{ register, login, logout, isLoading, userInfo }}
+            value={{ register, login, logout, transmissionPropsPost, isLoading, userInfo, dataPost }}
         >
             {children}
         </AuthContext.Provider>

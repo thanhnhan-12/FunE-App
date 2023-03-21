@@ -7,6 +7,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import { AuthContext } from "../context/AuthContext";
 import MenuNavigation from "./MenuNavigation";
+import SocialPostScreen from "../screens/SocialPostScreen";
 import { AuthProvider } from "../context/AuthContext";
 
 
@@ -34,6 +35,11 @@ const AuthNavigation = () => {
                                 <Stack.Screen
                                     name="EditProfile"
                                     component={EditProfileScreen}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="SocialPost"
+                                    component={SocialPostScreen}
                                     options={{ headerShown: false }}
                                 />
 

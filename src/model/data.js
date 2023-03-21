@@ -66,6 +66,7 @@ export const paidGames = [
 
 export const freeGames = [
   {
+    image: "../assets/images/Altos-Odyssey.jpeg",
     poster: require('../assets/images/Altos-Odyssey.jpeg'),
     title: 'Altos Odyssey',
     subtitle: 'Noodlecake Studios',
@@ -73,6 +74,7 @@ export const freeGames = [
     id: '1',
   },
   {
+    image: "../assets/images/asphalt-9.jpeg",
     poster: require('../assets/images/asphalt-9.jpeg'),
     title: 'Asphalt 9',
     subtitle: 'Gameloft',
@@ -80,6 +82,7 @@ export const freeGames = [
     id: '2',
   },
   {
+    image: "../assets/images/genshin-impact.jpeg",
     poster: require('../assets/images/genshin-impact.jpeg'),
     title: 'Genshin Impact',
     subtitle: 'miHoYo',
@@ -87,6 +90,7 @@ export const freeGames = [
     id: '3',
   },
   {
+    image: "../assets/images/fortnite.webp",
     poster: require('../assets/images/fortnite.webp'),
     title: 'Fortnite',
     subtitle: 'Epic Games',
@@ -94,6 +98,7 @@ export const freeGames = [
     id: '4',
   },
   {
+    image: "../assets/images/pokemon-unite.jpeg",
     poster: require('../assets/images/pokemon-unite.jpeg'),
     title: 'Pokémon Unite',
     subtitle: 'The Pokémon Company',
@@ -101,6 +106,7 @@ export const freeGames = [
     id: '5',
   },
   {
+    image: "../assets/images/diablo-4.jpeg",
     poster: require('../assets/images/diablo-4.jpeg'),
     title: 'Diablo 4',
     subtitle: 'Blizzard Entertainment',
