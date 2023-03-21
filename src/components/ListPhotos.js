@@ -8,7 +8,7 @@ export default function ListPhoto({ photo, title, onPress }) {
         <View style={{ alignItems: 'center', marginBottom: 20 }}>
             <Image
                 source={photo}
-                style={{ width: 90, height: 90, borderRadius: 10, marginRight: 8 }}
+                style={{ width: 90, height: 90, borderRadius: 10 }}
             />
             <View>
                 <Text
