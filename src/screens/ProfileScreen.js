@@ -4,7 +4,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { AuthContext } from '../context/AuthContext';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Gaming from '../assets/images/misc/gaming.svg';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

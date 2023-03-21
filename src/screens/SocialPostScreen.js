@@ -50,7 +50,7 @@ const HomeScreen = () => {
                                 alignItems: 'center',
                             }}>
                             <Image
-                                source={require("../assets/images/fortnite.webp")}
+                                source={require("../assets/images/Altos-Odyssey.jpeg")}
                                 style={{
                                     width: 300,
                                     height: 270,
