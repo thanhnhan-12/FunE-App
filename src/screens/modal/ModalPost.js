@@ -9,7 +9,7 @@ const handleOnClick = (modalVisible, setModalVisible, opacityModal, setOpacityMo
     setOpacityModal(!opacityModal);
 }
 
-const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModal, setRoom }) => {
+const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModal, setRoom, navigation }) => {
     return (
         <Modal
             animationType="slide"
@@ -124,7 +124,11 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                                         fontFamily: 'Roboto-MediumItalic',
                                         width: "80%"
 
-                                    }}>
+                                    }}
+                                    onPress={() => {
+                                        navigation.navigate('CreateProduct')
+                                    }}
+                                >
                                     Add Product
                                 </Text>
 
