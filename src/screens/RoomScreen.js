@@ -215,7 +215,7 @@ const RoomScreen = ({ navigation }) => {
                 <View style={{ marginVertical: 20 }}>
                     <CustomSwitch
                         selectionMode={1}
-                        option1="Photo"
+                        option1="Post"
                         option2="Information"
                         onSelectSwitch={onSelectSwitch}
                     />

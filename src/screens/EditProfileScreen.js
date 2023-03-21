@@ -85,7 +85,7 @@ const EditProfileScreen = () => {
                         }}>
                             <TouchableOpacity
                                 style={{
-                                    backgroundColor: '#7A8891',
+                                    backgroundColor: '#808080',
                                     padding: 20,
                                     borderRadius: 10,
                                     marginBottom: 20,
@@ -102,7 +102,7 @@ const EditProfileScreen = () => {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{
-                                    backgroundColor: '#7A8891',
+                                    backgroundColor: '#808080',
                                     padding: 20,
                                     borderRadius: 10,
                                     marginBottom: 20,
@@ -311,7 +311,7 @@ const EditProfileScreen = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{
-                            backgroundColor: '#AD40AF',
+                            backgroundColor: '#D62965',
                             padding: 20,
                             borderRadius: 10,
                             marginBottom: 30,

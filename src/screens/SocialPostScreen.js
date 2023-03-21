@@ -20,6 +20,17 @@ import { AuthContext } from '../context/AuthContext';
 const HomeScreen = () => {
     const { dataPost } = useContext(AuthContext);
     const [comment, setComment] = useState(null);
+    const [like, setLike] = useState(false);
+    const [countLike, setCountLike] = useState(0);
+    const handleOnClickLike = () => {
+        if (like == true) {
+            setLike(false);
+            setCountLike(countLike - 1)
+        } else {
+            setLike(true);
+            setCountLike(countLike + 1)
+        }
+    }
     console.log(dataPost);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
@@ -76,10 +87,16 @@ const HomeScreen = () => {
                                     </Text>
                                 </View>
 
-                                <TouchableOpacity style={{
+                                <View style={{
                                     flexDirection: 'row'
                                 }}>
-                                    <Ionicons name="heart" size={25} color="#D62965" />
+                                    <TouchableOpacity onPress={() => handleOnClickLike()}>
+                                        {like && like === true ?
+                                            <Ionicons name="heart" size={25} color="#D62965" />
+                                            :
+                                            <Ionicons name="heart-outline" size={25} color="#D62965" />
+                                        }
+                                    </TouchableOpacity>
                                     <Text
                                         style={{
                                             backgroundColor: '#CF4071',
@@ -93,9 +110,9 @@ const HomeScreen = () => {
                                             borderRadius: 20,
                                             marginLeft: 6
                                         }}>
-                                        0
+                                        {countLike}
                                     </Text>
-                                </TouchableOpacity>
+                                </View>
                             </TouchableOpacity>
                         </TouchableOpacity>
                     </TouchableOpacity>
