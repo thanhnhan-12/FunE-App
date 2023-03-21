@@ -28,6 +28,7 @@
 # .idea
 # .gradle
 local.properties
+.env
 # *.iml
 # *.hprof
 # .cxx/

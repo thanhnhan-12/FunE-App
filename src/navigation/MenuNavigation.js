@@ -53,6 +53,7 @@ const MenuNavigation = () => {
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="google-classroom" color={color} size={26} />
                     ),
+                    tabBarBadge: 3
                 }}
             />
             <Tab.Screen

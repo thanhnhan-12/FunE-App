@@ -68,6 +68,9 @@ const EditProfileScreen = () => {
                             borderWidth: 1,
                         }}
                     >
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }}>
+                            <Ionicons name="cloud-upload-outline" color="black" size={60} />
+                        </TouchableOpacity>
                         <View>
                             <Text
                                 style={{
