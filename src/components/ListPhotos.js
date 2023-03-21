@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { windowWidth } from '../utils/Dimensions';
 
-export default function ListPhoto({ photo, title }) {
+export default function ListPhoto({ photo, title, onPress }) {
     return (
 
         <View style={{ alignItems: 'center', marginBottom: 20 }}>

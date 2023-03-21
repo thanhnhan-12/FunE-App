@@ -19,12 +19,18 @@ import { freeGames, paidGames, sliderData } from '../model/data';
 
 import { AuthContext } from '../context/AuthContext';
 
-const RoomScreen = () => {
-    const { userInfo, isLoading, logout } = useContext(AuthContext);
+const RoomScreen = ({ navigation }) => {
+    const { userInfo, transmissionPropsPost, dataPost } = useContext(AuthContext);
     const [chooseTab, setChooseTab] = useState(1);
     const onSelectSwitch = value => {
         setChooseTab(value);
     };
+
+    const handleTransPage = (item, page) => {
+        transmissionPropsPost(item);
+        console.log("Post ter", item.poster)
+        navigation.navigate(page);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -32,7 +38,7 @@ const RoomScreen = () => {
                 showsVerticalScrollIndicator={false}
                 style={{ padding: 15 }}>
                 <View style={styles.container}>
-                    <ImageBackground source={require('../assets/images/homescreen/game-3.png')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
+                    <ImageBackground source={require('../assets/images/homescreen/game-2.jpeg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                             <ImageBackground
                                 source={require('../assets/images/user-profile-logo.jpg')}
@@ -62,13 +68,13 @@ const RoomScreen = () => {
                     <View style={{
                         textAlign: 'center',
                     }}>
-                        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, fontFamily: 'Roboto-Medium', color: 'black' }}>14</Text>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, fontFamily: 'Roboto-Medium', color: 'black' }}>6</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black' }}>Posts</Text>
                     </View>
                     <View style={{
                         textAlign: 'center',
                     }}>
-                        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, fontFamily: 'Roboto-Medium', color: 'black' }}>4</Text>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 16, fontFamily: 'Roboto-Medium', color: 'black' }}>6</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black' }}>Followers</Text>
                     </View>
                     <View style={{
@@ -173,7 +179,7 @@ const RoomScreen = () => {
                     </TouchableOpacity>
                     <TouchableOpacity style={{
                         marginRight: 5
-                    }}>
+                    }} >
                         <ImageBackground
                             source={require('../assets/images/user-profile-5.jpg')}
                             style={{ width: 50, height: 50 }}
@@ -216,7 +222,7 @@ const RoomScreen = () => {
                 </View>
                 {chooseTab == 1 &&
                     (<>
-                        <View
+                        <TouchableOpacity
                             style={{
                                 marginVertical: 15,
                                 flexDirection: 'row',
@@ -230,7 +236,7 @@ const RoomScreen = () => {
                                 color="black"
                                 style={{ marginLeft: 15 }}
                             />
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={{
                             flexDirection: 'row',
@@ -239,13 +245,17 @@ const RoomScreen = () => {
                             marginBottom: 20,
                             flexWrap: 'wrap',
                         }}>
-                            {freeGames.map(item => (
-                                <ListPhoto
-                                    key={item.id}
-                                    photo={item.poster}
-                                    title={item.title}
 
-                                />
+                            {freeGames.map(item => (
+                                <TouchableOpacity key={item.id}>
+                                    <TouchableOpacity onPress={() => handleTransPage(item, 'SocialPost')}>
+                                        <ListPhoto
+                                            key={item.id}
+                                            photo={item.poster}
+                                            title={item.title}
+                                        />
+                                    </TouchableOpacity>
+                                </TouchableOpacity>
                             ))}
                         </View>
                     </>)

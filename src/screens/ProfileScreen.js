@@ -208,10 +208,14 @@ const ProfileScreen = ({ navigation }) => {
                             borderBottomColor: 'black',
                             borderBottomWidth: 1,
                         }}
+
+                        onPress={() => { logout() }}
                     >
-                        <View style={{
-                            flexDirection: 'row'
-                        }}>
+                        <View
+                            style={{
+                                flexDirection: 'row'
+                            }}
+                        >
                             <MaterialCommunityIcons name="logout" color="black" size={26} style={{ marginRight: 10 }} />
                             <Text
                                 style={{
