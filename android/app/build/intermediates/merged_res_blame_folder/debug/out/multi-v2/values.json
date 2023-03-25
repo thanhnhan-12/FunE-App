@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.fune.app-mergeDebugResources-28:/values/values.xml",
+            "outputFile": "com.fune.app-mergeDebugResources-29:/values/values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\ad027df5cc0252cf290d9cc32e3d3e29\\transformed\\jetified-react-android-0.71.4-debug\\res\\values\\values.xml",
@@ -422,6 +422,25 @@
                         "endLines": "583,603,636,5863,5867",
                         "endColumns": "56,64,63,24,24",
                         "endOffsets": "37812,38767,40474,345149,345298"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\b1f5b762baa95949f045117918de13a2\\transformed\\jetified-Android-ScalableVideoView-10e7b4da8b\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "35",
+                        "endColumns": "24",
+                        "endOffsets": "1444"
+                    },
+                    "to": {
+                        "startLines": "7179",
+                        "startColumns": "4",
+                        "startOffsets": "389246",
+                        "endLines": "7212",
+                        "endColumns": "24",
+                        "endOffsets": "390635"
                     }
                 }
             ]
