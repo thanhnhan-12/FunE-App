@@ -12,6 +12,9 @@ export const productApi = {
   getProducts: () => {
     return instance.get(`/product/gets`)
   },
+  getCategories: () => {
+    return instance.get(`/category/gets`)
+  },
   getProductByID: (params) => {
     return instance.get(`/product/get`, {
       params: params
