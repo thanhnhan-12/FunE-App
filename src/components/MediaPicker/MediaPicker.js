@@ -4,6 +4,7 @@ import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { Divider, Text } from 'react-native-paper';
 import * as ImagePicker from 'react-native-image-picker'
 import Preview from './Preview';
+import { useForm, Controller } from "react-hook-form";
 const MediaPicker = ({ setMedias, medias }) => {
   const pickerTypeActionSheetRef = useRef(null);
   // const [mediaSource, setMediaSource] = useState(null);
