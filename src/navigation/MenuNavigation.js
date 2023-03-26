@@ -10,6 +10,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
+import SearchNavigation from './SearchNavigation';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -34,7 +35,7 @@ const MenuNavigation = () => {
             />
             <Tab.Screen
                 name="Search"
-                component={SearchScreen}
+                component={SearchNavigation}
                 options={{
                     tabBarLabel: 'Search',
                     tabBarIcon: ({ color }) => (
