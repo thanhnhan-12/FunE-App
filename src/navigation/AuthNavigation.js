@@ -21,7 +21,7 @@ const AuthNavigation = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 {
-                    userInfo.errCode === 0
+                    userInfo && userInfo.toString().length > 0
                         ?
                         (
                             // <AuthProvider>

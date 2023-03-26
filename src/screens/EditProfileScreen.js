@@ -1,22 +1,150 @@
-import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground, TextInput, Picker } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground, TextInput, Alert } from 'react-native';
 import RNPickerSelect from "react-native-picker-select";
-import Spinner from 'react-native-loading-spinner-overlay';
 import { AuthContext } from '../context/AuthContext';
-import CustomButton from '../components/CustomButton';
-import InputField from '../components/InputField';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from 'react-native-date-picker';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { Divider } from 'react-native-paper';
+import Preview from '../components/MediaPicker/Preview';
+import * as ImagePicker from 'react-native-image-picker';
+import Photo from '../components/MediaPicker/Photo';
+import { useForm } from "react-hook-form";
+import { userApi } from '../clients/user_api';
+import { objToForm } from '../functions';
+
 
 const EditProfileScreen = () => {
-    const { userInfo, isLoading, logout } = useContext(AuthContext);
+    const [medias, setMedias] = useState({});
+    const [photo, setPhoto] = useState({});
+    const { userInfo } = useContext(AuthContext);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
+    const [description, setDescription] = useState(false);
+    const [email, setEmail] = useState(false);
+    const [note, setNote] = useState(false);
     const [dobLabel, setDobLabel] = useState('Date of Birth');
     const [gender, setGender] = useState('Gender');
-    const [selectedValue, setSelectedValue] = useState("");
+    const { control, handleSubmit } = useForm();
+    const id_user = userInfo.id;
+    console.log(id_user);
+
+    useEffect(() => {
+        async function fetchData() {
+            setDescription(userInfo.description);
+            setEmail(userInfo.email);
+            setPhoto(userInfo.image);
+            setMedias(userInfo.background);
+            setDobLabel(userInfo.birthday);
+            setGender(userInfo.gender);
+            setNote(userInfo.note);
+        }
+        fetchData();
+
+    }, [])
+
+    const onSubmit = async () => {
+        const data = { id_user, description, email, dobLabel, gender, note };
+        const formData = new FormData();
+        objToForm(data, formData);
+
+        formData.append(id_user, description, email, dobLabel, gender, note);
+        if (medias) {
+            const media = medias[0];
+            const file = {
+                name: media.fileName,
+                type: media.type,
+                uri: media.uri
+            }
+            formData.append('media', file);
+        }
+        // if (photo) {
+        //     const photo = photo[0];
+        //     const file = {
+        //         name: photo.fileName,
+        //         type: photo.type,
+        //         uri: photo.uri
+        //     }
+        //     formData.push('photo', file);
+        //     // console.log("media", file)
+        // }
+
+        console.log("data", formData);
+        const result = await userApi.updateUser(formData);
+        if (result.message) {
+            Alert.alert("Update succeed!");
+            navigation.navigate('Home')
+        }
+        else {
+            Alert.alert("Update faided!");
+        }
+
+    };
+
+    const onPressPhotoLibrary = () => {
+        const options = {
+            title: 'Select Media',
+            mediaType: 'mixed',
+            quality: 1,
+        };
+        ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker')
+            } else if (response.errorMessage) {
+                console.log('ImagePicker Error: ', response.errorMessage)
+            } else {
+                // console.log(response.assets);
+                // setMediaSource(response.assets)
+                setMedias(response.assets)
+                // Do something with the captured file
+            }
+        });
+    }
+    const onPressCamera = async () => {
+
+        const options = {
+            title: 'Select Media',
+            mediaType: 'mixed',
+            quality: 1
+        }
+        // var options = {
+        //   mediaType: 'photo' as ImagePicker.MediaType,
+        // }
+        ImagePicker.launchCamera(options, response => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker')
+            } else if (response.errorMessage) {
+                console.log('ImagePicker Error: ', response.errorMessage)
+            } else {
+                // setMediaSource(response.assets)
+                setMedias(response.assets)
+                // Do something with the captured file
+            }
+        })
+    }
+
+    const onPressPhotoLibraryPR = () => {
+        const options = {
+            title: 'Select Media',
+            mediaType: 'mixed',
+            quality: 1,
+        };
+
+        ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker')
+            } else if (response.errorMessage) {
+                console.log('ImagePicker Error: ', response.errorMessage)
+            } else {
+                // console.log(response.assets);
+                // setMediaSource(response.assets)
+                setPhoto(response.assets)
+                // Do something with the captured file
+            }
+        });
+    }
+
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -30,12 +158,21 @@ const EditProfileScreen = () => {
                         alignItems: 'center',
                         backgroundColor: '#fff',
                     }}>
-                    <TouchableOpacity>
-                        <ImageBackground
-                            source={require('../assets/images/image-user.jpg')}
-                            style={{ width: 80, height: 80 }}
-                            imageStyle={{ borderRadius: 80 }}
-                        />
+                    <TouchableOpacity onPress={onPressPhotoLibraryPR}>
+                        {
+                            // console.log("Media", medias)
+                            photo && photo.length > 0 ?
+                                photo.map((file) => {
+                                    return <Photo key={file.fileName} file={file} />
+                                })
+                                :
+                                <ImageBackground
+                                    source={require('../assets/images/image-user.jpg')}
+                                    style={{ width: 80, height: 80 }}
+                                    imageStyle={{ borderRadius: 80 }}
+                                />
+                        }
+
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{
@@ -99,7 +236,9 @@ const EditProfileScreen = () => {
                                         fontWeight: '700',
                                         fontSize: 16,
                                         color: '#fff',
-                                    }}>
+                                    }}
+                                    onPress={onPressPhotoLibrary}
+                                >
                                     Open Galary
                                 </Text>
                             </TouchableOpacity>
@@ -116,10 +255,22 @@ const EditProfileScreen = () => {
                                         fontWeight: '700',
                                         fontSize: 16,
                                         color: '#fff',
-                                    }}>
+                                    }}
+                                    onPress={onPressCamera}
+                                >
                                     Open Camera
                                 </Text>
                             </TouchableOpacity>
+
+                        </View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            {
+                                // console.log("Media", medias)
+                                medias && medias.length > 0 &&
+                                medias.map((file) => {
+                                    return <Preview style={{ width: '90%', borderRadius: 10 }} key={file.fileName} file={file} />
+                                })
+                            }
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{
@@ -141,6 +292,8 @@ const EditProfileScreen = () => {
                     </TouchableOpacity>
                     <TextInput
                         placeholder="Descripton"
+                        onChangeText={text => setDescription(text)}
+                        value={description}
                         style={{
                             flex: 1,
                             paddingVertical: 0,
@@ -182,6 +335,8 @@ const EditProfileScreen = () => {
                             />
                             <TextInput
                                 placeholder="Email"
+                                // onChangeText={text => setEmail(text)}
+                                value={email}
                                 style={{ flex: 1, paddingVertical: 0, width: '100%' }}
                             />
                         </View>
@@ -270,9 +425,8 @@ const EditProfileScreen = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-
                                 <RNPickerSelect
-                                    onValueChange={(g) => setGender(gender)}
+                                    onValueChange={(g) => setGender(g)}
 
                                     items={[
                                         { label: "Male", value: "Male" },
@@ -281,7 +435,6 @@ const EditProfileScreen = () => {
 
                                 />
                             </View>
-
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -305,14 +458,16 @@ const EditProfileScreen = () => {
                             width: '100%',
                         }}>
                             <TextInput
-                                placeholder="Email"
-                                value='Note'
+                                placeholder="Note"
+                                value={note}
+                                onChangeText={text => setNote(text)}
                                 style={{ flex: 1, paddingVertical: 0, width: '100%' }}
                             />
                         </View>
 
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={handleSubmit(onSubmit)}
                         style={{
                             backgroundColor: '#D62965',
                             padding: 20,

@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
         await axios.post(`${BASE_URL}/login`, { email, password })
             .then(res => {
                 let userInfo = res.data;
-                setUserInfo(userInfo);
+                setUserInfo(userInfo.user.user);
                 AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
                 setIsLoading(false);
             }).catch(e => {
@@ -43,11 +43,11 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setIsLoading(true);
 
-        if (userInfo) {
-            setUserInfo({});
+        if (userInfo !== null) {
+            setUserInfo(0);
             setIsLoading(false);
         } else {
-            setUserInfo({});
+            setUserInfo(0);
             setIsLoading(false);
         }
     };
