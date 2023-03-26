@@ -154,7 +154,7 @@ const RoomScreen = ({ navigation }) => {
                                             width: '90%',
                                         }}>
                                             <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                {userInfo.user.user.firstName}
+                                                {userInfo.firstName}
                                             </Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>
@@ -386,7 +386,7 @@ const RoomScreen = ({ navigation }) => {
                                             width: '90%',
                                         }}>
                                             <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                {userInfo.user.user.firstName}
+                                                {userInfo.firstName}
                                             </Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>

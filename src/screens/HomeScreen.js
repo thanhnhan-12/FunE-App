@@ -33,10 +33,10 @@ const HomeScreen = ({ navigation }) => {
         setModalVisible(!modalVisible);
         setOpacityModal(!opacityModal);
     }
+    const backgroundIndividual = { uri: 'https://img5.thuthuatphanmem.vn/uploads/2021/12/28/anh-background-anime-buon_030340869.jpg' };
+    console.log(backgroundIndividual)
     return (
         <>
-
-
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
                 {
                     opacityModal && opacityModal === true ?
@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
                                     height: 200,
                                     opacity: 1,
                                 }}>
-                                    <ImageBackground source={require('../assets/images/homescreen/game-3.png')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
+                                    <ImageBackground source={backgroundIndividual} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                                             <ImageBackground
                                                 source={require('../assets/images/image-user.jpg')}
@@ -64,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
                                                 width: '90%',
                                             }}>
                                                 <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 20, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
-                                                    {userInfo.user.user.firstName}
+                                                    {userInfo.firstName}
                                                 </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>
@@ -120,7 +120,7 @@ const HomeScreen = ({ navigation }) => {
                                     <CustomSwitch
                                         selectionMode={1}
                                         option1="Post"
-                                        option2="Information"
+                                        option2="Sell"
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
@@ -180,7 +180,7 @@ const HomeScreen = ({ navigation }) => {
                                     width: '100%',
                                     height: 200,
                                 }}>
-                                    <ImageBackground source={require('../assets/images/homescreen/game-3.png')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
+                                    <ImageBackground source={backgroundIndividual} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                                             <ImageBackground
                                                 source={require('../assets/images/image-user.jpg')}
@@ -192,7 +192,7 @@ const HomeScreen = ({ navigation }) => {
                                                 width: '90%',
                                             }}>
                                                 <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 20, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
-                                                    {userInfo.user.user.firstName}
+                                                    {userInfo.firstName}
                                                 </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>

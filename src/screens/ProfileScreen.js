@@ -49,10 +49,10 @@ const ProfileScreen = ({ navigation }) => {
                             borderBottomColor: 'black',
                         }}>
                             <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: 'red' }}>
-                                {userInfo.user.user.lastName} {userInfo.user.user.firstName}
+                                {userInfo.lastName} {userInfo.firstName}
                             </Text>
                             <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium' }}>
-                                {userInfo.user.user.email}
+                                {userInfo.email}
                             </Text>
                         </TouchableOpacity>
 
