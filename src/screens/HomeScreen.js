@@ -20,7 +20,7 @@ import { freeGames, paidGames, sliderData } from '../model/data';
 import { AuthContext } from '../context/AuthContext';
 import ModalPost from './modal/ModalPost';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
     const [chooseTab, setChooseTab] = useState(1);
     const onSelectSwitch = value => {
@@ -326,6 +326,7 @@ const HomeScreen = () => {
                 </View>
             </SafeAreaView>
             <ModalPost
+                navigation={navigation}
                 opacityModal={opacityModal}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}

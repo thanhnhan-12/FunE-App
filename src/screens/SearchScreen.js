@@ -18,11 +18,12 @@ import { freeGames, paidGames, sliderData } from '../model/data';
 import CustomSwitch from '../components/CustomSwitch';
 import ListItem from '../components/ListItem';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native'
 
 const SearchScreen = () => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
     const [chooseTab, setChooseTab] = useState(1);
-
+    const navigation = useNavigation()
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
@@ -89,6 +90,9 @@ const SearchScreen = () => {
                 {chooseTab == 1 &&
                     freeGames.map(item => (
                         <ListItem
+                            onPress={() => {
+                                navigation.navigate('ProductDetail');
+                            }}
                             key={item.id}
                             photo={item.poster}
                             title={item.title}
@@ -100,6 +104,11 @@ const SearchScreen = () => {
                 {chooseTab == 2 &&
                     paidGames.map(item => (
                         <ListItem
+                            onPress={() => {
+                                navigation.navigate('ProductDetail', {
+                                    id_product: item.id,
+                                });
+                            }}
                             key={item.id}
                             photo={item.poster}
                             title={item.title}
