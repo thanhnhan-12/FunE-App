@@ -34,7 +34,6 @@ const HomeScreen = ({ navigation }) => {
         setOpacityModal(!opacityModal);
     }
     const backgroundIndividual = { uri: 'https://img5.thuthuatphanmem.vn/uploads/2021/12/28/anh-background-anime-buon_030340869.jpg' };
-    console.log(backgroundIndividual)
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
