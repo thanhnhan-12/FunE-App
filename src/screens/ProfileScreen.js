@@ -6,10 +6,11 @@ import { AuthContext } from '../context/AuthContext';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { IP_CONFIG } from '@env';
 
 const ProfileScreen = ({ navigation }) => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
-
+    const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -34,7 +35,7 @@ const ProfileScreen = ({ navigation }) => {
                         }}>
                         <TouchableOpacity>
                             <ImageBackground
-                                source={require('../assets/images/image-user.jpg')}
+                                source={imageIndividual}
                                 style={{ width: 80, height: 80 }}
                                 imageStyle={{ borderRadius: 80 }}
                             />

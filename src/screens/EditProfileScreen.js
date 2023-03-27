@@ -29,6 +29,7 @@ const EditProfileScreen = () => {
     const { control, handleSubmit } = useForm();
     const id_user = userInfo.id;
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
+    const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
 
     useEffect(() => {
         async function fetchData() {
@@ -166,7 +167,7 @@ const EditProfileScreen = () => {
                                 })
                                 :
                                 <ImageBackground
-                                    source={require('../assets/images/image-user.jpg')}
+                                    source={imageIndividual}
                                     style={{ width: 80, height: 80 }}
                                     imageStyle={{ borderRadius: 80 }}
                                 />

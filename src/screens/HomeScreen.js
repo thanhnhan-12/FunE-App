@@ -19,6 +19,7 @@ import { freeGames, paidGames, sliderData } from '../model/data';
 
 import { AuthContext } from '../context/AuthContext';
 import ModalPost from './modal/ModalPost';
+import { IP_CONFIG } from '@env';
 
 const HomeScreen = ({ navigation }) => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
@@ -33,7 +34,9 @@ const HomeScreen = ({ navigation }) => {
         setModalVisible(!modalVisible);
         setOpacityModal(!opacityModal);
     }
-    const backgroundIndividual = { uri: 'https://img5.thuthuatphanmem.vn/uploads/2021/12/28/anh-background-anime-buon_030340869.jpg' };
+    const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
+    const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
+
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -54,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
                                     <ImageBackground source={backgroundIndividual} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                                             <ImageBackground
-                                                source={require('../assets/images/image-user.jpg')}
+                                                source={imageIndividual}
                                                 style={{ width: 70, height: 70 }}
                                                 imageStyle={{ borderRadius: 70 }}
                                             />
@@ -182,7 +185,7 @@ const HomeScreen = ({ navigation }) => {
                                     <ImageBackground source={backgroundIndividual} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                                             <ImageBackground
-                                                source={require('../assets/images/image-user.jpg')}
+                                                source={imageIndividual}
                                                 style={{ width: 70, height: 70 }}
                                                 imageStyle={{ borderRadius: 70 }}
                                             />
