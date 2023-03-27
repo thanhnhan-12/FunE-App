@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import {
     View,
     Text,
     SafeAreaView,
     ScrollView,
-    ImageBackground,
     TextInput,
     TouchableOpacity,
+    FlatList,
+    Image
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Feather from 'react-native-vector-icons/Feather';
@@ -15,22 +16,13 @@ import BannerSlider from '../components/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 
 import { freeGames, paidGames, sliderData } from '../model/data';
-import CustomSwitch from '../components/CustomSwitch';
-import ListItem from '../components/ListItem';
-import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native'
 
 const SearchScreen = () => {
-    const { userInfo, isLoading, logout } = useContext(AuthContext);
-    const [chooseTab, setChooseTab] = useState(1);
-    const navigation = useNavigation()
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
 
-    const onSelectSwitch = value => {
-        setChooseTab(value);
-    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
             <ScrollView style={{ padding: 20 }}>
@@ -59,7 +51,7 @@ const SearchScreen = () => {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                     }}>
-                    <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: '#AD40AF' }}>
                         Outstanding
                     </Text>
                     <TouchableOpacity onPress={() => { }}>
@@ -78,46 +70,184 @@ const SearchScreen = () => {
                     loop={true}
                 />
 
-                <View style={{ marginVertical: 20 }}>
-                    <CustomSwitch
-                        selectionMode={1}
-                        option1="Recently Viewed"
-                        option2="You May Also Like"
-                        onSelectSwitch={onSelectSwitch}
-                    />
+                <View
+                    style={{
+                        marginVertical: 15,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: '#AD40AF' }}>
+                        Recently Viewed
+                    </Text>
+                    <TouchableOpacity onPress={() => { }}>
+                        <Text style={{ color: '#0aada8' }}>Clear</Text>
+                    </TouchableOpacity>
+                </View>
+                <FlatList
+                    horizontal={true}
+                    data={paidGames}
+                    renderItem={({ item, index }) => {
+                        return <View key={index}>
+                            <Image
+                                style={{
+                                    width: 100,
+                                    height: 150,
+                                    resizeMode: 'cover',
+                                    borderRadius: 10,
+                                    marginRight: 20
+                                }}
+                                source={require('../assets/images/genshin-impact.jpeg')}
+                            />
+                            <Text>{item.price}</Text>
+                            <Text style={{
+                                fontSize: 14,
+                                fontWeight: 700,
+                            }}>{item.subtitle}</Text>
+                        </View>
+                    }
+                    }
+                >
+
+                </FlatList>
+                <View
+                    style={{
+                        marginVertical: 15,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: '#AD40AF' }}>
+                        Recommemded
+                    </Text>
+                    <TouchableOpacity onPress={() => { }}>
+                        <Text style={{ color: '#0aada8' }}>Refresh</Text>
+                    </TouchableOpacity>
                 </View>
 
-                {chooseTab == 1 &&
-                    freeGames.map(item => (
-                        <ListItem
-                            onPress={() => {
-                                navigation.navigate('ProductDetail');
-                            }}
-                            key={item.id}
-                            photo={item.poster}
-                            title={item.title}
-                            subTitle={item.subtitle}
-                            isFree={item.isFree}
+                <View style={{
+                    flexDirection: 'row', alignItems: 'center', flex: 1, flexWrap: 'wrap', marginBottom: 10
+                }}>
+                    <Text style={{
+                        fontSize: 14,
+                        fontFamily: 'Roboto-Medium',
+                        color: 'black',
+                        borderWidth: 1,
+                        borderTopWidth: 1,
+                        borderRightWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        padding: 10,
+                        borderRadius: 10,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}>
+                        Denim Jeans
+                    </Text>
+                    <Text style={{
+                        fontSize: 14,
+                        fontFamily: 'Roboto-Medium',
+                        color: 'black',
+                        borderWidth: 1,
+                        borderTopWidth: 1,
+                        borderRightWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        padding: 10,
+                        borderRadius: 10,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}>
+                        Mini Skirt
+                    </Text>
+                    <Text style={{
+                        fontSize: 14,
+                        fontFamily: 'Roboto-Medium',
+                        color: 'black',
+                        borderWidth: 1,
+                        borderTopWidth: 1,
+                        borderRightWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        padding: 10,
+                        borderRadius: 10,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}>
+                        Jacket
+                    </Text>
+                    <Text style={{
+                        fontSize: 14,
+                        fontFamily: 'Roboto-Medium',
+                        color: 'black',
+                        borderWidth: 1,
+                        borderTopWidth: 1,
+                        borderRightWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        padding: 10,
+                        borderRadius: 10,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}>
+                        Accessories
+                    </Text>
+                    <Text style={{
+                        fontSize: 14,
+                        fontFamily: 'Roboto-Medium',
+                        color: 'black',
+                        borderWidth: 1,
+                        borderTopWidth: 1,
+                        borderRightWidth: 1,
+                        borderBottomWidth: 1,
+                        borderLeftWidth: 1,
+                        padding: 10,
+                        borderRadius: 10,
+                        marginRight: 10,
+                        marginBottom: 20
+                    }}>
+                        Eye Shadow
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        marginVertical: 15,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: '#AD40AF' }}>
+                        You may also like
+                    </Text>
+                    <TouchableOpacity onPress={() => { }}>
+                        <Text style={{ color: '#0aada8' }}>Refresh</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ marginBottom: 20 }}>
+                    <FlatList
+                        horizontal={true}
+                        data={paidGames}
+                        renderItem={({ item, index }) => {
+                            return <View key={index}>
+                                <Image
+                                    style={{
+                                        width: 100,
+                                        height: 150,
+                                        resizeMode: 'cover',
+                                        borderRadius: 10,
+                                        marginRight: 20
+                                    }}
+                                    source={require('../assets/images/god-of-war.jpeg')}
+                                />
+                                <Text>{item.price}</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                    fontWeight: 700,
+                                }}>{item.subtitle}</Text>
+                            </View>
+                        }
+                        }
+                    >
 
-                        />
-                    ))}
-                {chooseTab == 2 &&
-                    paidGames.map(item => (
-                        <ListItem
-                            onPress={() => {
-                                navigation.navigate('ProductDetail', {
-                                    id_product: item.id,
-                                });
-                            }}
-                            key={item.id}
-                            photo={item.poster}
-                            title={item.title}
-                            subTitle={item.subtitle}
-                            isFree={item.isFree}
-                            price={item.price}
-
-                        />
-                    ))}
+                    </FlatList>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
