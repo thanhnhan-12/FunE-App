@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState([]);
     const [dataPost, setDataPost] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
@@ -44,10 +44,10 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true);
 
         if (userInfo !== null) {
-            setUserInfo(0);
+            setUserInfo([]);
             setIsLoading(false);
         } else {
-            setUserInfo(0);
+            setUserInfo([]);
             setIsLoading(false);
         }
     };
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ register, login, logout, transmissionPropsPost, isLoading, userInfo, dataPost }}
+            value={{ register, login, logout, transmissionPropsPost, setUserInfo, isLoading, userInfo, dataPost }}
         >
             {children}
         </AuthContext.Provider>

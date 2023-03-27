@@ -1,44 +1,46 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground, TextInput, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground, TextInput, Alert, Image } from 'react-native';
 import RNPickerSelect from "react-native-picker-select";
 import { AuthContext } from '../context/AuthContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from 'react-native-date-picker';
-import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { Divider } from 'react-native-paper';
 import Preview from '../components/MediaPicker/Preview';
 import * as ImagePicker from 'react-native-image-picker';
 import Photo from '../components/MediaPicker/Photo';
 import { useForm } from "react-hook-form";
 import { userApi } from '../clients/user_api';
 import { objToForm } from '../functions';
+import { IP_CONFIG } from '@env';
 
 
 const EditProfileScreen = () => {
-    const [medias, setMedias] = useState({});
-    const [photo, setPhoto] = useState({});
-    const { userInfo } = useContext(AuthContext);
+    const [medias, setMedias] = useState([]);
+    const [photo, setPhoto] = useState([]);
+    const { userInfo, setUserInfo } = useContext(AuthContext);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
     const [description, setDescription] = useState(false);
+    const [background, setBackground] = useState(false);
     const [email, setEmail] = useState(false);
     const [note, setNote] = useState(false);
     const [dobLabel, setDobLabel] = useState('Date of Birth');
     const [gender, setGender] = useState('Gender');
     const { control, handleSubmit } = useForm();
     const id_user = userInfo.id;
-    console.log(id_user);
+    const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
+    console.log(userInfo.background.length)
 
     useEffect(() => {
         async function fetchData() {
             setDescription(userInfo.description);
             setEmail(userInfo.email);
-            setPhoto(userInfo.image);
-            setMedias(userInfo.background);
+            // setPhoto(userInfo.image);
+            // setMedias(userInfo.background);
             setDobLabel(userInfo.birthday);
             setGender(userInfo.gender);
             setNote(userInfo.note);
+            setBackground(userInfo.background);
         }
         fetchData();
 
@@ -50,7 +52,7 @@ const EditProfileScreen = () => {
         objToForm(data, formData);
 
         formData.append(id_user, description, email, dobLabel, gender, note);
-        if (medias) {
+        if (medias && medias.length > 0) {
             const media = medias[0];
             const file = {
                 name: media.fileName,
@@ -59,19 +61,20 @@ const EditProfileScreen = () => {
             }
             formData.append('media', file);
         }
-        // if (photo) {
-        //     const photo = photo[0];
+        // if (photo && photo.length > 0) {
+        //     const imageIndi = photo[0];
         //     const file = {
-        //         name: photo.fileName,
-        //         type: photo.type,
-        //         uri: photo.uri
+        //         name: imageIndi.fileName,
+        //         type: imageIndi.type,
+        //         uri: imageIndi.uri
         //     }
-        //     formData.push('photo', file);
-        //     // console.log("media", file)
+        //     formData.append('imageIndi', file);
         // }
 
-        console.log("data", formData);
         const result = await userApi.updateUser(formData);
+        const userById = await userApi.getUserByID(id_user);
+        setUserInfo(userById.users)
+        console.log(userInfo);
         if (result.message) {
             Alert.alert("Update succeed!");
             navigation.navigate('Home')
@@ -266,11 +269,16 @@ const EditProfileScreen = () => {
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             {
                                 // console.log("Media", medias)
-                                medias && medias.length > 0 &&
-                                medias.map((file) => {
-                                    return <Preview style={{ width: '90%', borderRadius: 10 }} key={file.fileName} file={file} />
-                                })
+                                medias && medias.length > 0 ?
+                                    medias.map((file) => {
+                                        return <Preview style={{ width: '90%', borderRadius: 10 }} key={file.fileName} file={file} />
+                                    })
+                                    :
+                                    userInfo && userInfo.background && userInfo.background.length > 0 &&
+                                    <Image source={backgroundIndividual} style={{ width: "100%", height: 250 }} />
                             }
+
+
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{

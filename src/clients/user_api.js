@@ -9,4 +9,11 @@ export const userApi = {
             }
         });
     },
+    getUserByID: async (id) => {
+        console.log("DĐ", id)
+        return await instance.post(`/get-users`, {
+            id: id,
+        });
+    },
+
 }
