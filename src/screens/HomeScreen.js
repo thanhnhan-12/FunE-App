@@ -15,7 +15,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ListPhoto from '../components/ListPhotos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomButton from '../components/CustomButton';
 import { freeGames, paidGames, sliderData } from '../model/data';
 
 import { AuthContext } from '../context/AuthContext';
@@ -119,11 +118,23 @@ const HomeScreen = ({ navigation }) => {
                                         </Text>
                                     </TouchableOpacity>
                                 </TouchableOpacity>
-                                <View style={{ marginVertical: 20 }}>
+                                <View style={{ marginVertical: 10 }}>
                                     <CustomSwitch
                                         selectionMode={1}
-                                        option1="Post"
-                                        option2="Sell"
+                                        // option1="Post"
+                                        // option2="Sell"
+                                        icon1={<MaterialCommunityIcons
+                                            name="text-box-plus-outline"
+                                            size={30}
+                                            color="black"
+                                            style={{ marginLeft: 15 }}
+                                        />}
+                                        icon2={<Ionicons
+                                            name="md-information-circle-outline"
+                                            size={30}
+                                            color="black"
+                                            style={{ marginLeft: 15 }}
+                                        />}
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>

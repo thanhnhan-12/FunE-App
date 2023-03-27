@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import CustomSwitch from '../components/CustomSwitch';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ListPhoto from '../components/ListPhotos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
@@ -227,11 +228,23 @@ const RoomScreen = ({ navigation }) => {
                                         </TouchableOpacity>
                                     </TouchableOpacity>
                                 </TouchableOpacity>
-                                <View style={{ marginVertical: 20 }}>
+                                <View style={{ marginVertical: 10 }}>
                                     <CustomSwitch
                                         selectionMode={1}
-                                        option1="Post"
-                                        option2="Information"
+                                        // option1="Post"
+                                        // option2="Information"
+                                        icon1={<MaterialCommunityIcons
+                                            name="text-box-plus-outline"
+                                            size={30}
+                                            color="black"
+                                            style={{ marginLeft: 15 }}
+                                        />}
+                                        icon2={<Ionicons
+                                            name="md-information-circle-outline"
+                                            size={30}
+                                            color="black"
+                                            style={{ marginLeft: 15 }}
+                                        />}
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
@@ -459,11 +472,23 @@ const RoomScreen = ({ navigation }) => {
                                         </TouchableOpacity>
                                     </TouchableOpacity>
                                 </TouchableOpacity>
-                                <View style={{ marginVertical: 20 }}>
+                                <View style={{ marginVertical: 10 }}>
                                     <CustomSwitch
                                         selectionMode={1}
-                                        option1="Post"
-                                        option2="Information"
+                                        // option1="Post"
+                                        // option2="Information"
+                                        icon1={<MaterialCommunityIcons
+                                            name="text-box-plus-outline"
+                                            size={30}
+                                            color="black"
+                                            style={{ marginLeft: 15 }}
+                                        />}
+                                        icon2={<Ionicons
+                                            name="md-information-circle-outline"
+                                            size={30}
+                                            color="black"
+                                            style={{ marginLeft: 15 }}
+                                        />}
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
