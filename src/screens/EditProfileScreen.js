@@ -29,7 +29,6 @@ const EditProfileScreen = () => {
     const { control, handleSubmit } = useForm();
     const id_user = userInfo.id;
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
-    console.log(userInfo.background.length)
 
     useEffect(() => {
         async function fetchData() {
@@ -50,8 +49,6 @@ const EditProfileScreen = () => {
         const data = { id_user, description, email, dobLabel, gender, note };
         const formData = new FormData();
         objToForm(data, formData);
-
-        formData.append(id_user, description, email, dobLabel, gender, note);
         if (medias && medias.length > 0) {
             const media = medias[0];
             const file = {
@@ -61,15 +58,15 @@ const EditProfileScreen = () => {
             }
             formData.append('media', file);
         }
-        // if (photo && photo.length > 0) {
-        //     const imageIndi = photo[0];
-        //     const file = {
-        //         name: imageIndi.fileName,
-        //         type: imageIndi.type,
-        //         uri: imageIndi.uri
-        //     }
-        //     formData.append('imageIndi', file);
-        // }
+        if (photo && photo.length > 0) {
+            const imageIndi = photo[0];
+            const file = {
+                name: imageIndi.fileName,
+                type: imageIndi.type,
+                uri: imageIndi.uri
+            }
+            formData.append('imageIndi', file);
+        }
 
         const result = await userApi.updateUser(formData);
         const userById = await userApi.getUserByID(id_user);
@@ -77,7 +74,6 @@ const EditProfileScreen = () => {
         console.log(userInfo);
         if (result.message) {
             Alert.alert("Update succeed!");
-            navigation.navigate('Home')
         }
         else {
             Alert.alert("Update faided!");
