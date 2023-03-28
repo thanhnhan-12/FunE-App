@@ -1,24 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  ImageBackground,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Image
+  Image, SafeAreaView,
+  ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomButton from '../components/CustomButton';
 
 import { AuthContext } from '../context/AuthContext';
 
-const ProductDetail = () => {
+const ProductDetail = ({navigation}) => {
   const { dataPost } = useContext(AuthContext);
+  const [quantity, setQuantity] = useState(1);
   const [comment, setComment] = useState(null);
   const [like, setLike] = useState(false);
   const [countLike, setCountLike] = useState(0);
@@ -31,12 +22,54 @@ const ProductDetail = () => {
       setCountLike(countLike + 1)
     }
   }
+  const handleDecreaseQuantity = () => {
+    if(quantity>1){
+      setQuantity(quantity - 1)
+    }
+  }
+  const handleIncreaseQuantity = () => {
+    setQuantity(quantity + 1)
+  }
   console.log(dataPost);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ padding: 15 }}>
+
+        <TouchableOpacity style={{
+          height:50,
+          marginTop:10,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+        >
+          <TouchableOpacity
+            onPress={()=> navigation.navigate('SearchScreen')}
+          >
+            <Image
+              style={{
+                height:30,
+                width:30,
+              }}
+              source={require("../assets/images/arrow_left.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={{
+            flexDirection: 'row',
+
+          }}>
+            <TouchableOpacity onPress={() => handleOnClickLike()}>
+              {like && like === true ?
+                <Ionicons name="heart" size={25} color="#D62965" />
+                :
+                <Ionicons name="heart-outline" size={25} color="#D62965" />
+              }
+            </TouchableOpacity>
+              <Ionicons onPress={()=>navigation.navigate('ShoppingCart')} name='cart' style={styles.iconCart}/>
+          </TouchableOpacity>
+        </TouchableOpacity>
+
         <TouchableOpacity>
           <TouchableOpacity style={{
             width: '100%',
@@ -63,30 +96,38 @@ const ProductDetail = () => {
               />
               <TouchableOpacity
                 style={{
-                  // backgroundColor: '#AD40AF',
-                  padding: 20,
+                  paddingLeft: 20,
+                  paddingRight:20,
                   width: '90%',
                   borderRadius: 10,
                   marginBottom: 5,
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}
-              >
+              >                
                 <View style={{
-                  flexDirection: 'row'
-                }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      fontSize: 16,
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      fontFamily: 'Roboto-MediumItalic',
-                    }}>
-                    {dataPost.title}
-                  </Text>
-                </View>
+                    flexDirection:'row',
+                    fontSize:20
 
+                  }}>
+                    <TouchableOpacity onPress={() => handleDecreaseQuantity()}>
+                      <Ionicons 
+                        style={{fontSize:22}} 
+                        name='remove-circle-outline'
+                      />
+                    </TouchableOpacity>
+                    <Text style={{
+                      fontSize:16, 
+                      paddingLeft:10,
+                      paddingRight:10
+                    }}>{quantity||1}</Text>
+                    <TouchableOpacity onPress={() => handleIncreaseQuantity()}>
+                      <Ionicons 
+                        style={{fontSize:22}} 
+                        name='add-circle'
+                      />
+                    </TouchableOpacity>
+                  </View>
                 <View style={{
                   flexDirection: 'row'
                 }}>
@@ -98,18 +139,7 @@ const ProductDetail = () => {
                     }
                   </TouchableOpacity>
                   <Text
-                    style={{
-                      backgroundColor: '#CF4071',
-                      color: 'white',
-                      textAlign: 'center',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      paddingLeft: 7,
-                      paddingRight: 7,
-                      paddingTop: 3,
-                      borderRadius: 20,
-                      marginLeft: 6
-                    }}>
+                    style={styles.countLike}>
                     {countLike}
                   </Text>
                 </View>
@@ -117,49 +147,90 @@ const ProductDetail = () => {
             </TouchableOpacity>
           </TouchableOpacity>
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-          <MaterialCommunityIcons name="comment-text-multiple" size={25} color="#33CC00" />
-          <TextInput
-            placeholder="Say something..."
-            style={{
-              flex: 1,
-              paddingVertical: 0,
-              backgroundColor: '#FFFFFF',
-              color: 'black',
-              paddingTop: 10,
-              paddingBottom: 10,
-              paddingLeft: 20,
-              paddingRight: 20,
-              marginLeft: 10,
-              marginRight: 10,
-              borderRadius: 30,
-            }}
-            onChangeText={text => setComment(text)}
-          />
 
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#D62965',
-              paddingTop: 8,
-              paddingBottom: 8,
-              paddingLeft: 10,
-              paddingRight: 10,
-              borderRadius: 10,
-            }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                fontWeight: '700',
-                fontSize: 16,
-                color: '#fff',
-              }}>
-              Send
-            </Text>
+        <View>
+          <Text style={styles.detail}>Details</Text>
+          <View>
+            <Text style={styles.item}>Name: Jane Austen</Text>
+          </View>
+          <View>
+            <Text style={styles.item}>Description: Jane Austen</Text>
+          </View>
+          <View>
+            <Text style={styles.item}>Price: 1000 USD</Text>
+          </View>
+        </View>
+
+        <View>
+          <Text style={styles.detail}>You may also like</Text>
+          <View style={{
+            marginTop:20,
+            flexDirection:'row',
+            justifyContent: 'space-around',
+            marginBottom: 38
+          }}>
+
+          <TouchableOpacity>
+            <Text style={styles.buyNow}>BUY NOW</Text>
           </TouchableOpacity>
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <Text onPress={()=>navigation.navigate('ShoppingCart')} style={styles.addCart}>ADD TO CART</Text>
+          </TouchableOpacity>
+            </View>
+        </View>
       </ScrollView>
     </SafeAreaView >
   )
 }
+const styles = StyleSheet.create({
+  iconCart:{
+    marginLeft:10,
+    fontSize:28,
+    color:'black'
+  },
+  countLike:{
+    backgroundColor: '#CF4071',
+    color: 'white',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 3,
+    borderRadius: 20,
+    marginLeft: 10
+  },
+  detail: {
+    fontWeight :700,
+    fontSize: 18,
+    color: 'black',
+    marginTop: 8
+  },
+  item: {
+    color: 'black',
+    backgroundColor: '#fff',
+    marginTop: 10,
+    padding: 8,
+    borderRadius: 10,
+  },
+  buyNow:{
+    color:'#fff',
+    backgroundColor:'#169227',
+    paddingBottom:10,
+    paddingTop:10,
+    paddingLeft:38,
+    paddingRight:38, 
+    borderRadius:10
+  },
+  addCart:{
+    color:'#fff',
+    backgroundColor:'#F63D69',
+    paddingBottom:10,
+    paddingTop:10,
+    paddingLeft:38,
+    paddingRight:38, 
+    borderRadius:10,
+  }
+})
 
 export default ProductDetail;
