@@ -20,6 +20,7 @@ import { freeGames, paidGames, sliderData } from '../model/data';
 import { AuthContext } from '../context/AuthContext';
 import ModalPost from './modal/ModalPost';
 import { IP_CONFIG } from '@env';
+import Header from '../components/Header';
 
 const HomeScreen = ({ navigation }) => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
@@ -39,6 +40,13 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <>
+            <Header
+                trueCart
+                trueHear
+                trueCoin
+                trueBell
+                navigation={navigation}
+            />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
                 {
                     opacityModal && opacityModal === true ?

@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { userApi } from '../clients/user_api';
 import { objToForm } from '../functions';
 import { IP_CONFIG } from '@env';
+import Header from '../components/Header';
 
 
 const EditProfileScreen = () => {
@@ -150,6 +151,10 @@ const EditProfileScreen = () => {
             flex: 1,
             backgroundColor: '#fff',
         }}>
+            <Header
+                title={"Edit Profile"}
+                trueReturn
+            />
             <ScrollView >
                 <SafeAreaView
                     style={{
@@ -274,8 +279,6 @@ const EditProfileScreen = () => {
                                     userInfo && userInfo.background && userInfo.background.length > 0 &&
                                     <Image source={backgroundIndividual} style={{ width: "100%", height: 250 }} />
                             }
-
-
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{

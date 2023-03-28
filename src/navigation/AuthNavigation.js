@@ -10,6 +10,8 @@ import MenuNavigation from "./MenuNavigation";
 import SocialPostScreen from "../screens/SocialPostScreen";
 import { AuthProvider } from "../context/AuthContext";
 import CreateProduct from "../screens/CreateProduct";
+import ShoppingCart from "../screens/ShoppingCart";
+import PaymentProduct from "../screens/PaymentProduct";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createNativeStackNavigator();
@@ -46,20 +48,21 @@ const AuthNavigation = () => {
                                 <Stack.Screen
                                     name="CreateProduct"
                                     component={CreateProduct}
-                                    options={{
-                                        headerShown: true, title: 'Upload Product',
-                                        headerRight: () => (
-                                            <TouchableOpacity
-                                                onPress={() => { Alert.alert("This is cart item") }}
-                                                style={{ marginRight: 20 }}>
-                                                <Ionicons name="ios-cart-outline" size={30} />
-                                            </TouchableOpacity>
-
-                                        )
-                                    }}
+                                    options={{ headerShown: false }}
 
                                 />
+                                <Stack.Screen
+                                    name="ShoppingCart"
+                                    component={ShoppingCart}
+                                    options={{ headerShown: false }}
 
+                                />
+                                <Stack.Screen
+                                    name="PaymentProduct"
+                                    component={PaymentProduct}
+                                    options={{ headerShown: false }}
+
+                                />
 
                             </>
 

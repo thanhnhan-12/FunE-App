@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image } from 'react-native'
+import { View, ImageBackground } from 'react-native'
 import Video from 'react-native-video';
 const Preview = ({ style, file, onDeleteImage }) => {
   const { type, uri } = file
@@ -10,7 +10,7 @@ const Preview = ({ style, file, onDeleteImage }) => {
     <View style={style}>
       {
         type.startsWith('image') ?
-          uri && <Image source={{ uri }} style={{ width: "100%", height: 250 }} />
+          uri && <ImageBackground source={{ uri }} style={{ width: "100%", height: 250 }} />
           : uri && <Video source={{ uri }} style={{ width: '100%', height: 250 }} controls={true} />
       }
     </View>

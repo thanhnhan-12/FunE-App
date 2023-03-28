@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 import { freeGames, paidGames, sliderData } from '../model/data';
 import ModalPost from './modal/ModalPost';
+import Header from '../components/Header';
 
 import { AuthContext } from '../context/AuthContext';
 
@@ -45,6 +46,14 @@ const RoomScreen = ({ navigation }) => {
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+                <Header
+                    trueBell
+                    trueCart
+                    trueCoin
+                    trueHear
+                    trueReturn
+                    navigation={navigation}
+                />
                 {
                     opacityModal && opacityModal === true ?
                         <ScrollView

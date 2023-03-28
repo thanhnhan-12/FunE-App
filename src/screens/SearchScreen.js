@@ -16,15 +16,24 @@ import BannerSlider from '../components/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 
 import { freeGames, paidGames, sliderData } from '../model/data';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
+import Header from '../components/Header';
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation }) => {
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+            <Header
+                trueBell
+                trueCart
+                trueCoin
+                title={"Search"}
+                trueReturn
+                navigation={navigation}
+            />
             <ScrollView style={{ padding: 20 }}>
                 <View
                     style={{
