@@ -28,7 +28,7 @@ const Select_Form = ({ control, name, options, defaultValue, label, required }) 
         defaultValue={defaultValue}
         rules={rules}
         render={({ field: { onChange, onBlur, value }, fieldState: { invalid, isTouched, isDirty, error } }) => (
-          <View style={{ ...styles.inputContainer, borderColor: invalid ? '#ef4146' : 'white' }}>
+          <View style={{ ...styles.inputContainer, borderColor: invalid ? '#ef4146' : '#ccc', borderRadius: 10 }}>
             <RNPickerSelect
               onValueChange={(value) => {
                 onChange(value);

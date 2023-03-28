@@ -7,6 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { IP_CONFIG } from '@env';
+import Header from '../components/Header';
 
 const ProfileScreen = ({ navigation }) => {
     const { userInfo, isLoading, logout } = useContext(AuthContext);
@@ -16,6 +17,14 @@ const ProfileScreen = ({ navigation }) => {
             flex: 1,
             backgroundColor: '#fff',
         }}>
+            <Header
+                trueBell
+                trueCart
+                trueCoin
+                title={"Profile"}
+                trueReturn
+                navigation={navigation}
+            />
             <ScrollView >
 
                 <SafeAreaView

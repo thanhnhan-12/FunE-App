@@ -12,7 +12,10 @@ const Input_Form = ({ control, name, label, required, keyboardType }) => {
       backgroundColor: 'white',
       height: 40,
       padding: 10,
-      borderRadius: 4,
+      borderRadius: 10,
+
+      borderColor: '#ccc',
+      borderWidth: 1,
     },
     label: {
       margin: 10,
@@ -24,7 +27,8 @@ const Input_Form = ({ control, name, label, required, keyboardType }) => {
     rules.required = "This field is required!"
   }
   return (
-    <View>
+    <View style={{
+    }}>
       <Text style={styles.label}>{label}</Text>
       <Controller
         control={control}

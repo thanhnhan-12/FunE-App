@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const handleOnClick = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
@@ -126,7 +125,9 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
 
                                     }}
                                     onPress={() => {
-                                        navigation.navigate('CreateProduct')
+                                        setOpacityModal(!opacityModal);
+                                        setModalVisible(!modalVisible);
+                                        navigation.navigate('CreateProduct');
                                     }}
                                 >
                                     Add Product

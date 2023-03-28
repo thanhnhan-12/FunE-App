@@ -14,21 +14,11 @@ const SearchNavigation = () => {
         <Stack.Screen
           name={'SearchScreen'}
           component={SearchScreen}
-          options={{
-            title: 'Search',
-            // headerTitleStyle: {
-            //   ...Fonts.titleRegular,
-            // },
-          }} />
+          options={{ headerShown: false }} />
         <Stack.Screen
           name={'ProductDetail'}
           component={ProductDetail}
-          options={{
-            title: 'Product',
-            // headerTitleStyle: {
-            //   ...Fonts.titleRegular,
-            // },
-          }} />
+          options={{ headerShown: false }} />
       </Stack.Group>
     </Stack.Navigator>
   )
