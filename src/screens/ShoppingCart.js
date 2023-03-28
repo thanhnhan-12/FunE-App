@@ -18,6 +18,7 @@ const ShoppingCart = ({ navigation }) => {
                 title={"Shopping Cart"}
                 trueCoin
                 trueReturn
+                navigation={navigation}
             />
             <ScrollView
                 showsVerticalScrollIndicator={false}

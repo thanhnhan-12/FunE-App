@@ -15,7 +15,7 @@ import { IP_CONFIG } from '@env';
 import Header from '../components/Header';
 
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({ navigation }) => {
     const [medias, setMedias] = useState([]);
     const [photo, setPhoto] = useState([]);
     const { userInfo, setUserInfo } = useContext(AuthContext);
@@ -154,6 +154,7 @@ const EditProfileScreen = () => {
             <Header
                 title={"Edit Profile"}
                 trueReturn
+                navigation={navigation}
             />
             <ScrollView >
                 <SafeAreaView
@@ -230,7 +231,7 @@ const EditProfileScreen = () => {
                         }}>
                             <TouchableOpacity
                                 style={{
-                                    backgroundColor: '#808080',
+                                    backgroundColor: '#71B36F',
                                     padding: 20,
                                     borderRadius: 10,
                                     marginBottom: 20,
@@ -249,7 +250,7 @@ const EditProfileScreen = () => {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{
-                                    backgroundColor: '#808080',
+                                    backgroundColor: '#7DAEB8',
                                     padding: 20,
                                     borderRadius: 10,
                                     marginBottom: 20,

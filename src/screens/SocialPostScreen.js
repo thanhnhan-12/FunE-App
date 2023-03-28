@@ -10,14 +10,12 @@ import {
     StyleSheet,
     Image
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomButton from '../components/CustomButton';
-
+import Header from '../components/Header';
 import { AuthContext } from '../context/AuthContext';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     const { dataPost } = useContext(AuthContext);
     const [comment, setComment] = useState(null);
     const [like, setLike] = useState(false);
@@ -34,6 +32,11 @@ const HomeScreen = () => {
     console.log(dataPost);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
+            <Header
+                title={"Post"}
+                trueReturn
+                navigation={navigation}
+            />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={{ padding: 15 }}>

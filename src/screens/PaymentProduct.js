@@ -20,6 +20,7 @@ const PaymentProduct = ({ navigation }) => {
                 title={"Checkout"}
                 trueCoin
                 trueReturn
+                navigation={navigation}
             />
             <ScrollView
                 showsVerticalScrollIndicator={false}

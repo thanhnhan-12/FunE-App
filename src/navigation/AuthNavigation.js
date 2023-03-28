@@ -7,6 +7,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import { AuthContext } from "../context/AuthContext";
 import MenuNavigation from "./MenuNavigation";
+import CartNavigation from "./CartNavigation";
 import SocialPostScreen from "../screens/SocialPostScreen";
 import { AuthProvider } from "../context/AuthContext";
 import CreateProduct from "../screens/CreateProduct";
@@ -49,21 +50,14 @@ const AuthNavigation = () => {
                                     name="CreateProduct"
                                     component={CreateProduct}
                                     options={{ headerShown: false }}
-
                                 />
+
                                 <Stack.Screen
-                                    name="ShoppingCart"
-                                    component={ShoppingCart}
+                                    name="CartNavigation"
+                                    component={CartNavigation}
                                     options={{ headerShown: false }}
 
                                 />
-                                <Stack.Screen
-                                    name="PaymentProduct"
-                                    component={PaymentProduct}
-                                    options={{ headerShown: false }}
-
-                                />
-
                             </>
 
                         )

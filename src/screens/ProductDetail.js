@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { AuthContext } from '../context/AuthContext';
 
-const ProductDetail = ({navigation}) => {
+const ProductDetail = ({ navigation }) => {
   const { dataPost } = useContext(AuthContext);
   const [quantity, setQuantity] = useState(1);
   const [comment, setComment] = useState(null);
@@ -23,7 +23,7 @@ const ProductDetail = ({navigation}) => {
     }
   }
   const handleDecreaseQuantity = () => {
-    if(quantity>1){
+    if (quantity > 1) {
       setQuantity(quantity - 1)
     }
   }
@@ -38,22 +38,22 @@ const ProductDetail = ({navigation}) => {
         style={{ padding: 15 }}>
 
         <TouchableOpacity style={{
-          height:50,
-          marginTop:10,
+          height: 50,
+          marginTop: 10,
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}
         >
           <TouchableOpacity
-            onPress={()=> navigation.navigate('SearchScreen')}
+            onPress={() => navigation.navigate('SearchScreen')}
           >
-            <Image
+            {/* <Image
               style={{
                 height:30,
                 width:30,
               }}
               source={require("../assets/images/arrow_left.png")}
-            />
+            /> */}
           </TouchableOpacity>
           <TouchableOpacity style={{
             flexDirection: 'row',
@@ -66,7 +66,7 @@ const ProductDetail = ({navigation}) => {
                 <Ionicons name="heart-outline" size={25} color="#D62965" />
               }
             </TouchableOpacity>
-              <Ionicons onPress={()=>navigation.navigate('ShoppingCart')} name='cart' style={styles.iconCart}/>
+            <Ionicons onPress={() => navigation.navigate('ShoppingCart')} name='cart' style={styles.iconCart} />
           </TouchableOpacity>
         </TouchableOpacity>
 
@@ -97,37 +97,37 @@ const ProductDetail = ({navigation}) => {
               <TouchableOpacity
                 style={{
                   paddingLeft: 20,
-                  paddingRight:20,
+                  paddingRight: 20,
                   width: '90%',
                   borderRadius: 10,
                   marginBottom: 5,
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}
-              >                
+              >
                 <View style={{
-                    flexDirection:'row',
-                    fontSize:20
+                  flexDirection: 'row',
+                  fontSize: 20
 
-                  }}>
-                    <TouchableOpacity onPress={() => handleDecreaseQuantity()}>
-                      <Ionicons 
-                        style={{fontSize:22}} 
-                        name='remove-circle-outline'
-                      />
-                    </TouchableOpacity>
-                    <Text style={{
-                      fontSize:16, 
-                      paddingLeft:10,
-                      paddingRight:10
-                    }}>{quantity||1}</Text>
-                    <TouchableOpacity onPress={() => handleIncreaseQuantity()}>
-                      <Ionicons 
-                        style={{fontSize:22}} 
-                        name='add-circle'
-                      />
-                    </TouchableOpacity>
-                  </View>
+                }}>
+                  <TouchableOpacity onPress={() => handleDecreaseQuantity()}>
+                    <Ionicons
+                      style={{ fontSize: 22 }}
+                      name='remove-circle-outline'
+                    />
+                  </TouchableOpacity>
+                  <Text style={{
+                    fontSize: 16,
+                    paddingLeft: 10,
+                    paddingRight: 10
+                  }}>{quantity || 1}</Text>
+                  <TouchableOpacity onPress={() => handleIncreaseQuantity()}>
+                    <Ionicons
+                      style={{ fontSize: 22 }}
+                      name='add-circle'
+                    />
+                  </TouchableOpacity>
+                </View>
                 <View style={{
                   flexDirection: 'row'
                 }}>
@@ -164,31 +164,31 @@ const ProductDetail = ({navigation}) => {
         <View>
           <Text style={styles.detail}>You may also like</Text>
           <View style={{
-            marginTop:20,
-            flexDirection:'row',
+            marginTop: 20,
+            flexDirection: 'row',
             justifyContent: 'space-around',
             marginBottom: 38
           }}>
 
-          <TouchableOpacity>
-            <Text style={styles.buyNow}>BUY NOW</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text onPress={()=>navigation.navigate('ShoppingCart')} style={styles.addCart}>ADD TO CART</Text>
-          </TouchableOpacity>
-            </View>
+            <TouchableOpacity>
+              <Text style={styles.buyNow}>BUY NOW</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text onPress={() => navigation.navigate('ShoppingCart')} style={styles.addCart}>ADD TO CART</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView >
   )
 }
 const styles = StyleSheet.create({
-  iconCart:{
-    marginLeft:10,
-    fontSize:28,
-    color:'black'
+  iconCart: {
+    marginLeft: 10,
+    fontSize: 28,
+    color: 'black'
   },
-  countLike:{
+  countLike: {
     backgroundColor: '#CF4071',
     color: 'white',
     textAlign: 'center',
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   detail: {
-    fontWeight :700,
+    fontWeight: 700,
     fontSize: 18,
     color: 'black',
     marginTop: 8
@@ -213,23 +213,23 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
   },
-  buyNow:{
-    color:'#fff',
-    backgroundColor:'#169227',
-    paddingBottom:10,
-    paddingTop:10,
-    paddingLeft:38,
-    paddingRight:38, 
-    borderRadius:10
+  buyNow: {
+    color: '#fff',
+    backgroundColor: '#169227',
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 38,
+    paddingRight: 38,
+    borderRadius: 10
   },
-  addCart:{
-    color:'#fff',
-    backgroundColor:'#F63D69',
-    paddingBottom:10,
-    paddingTop:10,
-    paddingLeft:38,
-    paddingRight:38, 
-    borderRadius:10,
+  addCart: {
+    color: '#fff',
+    backgroundColor: '#F63D69',
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 38,
+    paddingRight: 38,
+    borderRadius: 10,
   }
 })
 

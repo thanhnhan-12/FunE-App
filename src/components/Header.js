@@ -35,12 +35,14 @@ export default function Header({
                 marginRight: 20
             }}>
                 {trueReturn &&
-                    <MaterialCommunityIcons
-                        name="chevron-left"
-                        size={30}
-                        color="red"
-                        style={{ marginLeft: 15 }}
-                    />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialCommunityIcons
+                            name="chevron-left"
+                            size={30}
+                            color="red"
+                            style={{ marginLeft: 15 }}
+                        />
+                    </TouchableOpacity>
                 }
                 {title &&
                     <Text style={{
@@ -71,7 +73,9 @@ export default function Header({
                     </TouchableOpacity>
                 }
                 {trueCoin &&
-                    <TouchableOpacity>
+                    <TouchableOpacity style={{
+                        tabBarBadge: 3
+                    }}>
                         <MaterialCommunityIcons
                             name="bitcoin"
                             size={28}
@@ -81,23 +85,53 @@ export default function Header({
                     </TouchableOpacity>
                 }
                 {trueCart &&
-                    <TouchableOpacity onPress={() => navigation.navigate('ShoppingCart')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('CartNavigation')}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'flex-end',
+                        }}
+                    >
                         <Ionicons
                             name="cart-outline"
                             size={28}
                             color="black"
                             style={{ marginLeft: 15 }}
                         />
+                        <View style={{
+                            backgroundColor: '#D62965',
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            borderRadius: 50,
+                            marginLeft: -12,
+                            marginTop: -15
+                        }}>
+                            <Text style={{ color: 'white' }}>2</Text>
+                        </View>
                     </TouchableOpacity>
                 }
                 {trueBell &&
-                    <TouchableOpacity>
+                    <TouchableOpacity style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                    }}>
                         <MaterialCommunityIcons
                             name="bell-outline"
                             size={28}
                             color="black"
                             style={{ marginLeft: 15 }}
                         />
+                        <View style={{
+                            backgroundColor: '#D62965',
+                            paddingLeft: 5,
+                            paddingRight: 5,
+                            borderRadius: 50,
+                            marginLeft: -12,
+                            marginTop: -15
+                        }}>
+                            <Text style={{ color: 'white' }}>3</Text>
+                        </View>
                     </TouchableOpacity>
                 }
             </View>
