@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from "../screens/LoginScreen";
@@ -9,11 +8,8 @@ import { AuthContext } from "../context/AuthContext";
 import MenuNavigation from "./MenuNavigation";
 import CartNavigation from "./CartNavigation";
 import SocialPostScreen from "../screens/SocialPostScreen";
-import { AuthProvider } from "../context/AuthContext";
 import CreateProduct from "../screens/CreateProduct";
-import ShoppingCart from "../screens/ShoppingCart";
-import PaymentProduct from "../screens/PaymentProduct";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import SellingGlobal from "../screens/SellingGlobal";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +50,13 @@ const AuthNavigation = () => {
                                 <Stack.Screen
                                     name="CartNavigation"
                                     component={CartNavigation}
+                                    options={{ headerShown: false }}
+
+                                />
+
+                                <Stack.Screen
+                                    name="SellingGlobal"
+                                    component={SellingGlobal}
                                     options={{ headerShown: false }}
 
                                 />

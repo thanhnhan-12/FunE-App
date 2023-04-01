@@ -7,7 +7,8 @@ import {
     TextInput,
     TouchableOpacity,
     FlatList,
-    Image
+    Image,
+    ImageBackground
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Feather from 'react-native-vector-icons/Feather';
@@ -23,6 +24,8 @@ const SearchScreen = ({ navigation }) => {
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
+
+    const backgroundIndividual = { uri: `https://luattreem.vn/wp-content/uploads/2022/04/background-black-background-den-cong-nghe-800x450-1.jpg` };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -257,8 +260,57 @@ const SearchScreen = ({ navigation }) => {
 
                     </FlatList>
                 </View>
+                <View style={{
+                    flex: 1,
+                    width: '100%',
+                    height: 130,
+                    opacity: 1,
+                    marginBottom: 30
+                }}>
+                    <ImageBackground source={backgroundIndividual} resizeMode="cover"
+                        style={
+                            {
+                                flex: 1,
+                                justifyContent: 'center',
+                                borderRadius: 10,
+                            }
+                        } imageStyle={{ borderRadius: 10 }}>
+                        <View style={{ height: '100%', marginLeft: 15, justifyContent: 'space-evenly' }}>
+
+                            <View style={{
+                                width: '90%',
+                            }}>
+                                <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
+                                    Welcome to Fun E Global Selling
+                                </Text>
+                                <Text style={{
+                                    marginBottom: 10, marginLeft: 10, fontSize: 12, fontFamily: 'Roboto-Medium', color: 'white'
+                                }}>
+                                    Get access to 100 mln buyer worldwide.Start with creating an Fun E seller account.
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('SellingGlobal')}
+                                    style={{
+                                        backgroundColor: '#36B81A',
+                                        padding: 5,
+                                        width: 100,
+                                        marginLeft: 10
+                                    }}>
+                                    <Text
+                                        style={{
+                                            textAlign: 'center',
+                                            fontSize: 12,
+                                            color: '#fff',
+                                        }}>
+                                        Start Selling
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ImageBackground>
+                </View>
             </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
