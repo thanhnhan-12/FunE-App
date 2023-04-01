@@ -5,13 +5,9 @@ import { AuthContext } from '../context/AuthContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from 'react-native-date-picker';
-import Preview from '../components/MediaPicker/Preview';
-import * as ImagePicker from 'react-native-image-picker';
-import Photo from '../components/MediaPicker/Photo';
 import { useForm } from "react-hook-form";
 import { userApi } from '../clients/user_api';
 import { sellerApi } from '../clients/seller_api';
-import { objToForm } from '../functions';
 import Header from '../components/Header';
 
 
