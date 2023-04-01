@@ -436,6 +436,7 @@ const EditProfileScreen = ({ navigation }) => {
                             }}>
                                 <RNPickerSelect
                                     onValueChange={(g) => setGender(g)}
+                                    value={gender}
 
                                     items={[
                                         { label: "Male", value: "Male" },

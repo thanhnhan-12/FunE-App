@@ -3,6 +3,7 @@ import React from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import RoomScreen from '../screens/RoomScreen';
+import JoinRoom from '../screens/JoinRoom';
 import SearchScreen from '../screens/SearchScreen';
 import QRScanScreen from '../screens/QRScanScreen';
 
@@ -48,7 +49,7 @@ const MenuNavigation = () => {
             />
             <Tab.Screen
                 name="Room"
-                component={RoomScreen}
+                component={JoinRoom}
                 options={{
                     tabBarLabel: 'Room',
                     tabBarIcon: ({ color }) => (
