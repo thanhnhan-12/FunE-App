@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
 import MediaPicker from '../MediaPicker/MediaPicker';
-const Media_Form = ({ control, name, label, required }) => {
+const Media_Form = ({ control, name, label, required, defaultValue }) => {
 
   const rules = {};
   if (required) {
@@ -11,10 +11,12 @@ const Media_Form = ({ control, name, label, required }) => {
   }
 
   return (
-    <View style={{ borderWidth: 1, padding: 3, borderColor: '#3333' }}>
+    <View style={{ width: '100%' }}>
       <Controller
         control={control}
-        render={({ field: { onChange, onBlur, value }, fieldState: { invalid, isTouched, isDirty, error } }) => {
+        name={name}
+        defaultValue={defaultValue}
+        render={({ field: { onChange, value }, fieldState: { invalid, isTouched, isDirty, error } }) => {
           return <View>
             <MediaPicker
               medias={value}
@@ -23,7 +25,7 @@ const Media_Form = ({ control, name, label, required }) => {
             <Text style={{ color: '#ef4146' }}>{error ? error.message : null}</Text>
           </View>
         }}
-        name={name}
+
         rules={rules}
       />
     </View>
