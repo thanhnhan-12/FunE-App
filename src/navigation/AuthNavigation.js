@@ -51,7 +51,6 @@ const AuthNavigation = () => {
                                     component={CreateProduct}
                                     options={{ headerShown: false }}
                                 />
-
                                 <Stack.Screen
                                     name="CartNavigation"
                                     component={CartNavigation}
