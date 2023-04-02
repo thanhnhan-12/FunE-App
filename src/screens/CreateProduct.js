@@ -206,7 +206,7 @@ const CreateProduct = ({ navigation }) => {
               medias && medias.length > 0 &&
               medias.map((file) => {
                 // console.log("Media", file)
-                return <Preview style={{ width: '90%', borderRadius: 10 }} key={file.fileName} file={file} />
+                return <Preview style={{ width: '90%', height: 250, borderRadius: 10 }} key={file.fileName} file={file} />
               })
             }
           </View>

@@ -17,6 +17,8 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativecommunity.picker.RNCPickerPackage;
 // react-native-date-picker
 import com.henninghall.date_picker.DatePickerPackage;
+// react-native-document-picker
+import com.reactnativedocumentpicker.DocumentPickerPackage;
 // react-native-image-picker
 import com.imagepicker.ImagePickerPackage;
 // react-native-safe-area-context
@@ -77,6 +79,7 @@ public class PackageList {
       new AsyncStoragePackage(),
       new RNCPickerPackage(),
       new DatePickerPackage(),
+      new DocumentPickerPackage(),
       new ImagePickerPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
