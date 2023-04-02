@@ -30,7 +30,7 @@ const EditProfileScreen = ({ navigation }) => {
     const { control, handleSubmit } = useForm();
     const id_user = userInfo.id;
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
-    const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
+    const imageIndividual = userInfo.image ? { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` } : require('../assets/images/image-user.jpg');
 
     useEffect(() => {
         async function fetchData() {
@@ -274,7 +274,7 @@ const EditProfileScreen = ({ navigation }) => {
                                 // console.log("Media", medias)
                                 medias && medias.length > 0 ?
                                     medias.map((file) => {
-                                        return <Preview style={{ width: '90%', borderRadius: 10 }} key={file.fileName} file={file} />
+                                        return <Preview style={{ width: '90%', height: 250, borderRadius: 10 }} key={file.fileName} file={file} />
                                     })
                                     :
                                     userInfo && userInfo.background && userInfo.background.length > 0 &&

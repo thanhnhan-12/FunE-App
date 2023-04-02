@@ -68,7 +68,6 @@ const JoinRoom = ({ navigation }) => {
             const dataRoomNotJoin = await roomApi.getRoomNotJoin(data);
             setDataRoomCreate(dataRoomJoined.data);
             setDataRoomNotJoin(dataRoomNotJoin.data);
-            console.log("Vaoooooooo");
         }
         fetchData();
     }, [modalVisible])

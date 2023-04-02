@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CreatePostModal from '../CreatePost/CreatePostModal';
+
 
 const handleOnClick = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
     setModalVisible(!modalVisible);
@@ -33,6 +35,10 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                            setOpacityModal(!opacityModal);
+                        }}
                         style={{
                             alignItems: 'center',
                             textAlign: 'center',
@@ -42,18 +48,23 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                             justifyContent: 'space-evenly',
                         }}
                     >
-                        <Text
-                            style={{
-                                color: 'black',
-                                fontSize: 16,
-                                textAlign: 'center',
-                                fontFamily: 'Roboto-MediumItalic',
-                                width: "80%"
-                            }}>
-                            Add Pic/Video
-                        </Text>
+                        <CreatePostModal>
+                            <>
+                                <Text
+                                    style={{
+                                        color: 'black',
+                                        fontSize: 16,
+                                        textAlign: 'center',
+                                        fontFamily: 'Roboto-MediumItalic',
+                                        width: "80%"
+                                    }}>
+                                    Add Pic/Video
+                                </Text>
+                                <MaterialIcons name="arrow-forward-ios" size={22} color="red" />
+                            </>
+                        </CreatePostModal>
 
-                        <MaterialIcons name="arrow-forward-ios" size={22} color="red" />
+
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{
