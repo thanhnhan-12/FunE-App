@@ -37,28 +37,6 @@ const CreatePostModal = ({ children }) => {
       }
     });
   }
-  const onPressCamera = async () => {
-
-    const options = {
-      title: 'Select Media',
-      mediaType: 'mixed',
-      quality: 1
-    }
-    // var options = {
-    //   mediaType: 'photo' as ImagePicker.MediaType,
-    // }
-    ImagePicker.launchCamera(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker')
-      } else if (response.errorMessage) {
-        console.log('ImagePicker Error: ', response.errorMessage)
-      } else {
-        // setMediaSource(response.assets)
-        setMedias(response.assets)
-        // Do something with the captured file
-      }
-    })
-  }
   const onSubmit = async (data) => {
     const { medias, ...restData } = data;
     const payload = { ...restData, id_user }
@@ -92,14 +70,22 @@ const CreatePostModal = ({ children }) => {
       marginBottom: 100
     }
   })
-  return <SafeAreaView >
-    <Button
+  return <SafeAreaView style={{ width: '100%' }}>
+    <TouchableOpacity style={{
+      alignItems: 'center',
+      textAlign: 'center',
+      padding: 10,
+      width: '60%',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      width: "100%"
+    }}
       onPress={() => {
         setIsVisibleModal((prev) => !prev)
       }}
     >
       {children}
-    </Button>
+    </TouchableOpacity>
     <Modal
       setVisible={setIsVisibleModal}
       isVisible={isVisibleModal}>
@@ -130,7 +116,6 @@ const CreatePostModal = ({ children }) => {
                   defaultValue={[]}
                   required
                   control={control}
-                  required
                   label='Media'
                   name='medias' />
               </View>

@@ -4,7 +4,11 @@
             "outputFile": "com.fune.app-mergeDebugResources-29:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\be9a285d7d94d789380b4b7ef5365ae2\\transformed\\appcompat-1.4.1\\res\\values-large-v4\\values-large-v4.xml",
+=======
+                    "source": "C:\\Users\\DELL\\.gradle\\caches\\transforms-3\\be9a285d7d94d789380b4b7ef5365ae2\\transformed\\appcompat-1.4.1\\res\\values-large-v4\\values-large-v4.xml",
+>>>>>>> 1233d488f4299f31d4faadef6e66f6f89ccc0365
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
@@ -14,7 +18,11 @@
                     }
                 },
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-3\\4af7f0d23266db3f5bdb15fc939a61bd\\transformed\\material-1.1.0\\res\\values-large-v4\\values-large-v4.xml",
+=======
+                    "source": "C:\\Users\\DELL\\.gradle\\caches\\transforms-3\\4af7f0d23266db3f5bdb15fc939a61bd\\transformed\\material-1.1.0\\res\\values-large-v4\\values-large-v4.xml",
+>>>>>>> 1233d488f4299f31d4faadef6e66f6f89ccc0365
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
