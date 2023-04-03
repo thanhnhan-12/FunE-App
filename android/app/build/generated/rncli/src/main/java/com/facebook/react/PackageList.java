@@ -25,6 +25,8 @@ import com.imagepicker.ImagePickerPackage;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
 import com.swmansion.rnscreens.RNScreensPackage;
+// react-native-sound
+import com.zmxv.RNSound.RNSoundPackage;
 // react-native-svg
 import com.horcrux.svg.SvgPackage;
 // react-native-vector-icons
@@ -83,6 +85,7 @@ public class PackageList {
       new ImagePickerPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
+      new RNSoundPackage(),
       new SvgPackage(),
       new VectorIconsPackage(),
       new ReactVideoPackage()
