@@ -10,11 +10,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import SearchNavigation from './SearchNavigation';
-<<<<<<< HEAD
 import HomeNavigation from './HomeNavigation';
-=======
 import RoomNavigation from './RoomNavigation';
->>>>>>> 96983b384b12bd296c568645afebfe2a5681dbfb
 
 
 const Tab = createMaterialBottomTabNavigator();
