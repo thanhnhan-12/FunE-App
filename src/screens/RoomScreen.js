@@ -183,23 +183,27 @@ const RoomScreen = ({ navigation }) => {
                                             </Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-3.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
-                                                Lệ
-                                            </Text>
+                                    {members && members.length > 0 && members.map((item, index) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={{
+                                                marginRight: 5
+                                            }}>
+                                            <ImageBackground
+                                                source={{ uri: `http://${IP_CONFIG}:3000/individuals/${members[index].User.image}` }}
+                                                style={{ width: 50, height: 50 }}
+                                                imageStyle={{ borderRadius: 50 }}
+                                            />
+                                            <TouchableOpacity style={{
+                                                // backgroundColor: '#AD40AF',
+                                                width: '90%',
+                                            }}>
+                                                <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
+                                                    {members[index].User.firstName}
+                                                </Text>
+                                            </TouchableOpacity>
                                         </TouchableOpacity>
-                                    </TouchableOpacity>
+                                    ))}
                                 </TouchableOpacity>
                                 <View style={{ marginVertical: 10 }}>
                                     <CustomSwitch
