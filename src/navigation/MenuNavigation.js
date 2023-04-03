@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import SearchNavigation from './SearchNavigation';
+import HomeNavigation from './HomeNavigation';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -26,7 +27,7 @@ const MenuNavigation = () => {
         >
             <Tab.Screen
                 name="Home"
-                component={HomeScreen}
+                component={HomeNavigation}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color }) => (

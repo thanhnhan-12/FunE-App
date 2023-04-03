@@ -9,8 +9,8 @@ export const postApi = {
       }
     });
   },
-  getPosts: () => {
-    return instance.get(`/post/gets`)
+  getPosts: (payload) => {
+    return instance.get(`/post/gets`, { params: payload })
   },
   getPostByID: (params) => {
     return instance.get(`/post/get`, {

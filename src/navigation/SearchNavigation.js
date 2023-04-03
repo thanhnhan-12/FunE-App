@@ -7,7 +7,7 @@ import SearchScreen from '../screens/SearchScreen'
 import ProductDetail from '../screens/ProductDetail'
 const SearchNavigation = () => {
   const Stack = createNativeStackNavigator()
-  const navigation = useNavigation()
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Group>

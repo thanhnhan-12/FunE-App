@@ -21,8 +21,9 @@ import { AuthContext } from '../context/AuthContext';
 import ModalPost from './modal/ModalPost';
 import { IP_CONFIG } from '@env';
 import Header from '../components/Header';
-
-const HomeScreen = ({ navigation }) => {
+import { useNavigation } from '@react-navigation/native';
+const HomeScreen = () => {
+    const navigation = useNavigation();
     const { userInfo, isLoading, logout } = useContext(AuthContext);
     const [chooseTab, setChooseTab] = useState(1);
     const onSelectSwitch = value => {
@@ -179,6 +180,9 @@ const HomeScreen = ({ navigation }) => {
                                         }}>
                                             {freeGames.map(item => (
                                                 <ListPhoto
+                                                    onPress={() => {
+                                                        navigation.navigate('ScrollView')
+                                                    }}
                                                     key={item.id}
                                                     photo={item.poster}
                                                     title={item.title}
@@ -319,6 +323,9 @@ const HomeScreen = ({ navigation }) => {
                                         }}>
                                             {freeGames.map(item => (
                                                 <ListPhoto
+                                                    onPress={() => {
+                                                        navigation.navigate('ScrollView')
+                                                    }}
                                                     key={item.id}
                                                     photo={item.poster}
                                                     title={item.title}

@@ -5,7 +5,9 @@ import { windowWidth } from '../utils/Dimensions';
 export default function ListPhoto({ photo, title, onPress }) {
     return (
 
-        <View style={{ alignItems: 'center', marginBottom: 20 }}>
+        <TouchableOpacity
+            onPress={() => { onPress() }}
+            style={{ alignItems: 'center', marginBottom: 20 }}>
             <Image
                 source={photo}
                 style={{ width: 90, height: 90, borderRadius: 10 }}
@@ -21,6 +23,6 @@ export default function ListPhoto({ photo, title, onPress }) {
                     {title}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
