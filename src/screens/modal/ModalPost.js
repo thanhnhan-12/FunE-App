@@ -46,6 +46,7 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                             width: '60%',
                             flexDirection: 'row',
                             justifyContent: 'space-evenly',
+
                         }}
                     >
                         <CreatePostModal>
@@ -56,15 +57,13 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                                         fontSize: 16,
                                         textAlign: 'center',
                                         fontFamily: 'Roboto-MediumItalic',
-                                        width: "80%"
+                                        width: "100%",
                                     }}>
                                     Add Pic/Video
                                 </Text>
                                 <MaterialIcons name="arrow-forward-ios" size={22} color="red" />
                             </>
                         </CreatePostModal>
-
-
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{
@@ -150,7 +149,7 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                     }
                 </View>
             </View>
-        </Modal>
+        </Modal >
 
     );
 };
