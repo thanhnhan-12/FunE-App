@@ -21,7 +21,6 @@ const CartNavigation = () => {
                     name="PaymentProduct"
                     component={PaymentProduct}
                     options={{ headerShown: false }}
-
                 />
             </Stack.Group>
         </Stack.Navigator>

@@ -2,9 +2,7 @@ import React from 'react';
 
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import RoomScreen from '../screens/RoomScreen';
 import JoinRoom from '../screens/JoinRoom';
-import SearchScreen from '../screens/SearchScreen';
 import QRScanScreen from '../screens/QRScanScreen';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -12,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import SearchNavigation from './SearchNavigation';
+import RoomNavigation from './RoomNavigation';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -49,7 +48,7 @@ const MenuNavigation = () => {
             />
             <Tab.Screen
                 name="Room"
-                component={JoinRoom}
+                component={RoomNavigation}
                 options={{
                     tabBarLabel: 'Room',
                     tabBarIcon: ({ color }) => (

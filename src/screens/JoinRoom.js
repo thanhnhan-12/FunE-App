@@ -5,16 +5,12 @@ import {
     View,
     ImageBackground,
     Text,
-    TextInput,
     TouchableOpacity,
     StyleSheet,
-    Image,
     Alert
 } from 'react-native';
 import CustomSwitchRoom from '../components/CustomSwitchRoom';
 import { useForm } from "react-hook-form";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/AuthContext';
 import ModalCreateRoom from './modal/ModalCreateRoom';
@@ -32,7 +28,9 @@ const JoinRoom = ({ navigation }) => {
     const [description, setDescription] = useState(null);
     const [chooseTab, setChooseTab] = useState(1);
     const [dataRoomCreate, setDataRoomCreate] = useState([]);
+    const [dataRoomJoined, setDataRoomJoined] = useState([]);
     const [dataRoomNotJoin, setDataRoomNotJoin] = useState([]);
+    const [eff, setEff] = useState(false);
     const onSelectSwitch = value => {
         setChooseTab(value);
     };
@@ -61,16 +59,37 @@ const JoinRoom = ({ navigation }) => {
         }
     }
 
+    const onJoin = async (idRoom, item) => {
+        const data = { id_user, idRoom };
+        console.log(data);
+        const result = await roomApi.joinRoom(data);
+        if (result.message) {
+            setEff(!eff);
+            Alert.alert("Join succeed!");
+            navigation.navigate('RoomScreen', {
+                dataItem: item
+            })
+        }
+        else {
+            Alert.alert("Joined!");
+            navigation.navigate('RoomScreen', {
+                dataItem: item
+            });
+        }
+    }
+
     useEffect(() => {
         async function fetchData() {
             const data = { id_user };
-            const dataRoomJoined = await roomApi.getRoomCreate(data);
+            const dataRoomCreate = await roomApi.getRoomCreate(data);
             const dataRoomNotJoin = await roomApi.getRoomNotJoin(data);
-            setDataRoomCreate(dataRoomJoined.data);
+            const dataRoomJoined = await roomApi.getRoomJoined(data);
+            setDataRoomCreate(dataRoomCreate.data);
             setDataRoomNotJoin(dataRoomNotJoin.data);
+            setDataRoomJoined(dataRoomJoined.data);
         }
         fetchData();
-    }, [modalVisible])
+    }, [modalVisible, eff])
 
     return (
         <>
@@ -94,7 +113,7 @@ const JoinRoom = ({ navigation }) => {
                                 <View style={{ marginVertical: 10 }}>
                                     <CustomSwitchRoom
                                         selectionMode={1}
-                                        option1="Not participate"
+                                        option1="Join"
                                         option2="Joined"
                                         onSelectSwitch={onSelectSwitch}
                                     />
@@ -104,6 +123,7 @@ const JoinRoom = ({ navigation }) => {
                                 (<>
                                     {dataRoomNotJoin && dataRoomNotJoin.length > 0 && dataRoomNotJoin.map(item => (
                                         <View
+                                            key={item.id}
                                             style={{
                                                 marginVertical: 4,
                                                 flexDirection: 'row',
@@ -136,7 +156,7 @@ const JoinRoom = ({ navigation }) => {
                                                 </Text>
                                             </View>
                                             <TouchableOpacity
-                                                key={item.id}
+                                                onPress={() => onJoin(item.id, item)}
                                                 style={{
                                                     backgroundColor: '#AD40AF',
                                                     padding: 10,
@@ -167,6 +187,9 @@ const JoinRoom = ({ navigation }) => {
                                         dataRoomCreate.map(item => (
                                             <TouchableOpacity
                                                 key={item.id}
+                                                onPress={() => navigation.navigate('RoomScreen', {
+                                                    dataItem: item
+                                                })}
                                                 style={{
                                                     marginVertical: 4,
                                                     flexDirection: 'row',
@@ -198,7 +221,45 @@ const JoinRoom = ({ navigation }) => {
                                                 </View>
                                             </TouchableOpacity>
                                         ))
-
+                                    }
+                                    {dataRoomJoined && dataRoomJoined.length > 0 &&
+                                        dataRoomJoined.map(item => (
+                                            <TouchableOpacity
+                                                key={item.id}
+                                                onPress={() => navigation.navigate('RoomScreen', {
+                                                    dataItem: item
+                                                })}
+                                                style={{
+                                                    marginVertical: 4,
+                                                    flexDirection: 'row',
+                                                    borderWidth: 1,
+                                                    borderColor: '#ccc',
+                                                    paddingTop: 10,
+                                                    paddingBottom: 10,
+                                                }}>
+                                                <View style={{
+                                                    width: "20%",
+                                                    paddingLeft: 5
+                                                }}>
+                                                    <ImageBackground
+                                                        source={{ uri: `http://${IP_CONFIG}:3000/individuals/${item.image}` }}
+                                                        style={{ width: 70, height: 70 }}
+                                                        imageStyle={{ borderRadius: 10 }}
+                                                    />
+                                                </View>
+                                                <View style={{
+                                                    marginLeft: 20,
+                                                    width: "70%"
+                                                }}>
+                                                    <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                                        {item.name}
+                                                    </Text>
+                                                    <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium' }}>
+                                                        {item.description}
+                                                    </Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        ))
                                     }
                                 </>)
                             }
@@ -213,7 +274,7 @@ const JoinRoom = ({ navigation }) => {
                                 <View style={{ marginVertical: 10 }}>
                                     <CustomSwitchRoom
                                         selectionMode={1}
-                                        option1="Not participate"
+                                        option1="Join"
                                         option2="Joined"
                                         onSelectSwitch={onSelectSwitch}
                                     />
@@ -222,6 +283,7 @@ const JoinRoom = ({ navigation }) => {
                                     (<>
                                         {dataRoomNotJoin && dataRoomNotJoin.length > 0 && dataRoomNotJoin.map(item => (
                                             <View
+                                                key={item.id}
                                                 style={{
                                                     marginVertical: 4,
                                                     flexDirection: 'row',
@@ -254,7 +316,7 @@ const JoinRoom = ({ navigation }) => {
                                                     </Text>
                                                 </View>
                                                 <TouchableOpacity
-                                                    key={item.id}
+                                                    onPress={() => onJoin(item.id, item)}
                                                     style={{
                                                         backgroundColor: '#AD40AF',
                                                         padding: 10,
@@ -285,6 +347,9 @@ const JoinRoom = ({ navigation }) => {
                                             dataRoomCreate.map(item => (
                                                 <TouchableOpacity
                                                     key={item.id}
+                                                    onPress={() => navigation.navigate('RoomScreen', {
+                                                        dataItem: item
+                                                    })}
                                                     style={{
                                                         marginVertical: 4,
                                                         flexDirection: 'row',
@@ -316,7 +381,45 @@ const JoinRoom = ({ navigation }) => {
                                                     </View>
                                                 </TouchableOpacity>
                                             ))
-
+                                        }
+                                        {dataRoomJoined && dataRoomJoined.length > 0 &&
+                                            dataRoomJoined.map(item => (
+                                                <TouchableOpacity
+                                                    key={item.id}
+                                                    onPress={() => navigation.navigate('RoomScreen', {
+                                                        dataItem: item
+                                                    })}
+                                                    style={{
+                                                        marginVertical: 4,
+                                                        flexDirection: 'row',
+                                                        borderWidth: 1,
+                                                        borderColor: '#ccc',
+                                                        paddingTop: 10,
+                                                        paddingBottom: 10,
+                                                    }}>
+                                                    <View style={{
+                                                        width: "20%",
+                                                        paddingLeft: 5
+                                                    }}>
+                                                        <ImageBackground
+                                                            source={{ uri: `http://${IP_CONFIG}:3000/individuals/${item.image}` }}
+                                                            style={{ width: 70, height: 70 }}
+                                                            imageStyle={{ borderRadius: 10 }}
+                                                        />
+                                                    </View>
+                                                    <View style={{
+                                                        marginLeft: 20,
+                                                        width: "70%"
+                                                    }}>
+                                                        <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                                            {item.name}
+                                                        </Text>
+                                                        <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium' }}>
+                                                            {item.description}
+                                                        </Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            ))
                                         }
                                     </>)
                                 }
