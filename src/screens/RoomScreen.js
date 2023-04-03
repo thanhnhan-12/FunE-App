@@ -1,47 +1,62 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
     View,
     ImageBackground,
     Text,
-    TextInput,
     TouchableOpacity,
     StyleSheet,
-    Image
+
 } from 'react-native';
 import CustomSwitch from '../components/CustomSwitch';
+import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ListPhoto from '../components/ListPhotos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomButton from '../components/CustomButton';
-import { freeGames, paidGames, sliderData } from '../model/data';
-import ModalPost from './modal/ModalPost';
+import { freeGames } from '../model/data';
+import ModalPostRoom from './modal/ModalPostRoom';
 import Header from '../components/Header';
+import { IP_CONFIG } from '@env';
+import { userApi } from '../clients/user_api';
+import { roomApi } from '../clients/room_api';
 
 import { AuthContext } from '../context/AuthContext';
 
 const RoomScreen = ({ navigation }) => {
-    const { userInfo, transmissionPropsPost, dataPost } = useContext(AuthContext);
+    const { transmissionPropsPost } = useContext(AuthContext);
     const [chooseTab, setChooseTab] = useState(1);
     const onSelectSwitch = value => {
         setChooseTab(value);
     };
-
+    const route = useRoute();
+    const dataRoom = route.params.dataItem;
+    console.log(dataRoom);
     const handleTransPage = (item, page) => {
         transmissionPropsPost(item);
-        console.log("Post ter", item.poster)
         navigation.navigate(page);
     }
-
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
+    const [idUserRoom, setIdUserRoom] = useState([]);
+    const [members, setMembers] = useState([]);
 
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
         setModalVisible(!modalVisible);
         setOpacityModal(!opacityModal);
     }
+
+    useEffect(() => {
+        async function fetchData() {
+            const userById = await userApi.getUserByID(dataRoom.idUser);
+            setIdUserRoom(userById.users);
+            const memberRoom = await roomApi.getMembers(dataRoom.id);
+            setMembers(memberRoom.data);
+            transmissionPropsPost(dataRoom.id);
+        }
+        fetchData();
+    }, [])
 
     return (
         <>
@@ -63,10 +78,10 @@ const RoomScreen = ({ navigation }) => {
                                 opacity: 0.4
                             }}>
                                 <View style={styles.container}>
-                                    <ImageBackground source={require('../assets/images/homescreen/game-2.jpeg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
+                                    <ImageBackground source={{ uri: `http://${IP_CONFIG}:3000/individuals/${dataRoom.background}` }} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                                             <ImageBackground
-                                                source={require('../assets/images/user-profile-logo.jpg')}
+                                                source={{ uri: `http://${IP_CONFIG}:3000/individuals/${dataRoom.image}` }}
                                                 style={{ width: 70, height: 70 }}
                                                 imageStyle={{ borderRadius: 70 }}
                                             />
@@ -75,7 +90,7 @@ const RoomScreen = ({ navigation }) => {
                                                 width: '90%',
                                             }}>
                                                 <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 20, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
-                                                    Fun E Internal
+                                                    {dataRoom.name}
                                                 </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>
@@ -155,41 +170,7 @@ const RoomScreen = ({ navigation }) => {
                                         marginRight: 5
                                     }}>
                                         <ImageBackground
-                                            source={require('../assets/images/image-user.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                {userInfo.firstName}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-3.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
-                                                Lệ
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-4.jpg')}
+                                            source={{ uri: `http://${IP_CONFIG}:3000/individuals/${idUserRoom.image}` }}
                                             style={{ width: 50, height: 50 }}
                                             imageStyle={{ borderRadius: 50 }}
                                         />
@@ -198,44 +179,31 @@ const RoomScreen = ({ navigation }) => {
                                             width: '90%',
                                         }}>
                                             <Text style={{ marginLeft: 5, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                Thiên
+                                                {idUserRoom.firstName}
                                             </Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }} >
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-5.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                Tiến
-                                            </Text>
+                                    {members && members.length > 0 && members.map((item, index) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={{
+                                                marginRight: 5
+                                            }}>
+                                            <ImageBackground
+                                                source={{ uri: `http://${IP_CONFIG}:3000/individuals/${members[index].User.image}` }}
+                                                style={{ width: 50, height: 50 }}
+                                                imageStyle={{ borderRadius: 50 }}
+                                            />
+                                            <TouchableOpacity style={{
+                                                // backgroundColor: '#AD40AF',
+                                                width: '90%',
+                                            }}>
+                                                <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
+                                                    {members[index].User.firstName}
+                                                </Text>
+                                            </TouchableOpacity>
                                         </TouchableOpacity>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-2.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                Ngân
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
+                                    ))}
                                 </TouchableOpacity>
                                 <View style={{ marginVertical: 10 }}>
                                     <CustomSwitch
@@ -307,10 +275,10 @@ const RoomScreen = ({ navigation }) => {
                                 opacity: 1
                             }}>
                                 <View style={styles.container}>
-                                    <ImageBackground source={require('../assets/images/homescreen/game-2.jpeg')} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
+                                    <ImageBackground source={{ uri: `http://${IP_CONFIG}:3000/individuals/${dataRoom.background}` }} resizeMode="cover" style={styles.image} imageStyle={{ borderRadius: 10 }}>
                                         <TouchableOpacity style={{ height: '100%', marginLeft: 15, justifyContent: 'flex-end' }}>
                                             <ImageBackground
-                                                source={require('../assets/images/user-profile-logo.jpg')}
+                                                source={{ uri: `http://${IP_CONFIG}:3000/individuals/${dataRoom.image}` }}
                                                 style={{ width: 70, height: 70 }}
                                                 imageStyle={{ borderRadius: 70 }}
                                             />
@@ -319,7 +287,7 @@ const RoomScreen = ({ navigation }) => {
                                                 width: '90%',
                                             }}>
                                                 <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 20, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
-                                                    Fun E Internal
+                                                    {dataRoom.name}
                                                 </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>
@@ -399,41 +367,7 @@ const RoomScreen = ({ navigation }) => {
                                         marginRight: 5
                                     }}>
                                         <ImageBackground
-                                            source={require('../assets/images/image-user.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                {userInfo.firstName}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-3.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
-                                                Lệ
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-4.jpg')}
+                                            source={{ uri: `http://${IP_CONFIG}:3000/individuals/${idUserRoom.image}` }}
                                             style={{ width: 50, height: 50 }}
                                             imageStyle={{ borderRadius: 50 }}
                                         />
@@ -442,44 +376,32 @@ const RoomScreen = ({ navigation }) => {
                                             width: '90%',
                                         }}>
                                             <Text style={{ marginLeft: 5, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                Thiên
+                                                {idUserRoom.firstName}
                                             </Text>
                                         </TouchableOpacity>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }} >
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-5.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                Tiến
-                                            </Text>
+                                    {members && members.length > 0 && members.map((item, index) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={{
+                                                marginRight: 5
+                                            }}>
+                                            <ImageBackground
+                                                source={{ uri: `http://${IP_CONFIG}:3000/individuals/${members[index].User.image}` }}
+                                                style={{ width: 50, height: 50 }}
+                                                imageStyle={{ borderRadius: 50 }}
+                                            />
+                                            <TouchableOpacity style={{
+                                                // backgroundColor: '#AD40AF',
+                                                width: '90%',
+                                            }}>
+                                                <Text style={{ fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
+                                                    {members[index].User.firstName}
+                                                </Text>
+                                            </TouchableOpacity>
                                         </TouchableOpacity>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{
-                                        marginRight: 5
-                                    }}>
-                                        <ImageBackground
-                                            source={require('../assets/images/user-profile-2.jpg')}
-                                            style={{ width: 50, height: 50 }}
-                                            imageStyle={{ borderRadius: 50 }}
-                                        />
-                                        <TouchableOpacity style={{
-                                            // backgroundColor: '#AD40AF',
-                                            width: '90%',
-                                        }}>
-                                            <Text style={{ marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'black', fontWeight: 'bold' }}>
-                                                Ngân
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </TouchableOpacity>
+                                    ))}
+
                                 </TouchableOpacity>
                                 <View style={{ marginVertical: 10 }}>
                                     <CustomSwitch
@@ -571,12 +493,12 @@ const RoomScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </SafeAreaView >
-            <ModalPost
+            <ModalPostRoom
                 opacityModal={opacityModal}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 setOpacityModal={setOpacityModal}
-
+                idRoom={dataRoom.id}
             />
         </>
 

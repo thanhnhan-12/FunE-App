@@ -10,6 +10,7 @@ import CartNavigation from "./CartNavigation";
 import SocialPostScreen from "../screens/SocialPostScreen";
 import CreateProduct from "../screens/CreateProduct";
 import SellingGlobal from "../screens/SellingGlobal";
+import RoomScreen from "../screens/RoomScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,12 +54,10 @@ const AuthNavigation = () => {
                                     options={{ headerShown: false }}
 
                                 />
-
                                 <Stack.Screen
                                     name="SellingGlobal"
                                     component={SellingGlobal}
                                     options={{ headerShown: false }}
-
                                 />
                             </>
 
