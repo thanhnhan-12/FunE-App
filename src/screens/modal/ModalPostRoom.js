@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CreatePostModalRoom from '../CreatePost/CreatePostModalRoom';
+import CreatePostModalRoom from '../Post/CreatePostModalRoom';
 
 
 const handleOnClick = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
