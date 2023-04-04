@@ -32,7 +32,7 @@ export default function MediaPlayer({ data, isActive }) {
           <PlayerVideo uri={getIPFSLink(data.media)} isActive={isActive} style={styles.video} />
           :
           data.type.startsWith('image') ?
-            <ImageBackground style={styles.video} source={{ uri: getIPFSLink(data.media) }} style={{ width: "100%", height: '100%' }} />
+            <ImageBackground style={styles.video} source={{ uri: getIPFSLink(data.media) }} />
             :
             <PlayerSound uri={getIPFSLink(data.media)} isActive={isActive} />
       }

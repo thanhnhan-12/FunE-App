@@ -1,44 +1,58 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
     View,
     ImageBackground,
     Text,
-    TextInput,
     TouchableOpacity,
     StyleSheet,
-    Image
 } from 'react-native';
 import CustomSwitch from '../components/CustomSwitch';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ListPhoto from '../components/ListPhotos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { freeGames, paidGames, sliderData } from '../model/data';
-
+import { freeGames } from '../model/data';
 import { AuthContext } from '../context/AuthContext';
 import ModalPost from './modal/ModalPost';
 import { IP_CONFIG } from '@env';
 import Header from '../components/Header';
 import { useNavigation } from '@react-navigation/native';
+import { productApi } from '../clients/product_api';
+import ListProduct from '../components/ListProduct';
+import { MEDIA_URL } from '../config';
 const HomeScreen = () => {
+
     const navigation = useNavigation();
-    const { userInfo, isLoading, logout } = useContext(AuthContext);
+    const { userInfo } = useContext(AuthContext);
     const [chooseTab, setChooseTab] = useState(1);
+    const id_user = userInfo.id;
     const onSelectSwitch = value => {
         setChooseTab(value);
     };
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
+    const [products, setProducts] = useState([]);
 
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
         setModalVisible(!modalVisible);
         setOpacityModal(!opacityModal);
     }
+
+    const getIPFSLink = (hash) => {
+        return MEDIA_URL + hash;
+    };
+
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
     const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
-
+    useEffect(() => {
+        async function fetchData() {
+            const productUser = await productApi.getProductByUserId(id_user);
+            setProducts(productUser.product);
+        }
+        fetchData();
+    }, [modalVisible, products])
     return (
         <>
             <Header
@@ -154,7 +168,7 @@ const HomeScreen = () => {
                                                 marginVertical: 15,
                                                 flexDirection: 'row',
                                             }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                            <Text style={{ fontWeight: 'bold', marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                                 Postings
                                             </Text>
                                             <Ionicons
@@ -297,7 +311,7 @@ const HomeScreen = () => {
                                                 marginVertical: 15,
                                                 flexDirection: 'row',
                                             }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                            <Text style={{ color: 'black', fontWeight: 600, marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                                 Postings
                                             </Text>
                                             <Ionicons
@@ -330,6 +344,36 @@ const HomeScreen = () => {
                                                     photo={item.poster}
                                                     title={item.title}
 
+                                                />
+                                            ))}
+                                        </View>
+                                    </>)
+                                }
+                                {chooseTab == 2 &&
+                                    (<>
+                                        <View
+                                            style={{
+                                                marginVertical: 15,
+                                                flexDirection: 'row',
+                                            }}>
+                                            <Text style={{ color: 'black', marginLeft: 15, fontWeight: 600, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                                Products
+                                            </Text>
+                                        </View>
+
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-evenly',
+                                            alignItems: 'center',
+                                            marginBottom: 20,
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            {products.map(item => (
+                                                <ListProduct
+                                                    key={item.id}
+                                                    photo={getIPFSLink(item.media)}
+                                                    title={item.name}
+                                                    price={item.pricing}
                                                 />
                                             ))}
                                         </View>

@@ -33,10 +33,12 @@ const RoomScreen = ({ navigation }) => {
     const route = useRoute();
     const dataRoom = route.params.dataItem;
     console.log(dataRoom);
+
     const handleTransPage = (item, page) => {
         transmissionPropsPost(item);
         navigation.navigate(page);
     }
+
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
     const [idUserRoom, setIdUserRoom] = useState([]);
@@ -193,7 +195,6 @@ const RoomScreen = ({ navigation }) => {
                                                 source={{ uri: `http://${IP_CONFIG}:3000/individuals/${members[index].User.image}` }}
                                                 style={{ width: 50, height: 50 }}
                                                 imageStyle={{ borderRadius: 50 }}
-
                                             />
                                             <TouchableOpacity style={{
                                                 // backgroundColor: '#AD40AF',

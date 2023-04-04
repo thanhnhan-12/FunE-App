@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 import { AuthContext } from '../context/AuthContext';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -10,7 +9,7 @@ import { IP_CONFIG } from '@env';
 import Header from '../components/Header';
 
 const ProfileScreen = ({ navigation }) => {
-    const { userInfo, isLoading, logout } = useContext(AuthContext);
+    const { userInfo, logout } = useContext(AuthContext);
     const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
     return (
         <SafeAreaView style={{
