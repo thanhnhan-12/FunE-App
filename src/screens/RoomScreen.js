@@ -32,7 +32,6 @@ const RoomScreen = ({ navigation }) => {
     };
     const route = useRoute();
     const dataRoom = route.params.dataItem;
-    console.log(dataRoom);
 
     const handleTransPage = (item, page) => {
         transmissionPropsPost(item);
@@ -149,7 +148,7 @@ const RoomScreen = ({ navigation }) => {
                                         marginVertical: 15,
                                         flexDirection: 'row',
                                     }}>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                    <Text style={{ fontWeight: 600, marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                         Members
                                     </Text>
                                     <MaterialIcons
@@ -227,7 +226,7 @@ const RoomScreen = ({ navigation }) => {
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
-                                {chooseTab == 1 &&
+                                {/* {chooseTab == 1 &&
                                     (<>
                                         <TouchableOpacity
                                             style={{
@@ -266,7 +265,7 @@ const RoomScreen = ({ navigation }) => {
                                             ))}
                                         </View>
                                     </>)
-                                }
+                                } */}
                             </View>
                         </ScrollView>
                         :
@@ -346,7 +345,7 @@ const RoomScreen = ({ navigation }) => {
                                         marginVertical: 15,
                                         flexDirection: 'row',
                                     }}>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                    <Text style={{ fontWeight: 600, marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                         Members
                                     </Text>
                                     <MaterialIcons
@@ -425,7 +424,7 @@ const RoomScreen = ({ navigation }) => {
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
-                                {chooseTab == 1 &&
+                                {/* {chooseTab == 1 &&
                                     (<>
                                         <TouchableOpacity
                                             style={{
@@ -464,7 +463,7 @@ const RoomScreen = ({ navigation }) => {
                                             ))}
                                         </View>
                                     </>)
-                                }
+                                } */}
                             </View>
                         </ScrollView>
                 }

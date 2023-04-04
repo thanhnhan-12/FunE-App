@@ -206,6 +206,36 @@ const HomeScreen = () => {
                                         </View>
                                     </>)
                                 }
+                                {chooseTab == 2 &&
+                                    (<>
+                                        <View
+                                            style={{
+                                                marginVertical: 15,
+                                                flexDirection: 'row',
+                                            }}>
+                                            <Text style={{ color: 'black', marginLeft: 15, fontWeight: 600, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                                Products
+                                            </Text>
+                                        </View>
+
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-evenly',
+                                            alignItems: 'center',
+                                            marginBottom: 20,
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            {products.map(item => (
+                                                <ListProduct
+                                                    key={item.id}
+                                                    photo={getIPFSLink(item.media)}
+                                                    title={item.name}
+                                                    price={item.pricing}
+                                                />
+                                            ))}
+                                        </View>
+                                    </>)
+                                }
                             </View>
                         </ScrollView>
                         :

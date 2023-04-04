@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CreatePostModal from '../Post/CreatePostModal';
-
-
-const handleOnClick = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
-    setModalVisible(!modalVisible);
-    setOpacityModal(!opacityModal);
-}
+import { AuthContext } from '../../context/AuthContext';
 
 const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModal, setRoom, navigation }) => {
+
+    const handleOnClick = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
+        setModalVisible(!modalVisible);
+        setOpacityModal(!opacityModal);
+    }
+
+    const { userInfo } = useContext(AuthContext);
     return (
         <Modal
             animationType="slide"
@@ -89,7 +91,8 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
 
                         <MaterialIcons name="arrow-forward-ios" size={22} color="red" />
                     </TouchableOpacity>
-                    {setRoom === false &&
+                    {userInfo && setRoom === false && userInfo.roleId === "2" &&
+
                         <View>
                             <TouchableOpacity
                                 style={{
@@ -147,6 +150,7 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                             </TouchableOpacity>
                         </View>
                     }
+
                 </View>
             </View>
         </Modal >

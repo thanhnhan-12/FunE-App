@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 export default function ListProduct({ photo, title, onPress, price }) {
+    let num = parseInt(price);
     return (
 
         <TouchableOpacity
@@ -27,7 +28,7 @@ export default function ListProduct({ photo, title, onPress, price }) {
                             fontFamily: 'Roboto-Medium',
                             fontSize: 12,
                         }}>
-                        $ {price}
+                        $ {num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
                     </Text>
                 </View>
             </View>
