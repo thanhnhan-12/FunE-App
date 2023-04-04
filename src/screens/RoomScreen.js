@@ -193,6 +193,7 @@ const RoomScreen = ({ navigation }) => {
                                                 source={{ uri: `http://${IP_CONFIG}:3000/individuals/${members[index].User.image}` }}
                                                 style={{ width: 50, height: 50 }}
                                                 imageStyle={{ borderRadius: 50 }}
+
                                             />
                                             <TouchableOpacity style={{
                                                 // backgroundColor: '#AD40AF',
