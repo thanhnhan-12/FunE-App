@@ -41,6 +41,7 @@ const JoinRoom = ({ navigation }) => {
     const backgroundIndividual = userInfo.background;
     const imageIndividual = userInfo.image;
     const id_user = userInfo.id;
+
     const onSubmit = async () => {
         if (roomName !== null) {
             const data = { id_user, roomName, imageIndividual, backgroundIndividual, description };

@@ -20,4 +20,7 @@ export const productApi = {
       params: params
     });
   },
+  getProductByUserId: (id_user) => {
+    return instance.get(`/product/get/by/id?id_user=${id_user}`);
+  },
 }

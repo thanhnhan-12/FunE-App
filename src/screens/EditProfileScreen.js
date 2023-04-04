@@ -27,7 +27,7 @@ const EditProfileScreen = ({ navigation }) => {
     const [note, setNote] = useState(false);
     const [dobLabel, setDobLabel] = useState('Date of Birth');
     const [gender, setGender] = useState('Gender');
-    const { control, handleSubmit } = useForm();
+    const { handleSubmit } = useForm();
     const id_user = userInfo.id;
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
     const imageIndividual = userInfo.image ? { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` } : require('../assets/images/image-user.jpg');
@@ -36,8 +36,6 @@ const EditProfileScreen = ({ navigation }) => {
         async function fetchData() {
             setDescription(userInfo.description);
             setEmail(userInfo.email);
-            // setPhoto(userInfo.image);
-            // setMedias(userInfo.background);
             setDobLabel(userInfo.birthday);
             setGender(userInfo.gender);
             setNote(userInfo.note);
