@@ -20,10 +20,15 @@ import { IP_CONFIG } from '@env';
 import Header from '../components/Header';
 import { useNavigation } from '@react-navigation/native';
 import { productApi } from '../clients/product_api';
+<<<<<<< HEAD
 import { postApi } from '../clients/post_api';
 import ListProduct from '../components/ListProduct';
 import { MEDIA_URL } from '../config';
 import SquareAlbum from '../components/SquareAlbum';
+=======
+import ListProduct from '../components/ListProduct';
+import { MEDIA_URL } from '../config';
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
 const HomeScreen = () => {
 
     const navigation = useNavigation();
@@ -35,7 +40,10 @@ const HomeScreen = () => {
     };
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
+<<<<<<< HEAD
     const [posts, setPosts] = useState([]);
+=======
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
     const [products, setProducts] = useState([]);
 
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
@@ -43,6 +51,7 @@ const HomeScreen = () => {
         setOpacityModal(!opacityModal);
     }
 
+<<<<<<< HEAD
     async function fetchPost(limit, offset) {
         const result = await postApi.getPosts({ limit, offset });
         if (result.posts) {
@@ -55,21 +64,30 @@ const HomeScreen = () => {
 
     console.log("Post", posts)
 
+=======
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
     };
 
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
     const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
     useEffect(() => {
         async function fetchData() {
             const productUser = await productApi.getProductByUserId(id_user);
             setProducts(productUser.product);
         }
         fetchData();
+<<<<<<< HEAD
         fetchPost(10, 0)
     }, [modalVisible])
+=======
+    }, [modalVisible, products])
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
     return (
         <>
             <Header
@@ -209,7 +227,11 @@ const HomeScreen = () => {
                                             marginBottom: 20,
                                             flexWrap: 'wrap',
                                         }}>
+<<<<<<< HEAD
                                             {/* {freeGames.map(item => (
+=======
+                                            {freeGames.map(item => (
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
                                                 <ListPhoto
                                                     onPress={() => {
                                                         navigation.navigate('ScrollView')
@@ -219,7 +241,11 @@ const HomeScreen = () => {
                                                     title={item.title}
 
                                                 />
+<<<<<<< HEAD
                                             ))} */}
+=======
+                                            ))}
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
                                         </View>
                                     </>)
                                 }
@@ -375,6 +401,7 @@ const HomeScreen = () => {
                                             />
                                         </View>
 
+<<<<<<< HEAD
                                         <View>
                                             <View style={{
                                                 flexDirection: 'row',
@@ -391,6 +418,26 @@ const HomeScreen = () => {
                                                     ))
                                                 }
                                             </View>
+=======
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-evenly',
+                                            alignItems: 'center',
+                                            marginBottom: 20,
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            {freeGames.map(item => (
+                                                <ListPhoto
+                                                    onPress={() => {
+                                                        navigation.navigate('ScrollView')
+                                                    }}
+                                                    key={item.id}
+                                                    photo={item.poster}
+                                                    title={item.title}
+
+                                                />
+                                            ))}
+>>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
                                         </View>
                                     </>)
                                 }
