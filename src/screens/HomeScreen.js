@@ -20,8 +20,10 @@ import { IP_CONFIG } from '@env';
 import Header from '../components/Header';
 import { useNavigation } from '@react-navigation/native';
 import { productApi } from '../clients/product_api';
+import { postApi } from '../clients/post_api';
 import ListProduct from '../components/ListProduct';
 import { MEDIA_URL } from '../config';
+import SquareAlbum from '../components/SquareAlbum';
 const HomeScreen = () => {
 
     const navigation = useNavigation();
@@ -33,6 +35,7 @@ const HomeScreen = () => {
     };
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
+    const [posts, setPosts] = useState([]);
     const [products, setProducts] = useState([]);
 
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
@@ -40,19 +43,33 @@ const HomeScreen = () => {
         setOpacityModal(!opacityModal);
     }
 
+    async function fetchPost(limit, offset) {
+        const result = await postApi.getPosts({ limit, offset });
+        if (result.posts) {
+            setPosts(result.posts);
+        }
+        else {
+            console.log("get category fail!");
+        }
+    }
+
+    console.log("Post", posts)
+
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
     };
 
     const backgroundIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.background}` };
     const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
+
     useEffect(() => {
         async function fetchData() {
             const productUser = await productApi.getProductByUserId(id_user);
             setProducts(productUser.product);
         }
         fetchData();
-    }, [modalVisible, products])
+        fetchPost(10, 0)
+    }, [modalVisible])
     return (
         <>
             <Header
@@ -192,7 +209,7 @@ const HomeScreen = () => {
                                             marginBottom: 20,
                                             flexWrap: 'wrap',
                                         }}>
-                                            {freeGames.map(item => (
+                                            {/* {freeGames.map(item => (
                                                 <ListPhoto
                                                     onPress={() => {
                                                         navigation.navigate('ScrollView')
@@ -202,7 +219,7 @@ const HomeScreen = () => {
                                                     title={item.title}
 
                                                 />
-                                            ))}
+                                            ))} */}
                                         </View>
                                     </>)
                                 }
@@ -358,24 +375,22 @@ const HomeScreen = () => {
                                             />
                                         </View>
 
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-evenly',
-                                            alignItems: 'center',
-                                            marginBottom: 20,
-                                            flexWrap: 'wrap',
-                                        }}>
-                                            {freeGames.map(item => (
-                                                <ListPhoto
-                                                    onPress={() => {
-                                                        navigation.navigate('ScrollView')
-                                                    }}
-                                                    key={item.id}
-                                                    photo={item.poster}
-                                                    title={item.title}
-
-                                                />
-                                            ))}
+                                        <View>
+                                            <View style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'flex-start',
+                                                alignItems: 'flex-start',
+                                                marginBottom: 20,
+                                                flexWrap: 'wrap',
+                                            }}>
+                                                {posts && posts.length > 0 &&
+                                                    posts.map((item, index) => (
+                                                        <SquareAlbum key={index} data={item} onPress={() => {
+                                                            navigation.navigate('ScrollView')
+                                                        }} />
+                                                    ))
+                                                }
+                                            </View>
                                         </View>
                                     </>)
                                 }

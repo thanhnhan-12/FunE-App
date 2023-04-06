@@ -59,6 +59,16 @@ const RoomScreen = ({ navigation }) => {
         fetchData();
     }, [])
 
+    async function fetchData(limit, offset) {
+        const result = await postApi.getPosts({ limit, offset });
+        if (result.posts) {
+            setPosts((prev) => [...prev, ...result.posts]);
+        }
+        else {
+            Alert.alert("get category fail!");
+        }
+    }
+
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>

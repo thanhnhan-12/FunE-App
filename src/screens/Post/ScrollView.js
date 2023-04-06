@@ -5,10 +5,9 @@ import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 const ScrollView = () => {
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
   const bottomTabHeight = /* useBottomTabBarHeight() ||  */50;
   const { height: WINDOW_HEIGHT } = Dimensions.get("window");
-
   async function fetchData(limit, offset) {
     const result = await postApi.getPosts({ limit, offset });
     if (result.posts) {
@@ -35,9 +34,9 @@ const ScrollView = () => {
           {
             const { medias, id: id_post, description } = item;
             const firstMedia = medias[0];
-            const { type, media, id_media } = firstMedia;
+            const { type, media, id_media, firstName, lastName, avatar } = firstMedia;
 
-            return <VideoPlayer data={{ type, media, id_media, id_post, description }} isActive={activeVideoIndex === index} />
+            return <VideoPlayer data={{ type, media, id_media, id_post, description, firstName, lastName, avatar }} isActive={activeVideoIndex === index} />
           }
         }}
         onScroll={(e) => {

@@ -19,6 +19,7 @@ export default function MediaPlayer({ data, isActive }) {
     const gateway = MEDIA_URL;
     return MEDIA_URL + hash;
   };
+  console.log("dâta", data);
   return (
     <View
       style={[
@@ -38,7 +39,7 @@ export default function MediaPlayer({ data, isActive }) {
       }
       <View style={styles.bottomSection}>
         <View style={styles.bottomLeftSection}>
-          <Text style={styles.channelName}>{data.firstName ? `${data.firstName} ${data.lastName}` : "Văn Thiên"}</Text>
+          <Text style={styles.channelName}>{data.firstName ? `${data.lastName} ${data.firstName}` : "Văn Thiên"}</Text>
           <Text style={styles.caption}>{data.description}</Text>
         </View>
         <View style={styles.bottomRightSection}>
