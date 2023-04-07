@@ -40,10 +40,8 @@ const SellingGlobal = ({ navigation }) => {
     const onSubmit = async () => {
         const data = { id_user, name, dobLabel, gender, address, email, bankName, bankNumber, bankCode, bankLocation, bankCurrency };
         const result = await sellerApi.createSeller(data);
-        console.log(result);
         const userById = await userApi.getUserByID(id_user);
         setUserInfo(userById.users)
-        console.log(userInfo);
         if (result.message) {
             Alert.alert("Update succeed!");
         }

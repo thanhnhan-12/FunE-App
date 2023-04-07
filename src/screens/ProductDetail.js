@@ -30,7 +30,6 @@ const ProductDetail = ({ navigation }) => {
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1)
   }
-  console.log(dataPost);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
       <ScrollView

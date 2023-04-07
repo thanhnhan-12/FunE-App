@@ -43,7 +43,6 @@ const MediaPicker = ({ setMedias, medias }) => {
     try {
       const result = await DocumentPicker.pickMultiple(options);
       const files = result.map((file) => ({ name: file.type.startsWith('audio') ? file.name.trim() + '.mp3' : file.name, type: file.type, uri: file.uri }));
-      console.log(files);
       setMedias([...medias, ...files])
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {

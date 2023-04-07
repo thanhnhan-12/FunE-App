@@ -50,7 +50,6 @@ const CreatePostModalRoom = ({ children }) => {
             }
         }
         const result = await postRoomApi.createPost(formData);
-        console.log(result)
         if (result.message) {
             setIsVisibleModal(false)
             Alert.alert("create product success!");

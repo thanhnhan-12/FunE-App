@@ -62,7 +62,6 @@ const JoinRoom = ({ navigation }) => {
 
     const onJoin = async (idRoom, item) => {
         const data = { id_user, idRoom };
-        console.log(data);
         const result = await roomApi.joinRoom(data);
         if (result.message) {
             setEff(!eff);

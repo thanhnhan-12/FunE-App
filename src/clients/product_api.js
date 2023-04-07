@@ -23,4 +23,7 @@ export const productApi = {
   getProductByUserId: (id_user) => {
     return instance.get(`/product/get/by/id?id_user=${id_user}`);
   },
+  getProductSearch: (data) => {
+    return instance.get(`/product/get/search?keyword=${data.keyword}`);
+  },
 }

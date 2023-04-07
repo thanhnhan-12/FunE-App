@@ -29,7 +29,6 @@ const HomeScreen = ({ navigation }) => {
             setCountLike(countLike + 1)
         }
     }
-    console.log(dataPost);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
             <Header

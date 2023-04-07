@@ -71,7 +71,6 @@ const EditProfileScreen = ({ navigation }) => {
         const result = await userApi.updateUser(formData);
         const userById = await userApi.getUserByID(id_user);
         setUserInfo(userById.users)
-        console.log(userInfo);
         if (result.message) {
             Alert.alert("Update succeed!");
         }

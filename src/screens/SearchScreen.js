@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,19 +11,19 @@ import {
     ImageBackground
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import Feather from 'react-native-vector-icons/Feather';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import BannerSlider from '../components/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
-
 import { freeGames, paidGames, sliderData } from '../model/data';
-import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const SearchScreen = ({ navigation }) => {
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
+
+    const [searchText, setSearchText] = useState('');
+
 
     const backgroundIndividual = { uri: `https://luattreem.vn/wp-content/uploads/2022/04/background-black-background-den-cong-nghe-800x450-1.jpg` };
 
@@ -46,15 +46,22 @@ const SearchScreen = ({ navigation }) => {
                         borderRadius: 8,
                         paddingHorizontal: 10,
                         paddingVertical: 8,
-                        height: 60
+                        height: 60,
+                        justifyContent: 'space-between'
                     }}>
-                    <Feather
-                        name="search"
-                        size={20}
-                        color="#C6C6C6"
-                        style={{ marginRight: 5, marginTop: 10 }}
+                    <TextInput placeholder="Search Posting / Room"
+                        onChangeText={text => setSearchText(text)}
                     />
-                    <TextInput placeholder="Search Posting / Room" />
+                    <TouchableOpacity onPress={() => navigation.navigate('DetailSearch', {
+                        searchText: searchText
+                    })}>
+                        <Ionicons
+                            name="search"
+                            size={20}
+                            color="black"
+                            style={{ marginTop: 10 }}
+                        />
+                    </TouchableOpacity>
                 </View>
 
                 <View

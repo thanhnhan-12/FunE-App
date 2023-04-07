@@ -5,6 +5,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import SearchScreen from '../screens/SearchScreen'
 import ProductDetail from '../screens/ProductDetail'
+import DetailSearch from '../screens/DetailSearch'
 const SearchNavigation = () => {
   const Stack = createNativeStackNavigator()
 
@@ -18,6 +19,10 @@ const SearchNavigation = () => {
         <Stack.Screen
           name={'ProductDetail'}
           component={ProductDetail}
+          options={{ headerShown: false }} />
+        <Stack.Screen
+          name={'DetailSearch'}
+          component={DetailSearch}
           options={{ headerShown: false }} />
       </Stack.Group>
     </Stack.Navigator>

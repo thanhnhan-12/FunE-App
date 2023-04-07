@@ -11,9 +11,7 @@ import {
 import CustomSwitch from '../components/CustomSwitch';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import ListPhoto from '../components/ListPhotos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { freeGames } from '../model/data';
 import { AuthContext } from '../context/AuthContext';
 import ModalPost from './modal/ModalPost';
 import { IP_CONFIG } from '@env';
@@ -53,8 +51,6 @@ const HomeScreen = () => {
             console.log("get category fail!");
         }
     }
-
-    console.log("Post", posts)
 
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;

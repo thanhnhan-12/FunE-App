@@ -36,11 +36,9 @@ const styles = StyleSheet.create({
 
 
 const SquareAlbum = ({ onPress, data, key }) => {
-    console.log(data);
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
     };
-    console.log("length", data.medias.length);
 
     return (
         <View>
