@@ -19,10 +19,6 @@ export default function MediaPlayer({ data, isActive }) {
     const gateway = MEDIA_URL;
     return MEDIA_URL + hash;
   };
-<<<<<<< HEAD
-  console.log("dâta", data);
-=======
->>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
   return (
     <View
       style={[
@@ -42,11 +38,7 @@ export default function MediaPlayer({ data, isActive }) {
       }
       <View style={styles.bottomSection}>
         <View style={styles.bottomLeftSection}>
-<<<<<<< HEAD
-          <Text style={styles.channelName}>{data.firstName ? `${data.lastName} ${data.firstName}` : "Văn Thiên"}</Text>
-=======
           <Text style={styles.channelName}>{data.firstName ? `${data.firstName} ${data.lastName}` : "Văn Thiên"}</Text>
->>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
           <Text style={styles.caption}>{data.description}</Text>
         </View>
         <View style={styles.bottomRightSection}>

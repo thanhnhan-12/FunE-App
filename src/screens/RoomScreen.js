@@ -59,7 +59,6 @@ const RoomScreen = ({ navigation }) => {
         fetchData();
     }, [])
 
-<<<<<<< HEAD
     async function fetchData(limit, offset) {
         const result = await postApi.getPosts({ limit, offset });
         if (result.posts) {
@@ -70,8 +69,6 @@ const RoomScreen = ({ navigation }) => {
         }
     }
 
-=======
->>>>>>> 9f448fe1eb60af58d60b8645241d524e555c04d9
     return (
         <>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
