@@ -9,18 +9,18 @@ import {
     StyleSheet,
 
 } from 'react-native';
+import SquareAlbum from '../components/SquareAlbum';
 import CustomSwitch from '../components/CustomSwitch';
 import { useRoute } from '@react-navigation/native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import ListPhoto from '../components/ListPhotos';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { freeGames } from '../model/data';
 import ModalPostRoom from './modal/ModalPostRoom';
 import Header from '../components/Header';
 import { IP_CONFIG } from '@env';
 import { userApi } from '../clients/user_api';
 import { roomApi } from '../clients/room_api';
+import { postRoomApi } from '../clients/post_room_api';
 
 import { AuthContext } from '../context/AuthContext';
 
@@ -33,15 +33,11 @@ const RoomScreen = ({ navigation }) => {
     const route = useRoute();
     const dataRoom = route.params.dataItem;
 
-    const handleTransPage = (item, page) => {
-        transmissionPropsPost(item);
-        navigation.navigate(page);
-    }
-
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
     const [idUserRoom, setIdUserRoom] = useState([]);
     const [members, setMembers] = useState([]);
+    const [posts, setPosts] = useState([]);
 
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
         setModalVisible(!modalVisible);
@@ -57,15 +53,17 @@ const RoomScreen = ({ navigation }) => {
             transmissionPropsPost(dataRoom.id);
         }
         fetchData();
-    }, [])
+        fetchPost(10, 0, dataRoom.id);
+    }, [modalVisible])
 
-    async function fetchData(limit, offset) {
-        const result = await postApi.getPosts({ limit, offset });
+    async function fetchPost(limit, offset, idRoom) {
+        const result = await postRoomApi.getPosts({ limit, offset, idRoom });
         if (result.posts) {
-            setPosts((prev) => [...prev, ...result.posts]);
+            setPosts(result.posts);
+            console.log(posts);
         }
         else {
-            Alert.alert("get category fail!");
+            console.log("get post fail!");
         }
     }
 
@@ -236,46 +234,54 @@ const RoomScreen = ({ navigation }) => {
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
-                                {/* {chooseTab == 1 &&
+                                {chooseTab == 1 &&
                                     (<>
-                                        <TouchableOpacity
+                                        <View
                                             style={{
                                                 marginVertical: 15,
                                                 flexDirection: 'row',
                                             }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                            <Text style={{ color: 'black', fontWeight: 600, marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                                 Postings
                                             </Text>
-                                            <MaterialIcons
-                                                name="post-add"
+                                            <Ionicons
+                                                name="cut-outline"
                                                 size={26}
                                                 color="black"
                                                 style={{ marginLeft: 15 }}
                                             />
-                                        </TouchableOpacity>
+                                            <MaterialIcons
+                                                name="delete-outline"
+                                                size={26}
+                                                color="black"
+                                                style={{ marginLeft: 15 }}
+                                            />
+                                        </View>
 
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-evenly',
-                                            alignItems: 'center',
-                                            marginBottom: 20,
-                                            flexWrap: 'wrap',
-                                        }}>
+                                        <View>
+                                            <View style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'flex-start',
+                                                alignItems: 'flex-start',
+                                                marginBottom: 20,
+                                                flexWrap: 'wrap',
+                                            }}>
+                                                {posts && posts.length > 0 &&
+                                                    posts.map((item, index) => (
+                                                        <View key={index}>
+                                                            <SquareAlbum key={index} data={item} onPress={() => {
+                                                                navigation.navigate('SocialPostScreen', {
+                                                                    data: item
+                                                                })
+                                                            }} />
+                                                        </View>
 
-                                            {freeGames.map(item => (
-                                                <TouchableOpacity key={item.id}>
-                                                    <TouchableOpacity onPress={() => handleTransPage(item, 'SocialPost')}>
-                                                        <ListPhoto
-                                                            key={item.id}
-                                                            photo={item.poster}
-                                                            title={item.title}
-                                                        />
-                                                    </TouchableOpacity>
-                                                </TouchableOpacity>
-                                            ))}
+                                                    ))
+                                                }
+                                            </View>
                                         </View>
                                     </>)
-                                } */}
+                                }
                             </View>
                         </ScrollView>
                         :
@@ -434,46 +440,54 @@ const RoomScreen = ({ navigation }) => {
                                         onSelectSwitch={onSelectSwitch}
                                     />
                                 </View>
-                                {/* {chooseTab == 1 &&
+                                {chooseTab == 1 &&
                                     (<>
-                                        <TouchableOpacity
+                                        <View
                                             style={{
                                                 marginVertical: 15,
                                                 flexDirection: 'row',
                                             }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                            <Text style={{ color: 'black', fontWeight: 600, marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                                 Postings
                                             </Text>
-                                            <MaterialIcons
-                                                name="post-add"
+                                            <Ionicons
+                                                name="cut-outline"
                                                 size={26}
                                                 color="black"
                                                 style={{ marginLeft: 15 }}
                                             />
-                                        </TouchableOpacity>
+                                            <MaterialIcons
+                                                name="delete-outline"
+                                                size={26}
+                                                color="black"
+                                                style={{ marginLeft: 15 }}
+                                            />
+                                        </View>
 
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-evenly',
-                                            alignItems: 'center',
-                                            marginBottom: 20,
-                                            flexWrap: 'wrap',
-                                        }}>
+                                        <View>
+                                            <View style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'flex-start',
+                                                alignItems: 'flex-start',
+                                                marginBottom: 20,
+                                                flexWrap: 'wrap',
+                                            }}>
+                                                {posts && posts.length > 0 &&
+                                                    posts.map((item, index) => (
+                                                        <View key={index}>
+                                                            <SquareAlbum key={index} data={item} onPress={() => {
+                                                                navigation.navigate('SocialPostScreen', {
+                                                                    data: item
+                                                                })
+                                                            }} />
+                                                        </View>
 
-                                            {freeGames.map(item => (
-                                                <TouchableOpacity key={item.id}>
-                                                    <TouchableOpacity onPress={() => handleTransPage(item, 'SocialPost')}>
-                                                        <ListPhoto
-                                                            key={item.id}
-                                                            photo={item.poster}
-                                                            title={item.title}
-                                                        />
-                                                    </TouchableOpacity>
-                                                </TouchableOpacity>
-                                            ))}
+                                                    ))
+                                                }
+                                            </View>
                                         </View>
                                     </>)
-                                } */}
+                                }
                             </View>
                         </ScrollView>
                 }

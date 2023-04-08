@@ -9,8 +9,8 @@ export const postRoomApi = {
             }
         });
     },
-    getPosts: () => {
-        return instance.get(`/post/room/gets`)
+    getPosts: (payload) => {
+        return instance.get(`/post/room/gets`, { params: payload })
     },
     getPostByID: (params) => {
         return instance.get(`/post/room/get`, {

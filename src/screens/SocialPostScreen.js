@@ -1,25 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
     View,
-    ImageBackground,
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet,
-    Image
+    Image,
+    StyleSheet
 } from 'react-native';
+import { useRoute } from '@react-navigation/native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header';
+import Video from 'react-native-video';
+import Sound from 'react-native-video';
 import { AuthContext } from '../context/AuthContext';
+import Carousel from 'react-native-snap-carousel';
+import { MEDIA_URL } from '../config';
+import PlayerSound from "./Post/components/PlayerSound";
 
 const HomeScreen = ({ navigation }) => {
-    const { dataPost } = useContext(AuthContext);
+    const route = useRoute();
+    const dataPost = route.params.data;
     const [comment, setComment] = useState(null);
     const [like, setLike] = useState(false);
+    const [post, setPost] = useState([]);
     const [countLike, setCountLike] = useState(0);
+
     const handleOnClickLike = () => {
         if (like == true) {
             setLike(false);
@@ -29,6 +37,36 @@ const HomeScreen = ({ navigation }) => {
             setCountLike(countLike + 1)
         }
     }
+    const getIPFSLink = (hash) => {
+        return MEDIA_URL + hash;
+    };
+    _renderItem = ({ item, index }) => {
+        if (item.type === 'image/jpeg') {
+            return (
+                <View style={styles.slide}>
+                    <Image source={{ uri: getIPFSLink(item.media) }} style={styles.image} />
+                </View>
+            );
+        } else if (item.type === 'video/mp4') {
+            return (
+                <View style={styles.slide}>
+                    <Video source={{ uri: getIPFSLink(item.media) }} style={styles.video} />
+                </View>
+            );
+        } else if (item.type === 'audio/mpeg') {
+            return (
+                <View style={styles.slide}>
+                    <PlayerSound uri={getIPFSLink(item.media)} style={styles.audio} />
+                </View>
+            );
+        }
+    };
+    useEffect(() => {
+        async function fetchData() {
+            setPost(dataPost);
+        }
+        fetchData();
+    }, [])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
             <Header
@@ -39,20 +77,28 @@ const HomeScreen = ({ navigation }) => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={{ padding: 15 }}>
-                <TouchableOpacity>
-                    <TouchableOpacity style={{
+                <View>
+                    <View style={{
                         width: '100%',
                         backgroundColor: '#fff',
                         overflow: 'hidden',
                         borderRadius: 20
                     }}>
-                        <TouchableOpacity
+                        <View
                             style={{
                                 width: '100%',
                                 alignItems: 'center',
                             }}>
-                            <Image
-                                source={require("../assets/images/Altos-Odyssey.jpeg")}
+                            <Carousel
+                                data={dataPost.medias}
+                                renderItem={this._renderItem}
+                                sliderWidth={300}
+                                itemWidth={400}
+                                loop={true}
+                            />
+                            {/* <SwiperMedia item={dataPost.medias} /> */}
+                            {/* <Image
+                                source={{ uri: getIPFSLink(dataPost.medias[0].media) }}
                                 style={{
                                     width: 300,
                                     height: 270,
@@ -62,8 +108,8 @@ const HomeScreen = ({ navigation }) => {
                                     marginLeft: 20,
                                     marginRight: 20
                                 }}
-                            />
-                            <TouchableOpacity
+                            /> */}
+                            <View
                                 style={{
                                     // backgroundColor: '#AD40AF',
                                     padding: 20,
@@ -85,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
                                             fontWeight: 'bold',
                                             fontFamily: 'Roboto-MediumItalic',
                                         }}>
-                                        {dataPost.title}
+                                        {dataPost.description}
                                     </Text>
                                 </View>
 
@@ -115,10 +161,10 @@ const HomeScreen = ({ navigation }) => {
                                         {countLike}
                                     </Text>
                                 </View>
-                            </TouchableOpacity>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </View>
                 <TouchableOpacity style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', flex: 1 }}>
                     <MaterialCommunityIcons name="comment-text-multiple" size={25} color="#33CC00" />
                     <TextInput
@@ -163,5 +209,31 @@ const HomeScreen = ({ navigation }) => {
         </SafeAreaView >
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    slide: {
+        width: 300,
+        height: 400,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    image: {
+        width: 300,
+        height: 400,
+        resizeMode: 'cover',
+    },
+    video: {
+        width: 300,
+        height: 400,
+    },
+    audio: {
+        width: 300,
+        height: 400,
+    },
+});
 
 export default HomeScreen;

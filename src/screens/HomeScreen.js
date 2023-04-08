@@ -65,7 +65,7 @@ const HomeScreen = () => {
             setProducts(productUser.product);
         }
         fetchData();
-        fetchPost(10, 0)
+        fetchPost(10, 0);
     }, [modalVisible])
     return (
         <>
@@ -182,7 +182,7 @@ const HomeScreen = () => {
                                                 marginVertical: 15,
                                                 flexDirection: 'row',
                                             }}>
-                                            <Text style={{ fontWeight: 'bold', marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                            <Text style={{ color: 'black', fontWeight: 600, marginLeft: 15, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
                                                 Postings
                                             </Text>
                                             <Ionicons
@@ -199,15 +199,25 @@ const HomeScreen = () => {
                                             />
                                         </View>
 
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'space-evenly',
-                                            alignItems: 'center',
-                                            marginBottom: 20,
-                                            flexWrap: 'wrap',
-                                        }}>
-
-                                        </View >
+                                        <View>
+                                            <View style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'flex-start',
+                                                alignItems: 'flex-start',
+                                                marginBottom: 20,
+                                                flexWrap: 'wrap',
+                                            }}>
+                                                {posts && posts.length > 0 &&
+                                                    posts.map((item, index) => (
+                                                        <TouchableOpacity key={index}>
+                                                            <SquareAlbum data={item} onPress={() => {
+                                                                navigation.navigate('ScrollView')
+                                                            }} />
+                                                        </TouchableOpacity>
+                                                    ))
+                                                }
+                                            </View>
+                                        </View>
                                     </>)
                                 }
                                 {
@@ -231,12 +241,14 @@ const HomeScreen = () => {
                                             flexWrap: 'wrap',
                                         }}>
                                             {products.map(item => (
-                                                <ListProduct
-                                                    key={item.id}
-                                                    photo={getIPFSLink(item.media)}
-                                                    title={item.name}
-                                                    price={item.pricing}
-                                                />
+                                                <TouchableOpacity key={item.id}>
+                                                    <ListProduct
+                                                        key={item.id}
+                                                        photo={getIPFSLink(item.media)}
+                                                        title={item.name}
+                                                        price={item.pricing}
+                                                    />
+                                                </TouchableOpacity>
                                             ))}
                                         </View>
                                     </>)
@@ -373,9 +385,11 @@ const HomeScreen = () => {
                                             }}>
                                                 {posts && posts.length > 0 &&
                                                     posts.map((item, index) => (
-                                                        <SquareAlbum key={index} data={item} onPress={() => {
-                                                            navigation.navigate('ScrollView')
-                                                        }} />
+                                                        <TouchableOpacity key={index}>
+                                                            <SquareAlbum data={item} onPress={() => {
+                                                                navigation.navigate('ScrollView')
+                                                            }} />
+                                                        </TouchableOpacity>
                                                     ))
                                                 }
                                             </View>
@@ -403,12 +417,13 @@ const HomeScreen = () => {
                                             flexWrap: 'wrap',
                                         }}>
                                             {products.map(item => (
-                                                <ListProduct
-                                                    key={item.id}
-                                                    photo={getIPFSLink(item.media)}
-                                                    title={item.name}
-                                                    price={item.pricing}
-                                                />
+                                                <TouchableOpacity key={item.id}>
+                                                    <ListProduct
+                                                        photo={getIPFSLink(item.media)}
+                                                        title={item.name}
+                                                        price={item.pricing}
+                                                    />
+                                                </TouchableOpacity>
                                             ))}
                                         </View>
                                     </>)

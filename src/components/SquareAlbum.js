@@ -42,9 +42,9 @@ const SquareAlbum = ({ onPress, data, key }) => {
 
     return (
         <View>
-            <TouchableOpacity style={styles.container} onPress={onPress} key={key}>
+            <TouchableOpacity style={styles.container} onPress={onPress}>
                 {data.medias.map((item, index) => (
-                    <View style={{}}>
+                    <View key={index}>
                         {
                             data.medias.length === 1 &&
                             <View style={styles.boxone}>
