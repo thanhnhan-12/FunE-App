@@ -134,11 +134,15 @@ const DetailSearch = ({ navigation }) => {
                 }}>
                     {products.map(item => (
                         <ListSearch
+                            onPress={() => navigation.navigate('ProductDetail', {
+                                data: item
+                            })}
                             key={item.id}
                             photo={getIPFSLink(item.media)}
                             title={item.name}
                             price={item.pricing}
                             dot={true}
+                            navigation={navigation}
                         />
                     ))}
                 </View>

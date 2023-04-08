@@ -1,18 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image, SafeAreaView,
-  ScrollView, StyleSheet, Text, TouchableOpacity, View
+  ScrollView, StyleSheet, Text, TouchableOpacity, View, ImageBackground
 } from 'react-native';
+import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import { AuthContext } from '../context/AuthContext';
+import { useRoute } from '@react-navigation/native';
+import { MEDIA_URL } from '../config';
+import Header from '../components/Header';
 
 const ProductDetail = ({ navigation }) => {
-  const { dataPost } = useContext(AuthContext);
   const [quantity, setQuantity] = useState(1);
+  const [product, setProduct] = useState([]);
   const [comment, setComment] = useState(null);
   const [like, setLike] = useState(false);
   const [countLike, setCountLike] = useState(0);
+  const route = useRoute();
+  const getIPFSLink = (hash) => {
+    return MEDIA_URL + hash;
+  };
   const handleOnClickLike = () => {
     if (like == true) {
       setLike(false);
@@ -30,155 +36,244 @@ const ProductDetail = ({ navigation }) => {
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1)
   }
+  const fetchData = () => {
+    setProduct(route.params.data);
+    console.log(product)
+  }
+  useEffect(() => {
+    fetchData();
+  }, [])
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ padding: 15 }}>
+    <>
+      <Header
+        trueCart
+        trueHear
+        trueCoin
+        navigation={navigation}
+        trueReturn
+      />
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ padding: 15 }}>
 
-        <TouchableOpacity style={{
-          height: 50,
-          marginTop: 10,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate('SearchScreen')}
-          >
-            {/* <Image
-              style={{
-                height:30,
-                width:30,
-              }}
-              source={require("../assets/images/arrow_left.png")}
-            /> */}
-          </TouchableOpacity>
-          <TouchableOpacity style={{
-            flexDirection: 'row',
-
-          }}>
-            <TouchableOpacity onPress={() => handleOnClickLike()}>
-              {like && like === true ?
-                <Ionicons name="heart" size={25} color="#D62965" />
-                :
-                <Ionicons name="heart-outline" size={25} color="#D62965" />
-              }
-            </TouchableOpacity>
-            <Ionicons onPress={() => navigation.navigate('ShoppingCart')} name='cart' style={styles.iconCart} />
-          </TouchableOpacity>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <TouchableOpacity style={{
-            width: '100%',
-            backgroundColor: '#fff',
-            overflow: 'hidden',
-            borderRadius: 20
-          }}>
-            <TouchableOpacity
-              style={{
+          <View>
+            <View style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              overflow: 'hidden',
+              borderRadius: 20
+            }}>
+              <View style={{
+                flex: 1,
                 width: '100%',
-                alignItems: 'center',
+                height: 200,
+                opacity: 1,
               }}>
-              <Image
-                source={require("../assets/images/Altos-Odyssey.jpeg")}
-                style={{
-                  width: 300,
-                  height: 270,
+                <ImageBackground source={{ uri: getIPFSLink(product.media) }} resizeMode="cover" style={{
+                  flex: 1,
+                  justifyContent: 'center',
                   borderRadius: 10,
-                  marginTop: 10,
-                  marginBottom: 20,
-                  marginLeft: 20,
-                  marginRight: 20
-                }}
-              />
-              <TouchableOpacity
-                style={{
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  width: '90%',
-                  borderRadius: 10,
-                  marginBottom: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{
-                  flexDirection: 'row',
-                  fontSize: 20
+                }} imageStyle={{ borderRadius: 10 }}>
+                  <View style={{ height: '100%', justifyContent: 'flex-end' }}>
+                    <View style={{
+                      backgroundColor: '#D62965',
+                      padding: 10,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                    }}>
+                      <View>
+                        <Text style={{ fontSize: 13, fontWeight: 700, color: 'white' }}>${product.pricing}</Text>
+                        <Text style={{ fontSize: 13, fontWeight: 700, color: '#ccc' }}>{product.description}</Text>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: 20,
+                          paddingRight: 20,
+                          borderRadius: 10,
+                          marginBottom: 5,
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <View style={{
+                          flexDirection: 'row',
+                          fontSize: 20
 
-                }}>
-                  <TouchableOpacity onPress={() => handleDecreaseQuantity()}>
-                    <Ionicons
-                      style={{ fontSize: 22 }}
-                      name='remove-circle-outline'
-                    />
-                  </TouchableOpacity>
+                        }}>
+                          <TouchableOpacity onPress={() => handleDecreaseQuantity()}>
+                            <Ionicons
+                              style={{ fontSize: 22 }}
+                              name='ios-remove-circle-sharp'
+                              color='white'
+                            />
+                          </TouchableOpacity>
+                          <Text style={{
+                            fontSize: 16,
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            color: 'white'
+                          }}>{quantity || 1}</Text>
+                          <TouchableOpacity onPress={() => handleIncreaseQuantity()}>
+                            <Ionicons
+                              style={{ fontSize: 22 }}
+                              name='add-circle'
+                              color='white'
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </ImageBackground>
+              </View>
+
+            </View>
+          </View>
+
+          <View>
+            <Text style={styles.detail}>Details</Text>
+            <View style={{
+              marginTop: 15,
+              padding: 15,
+              backgroundColor: "white",
+              borderRadius: 10,
+              shadowColor: '#000',
+              shadowOffset: { width: 20, height: 20 },
+              shadowOpacity: 0.8,
+              shadowRadius: 5,
+              borderBottomWidth: 1,
+              borderBottomColor: '#ccc'
+
+            }}>
+              <Text style={styles.item}>{product.name}</Text>
+            </View>
+          </View>
+
+          <View>
+            <Text style={styles.detail}>Review</Text>
+            <View>
+              <View style={{
+                flexDirection: 'row', alignItems: 'center', flex: 1, flexWrap: 'wrap', marginBottom: 10
+              }}>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 20 }}>
+                  <Octicons
+                    name="dot-fill"
+                    size={20}
+                    color="green"
+                  />
                   <Text style={{
-                    fontSize: 16,
-                    paddingLeft: 10,
-                    paddingRight: 10
-                  }}>{quantity || 1}</Text>
-                  <TouchableOpacity onPress={() => handleIncreaseQuantity()}>
-                    <Ionicons
-                      style={{ fontSize: 22 }}
-                      name='add-circle'
-                    />
-                  </TouchableOpacity>
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                    color: 'black',
+                    marginLeft: 5
+                  }}>
+                    Product as is
+                  </Text>
+
                 </View>
-                <View style={{
-                  flexDirection: 'row'
-                }}>
-                  <TouchableOpacity onPress={() => handleOnClickLike()}>
-                    {like && like === true ?
-                      <Ionicons name="heart" size={25} color="#D62965" />
-                      :
-                      <Ionicons name="heart-outline" size={25} color="#D62965" />
-                    }
-                  </TouchableOpacity>
-                  <Text
-                    style={styles.countLike}>
-                    {countLike}
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 20 }}>
+                  <Octicons
+                    name="dot-fill"
+                    size={20}
+                    color="green"
+                  />
+                  <Text style={{
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                    color: 'black',
+                    marginLeft: 5
+                  }}>
+                    Seller responsive
                   </Text>
                 </View>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          </TouchableOpacity>
-        </TouchableOpacity>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 20 }}>
+                  <Octicons
+                    name="dot-fill"
+                    size={20}
+                    color="green"
+                  />
+                  <Text style={{
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                    color: 'black',
+                    marginLeft: 5
+                  }}>
+                    Delivery timing
+                  </Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 20 }}>
+                  <Octicons
+                    name="dot-fill"
+                    size={20}
+                    color="green"
+                  />
+                  <Text style={{
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                    color: 'black',
+                    marginLeft: 5
+                  }}>
+                    Package protection
+                  </Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 20 }}>
+                  <Octicons
+                    name="dot-fill"
+                    size={20}
+                    color="green"
+                  />
+                  <Text style={{
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                    color: 'black',
+                    marginLeft: 5
+                  }}>
+                    Correct order
+                  </Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: 15, marginBottom: 20 }}>
+                  <Octicons
+                    name="dot-fill"
+                    size={20}
+                    color="green"
+                  />
+                  <Text style={{
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                    color: 'black',
+                    marginLeft: 5
+                  }}>
+                    Buying experience
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
 
-        <View>
-          <Text style={styles.detail}>Details</Text>
-          <View>
-            <Text style={styles.item}>Name: Jane Austen</Text>
-          </View>
-          <View>
-            <Text style={styles.item}>Description: Jane Austen</Text>
-          </View>
-          <View>
-            <Text style={styles.item}>Price: 1000 USD</Text>
-          </View>
-        </View>
 
-        <View>
           <Text style={styles.detail}>You may also like</Text>
+
+        </ScrollView>
+        <View>
           <View style={{
             marginTop: 20,
             flexDirection: 'row',
             justifyContent: 'space-around',
-            marginBottom: 38
+            marginBottom: 20
           }}>
 
             <TouchableOpacity>
               <Text style={styles.buyNow}>BUY NOW</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text onPress={() => navigation.navigate('ShoppingCart')} style={styles.addCart}>ADD TO CART</Text>
+              <Text onPress={() => navigation.navigate('CartNavigation')} style={styles.addCart}>ADD TO CART</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView >
+      </SafeAreaView >
+    </>
   )
 }
 const styles = StyleSheet.create({
@@ -207,10 +302,6 @@ const styles = StyleSheet.create({
   },
   item: {
     color: 'black',
-    backgroundColor: '#fff',
-    marginTop: 10,
-    padding: 8,
-    borderRadius: 10,
   },
   buyNow: {
     color: '#fff',

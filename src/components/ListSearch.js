@@ -2,12 +2,12 @@ import React from 'react';
 import Octicons from 'react-native-vector-icons/Octicons';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
-export default function ListSearch({ photo, title, onPress, price, dot }) {
+export default function ListSearch({ photo, title, onPress, price, dot, navigation }) {
     let num = parseInt(price);
     return (
 
         <TouchableOpacity
-            onPress={() => { onPress() }}
+            onPress={onPress}
             style={{
                 alignItems: 'center',
                 marginBottom: 15,
