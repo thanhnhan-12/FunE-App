@@ -7,17 +7,18 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    StyleSheet
+    StyleSheet,
+    ImageBackground
 } from 'react-native';
 import { useRoute } from '@react-navigation/native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header';
 import Video from 'react-native-video';
-import Sound from 'react-native-video';
 import { AuthContext } from '../context/AuthContext';
 import Carousel from 'react-native-snap-carousel';
-import { MEDIA_URL } from '../config';
+import { MEDIA_URL, individuals_URL } from '../config';
+import { commentRoomApi } from '../clients/comment_room_api';
 import PlayerSound from "./Post/components/PlayerSound";
 
 const HomeScreen = ({ navigation }) => {
@@ -26,7 +27,10 @@ const HomeScreen = ({ navigation }) => {
     const [comment, setComment] = useState(null);
     const [like, setLike] = useState(false);
     const [post, setPost] = useState([]);
-    const [countLike, setCountLike] = useState(0);
+    const [userComment, setUserComment] = useState([]);
+    const [countLike, setCountLike] = useState(7);
+    const { userInfo } = useContext(AuthContext);
+    const id_user = userInfo.id;
 
     const handleOnClickLike = () => {
         if (like == true) {
@@ -37,9 +41,13 @@ const HomeScreen = ({ navigation }) => {
             setCountLike(countLike + 1)
         }
     }
+    const idPost = dataPost.id;
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
     };
+    const getAvatar = (hash) => {
+        return individuals_URL + hash;
+    }
     _renderItem = ({ item, index }) => {
         if (item.type === 'image/jpeg') {
             return (
@@ -61,12 +69,22 @@ const HomeScreen = ({ navigation }) => {
             );
         }
     };
+
+    const handleComment = async () => {
+        if (comment.length > 0) {
+            const result = await commentRoomApi.createComment({ idPost, id_user, comment });
+            setComment('');
+        }
+    }
+
     useEffect(() => {
         async function fetchData() {
             setPost(dataPost);
+            const result = await commentRoomApi.getsComment({ idPost });
+            setUserComment(result.data)
         }
         fetchData();
-    }, [])
+    }, [comment])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
             <Header
@@ -165,10 +183,11 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-                <TouchableOpacity style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center', flex: 1 }}>
                     <MaterialCommunityIcons name="comment-text-multiple" size={25} color="#33CC00" />
                     <TextInput
                         placeholder="Say something..."
+                        value={comment}
                         style={{
                             flex: 1,
                             paddingVertical: 0,
@@ -186,6 +205,7 @@ const HomeScreen = ({ navigation }) => {
                     />
 
                     <TouchableOpacity
+                        onPress={() => handleComment()}
                         style={{
                             backgroundColor: '#D62965',
                             paddingTop: 8,
@@ -204,7 +224,27 @@ const HomeScreen = ({ navigation }) => {
                             Send
                         </Text>
                     </TouchableOpacity>
-                </TouchableOpacity>
+                </View>
+                <View style={{ marginTop: 10, marginBottom: 40 }} >
+                    {userComment && userComment.length > 0 &&
+                        userComment.map((item, index) => (
+                            <View key={index} style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
+                                <Image
+                                    source={{ uri: getAvatar(item.User.image) }}
+                                    style={{ width: 70, height: 70, borderRadius: 70, marginRight: 10 }}
+
+                                />
+                                <View style={{ backgroundColor: 'white', width: "70%", borderRadius: 8, padding: 10 }}>
+                                    <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>{item.User.lastName} {item.User.firstName}</Text>
+                                    <Text>{item.comment}</Text>
+                                    <TouchableOpacity style={{ marginTop: 10 }}>
+                                        <Text style={{ fontWeight: 600, color: "gray" }}>Reply</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        ))
+                    }
+                </View>
             </ScrollView>
         </SafeAreaView >
     )

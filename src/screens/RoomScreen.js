@@ -269,7 +269,7 @@ const RoomScreen = ({ navigation }) => {
                                                 {posts && posts.length > 0 &&
                                                     posts.map((item, index) => (
                                                         <View key={index}>
-                                                            <SquareAlbum key={index} data={item} onPress={() => {
+                                                            <SquareAlbum data={item} onPress={() => {
                                                                 navigation.navigate('SocialPostScreen', {
                                                                     data: item
                                                                 })
@@ -475,7 +475,7 @@ const RoomScreen = ({ navigation }) => {
                                                 {posts && posts.length > 0 &&
                                                     posts.map((item, index) => (
                                                         <View key={index}>
-                                                            <SquareAlbum key={index} data={item} onPress={() => {
+                                                            <SquareAlbum data={item} onPress={() => {
                                                                 navigation.navigate('SocialPostScreen', {
                                                                     data: item
                                                                 })
