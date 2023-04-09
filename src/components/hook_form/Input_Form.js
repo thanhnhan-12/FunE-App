@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
-const Input_Form = ({ control, name, label, required, keyboardType }) => {
+const Input_Form = ({ control, name, label, required, keyboardType, fullWidth, style }) => {
 
   const styles = StyleSheet.create({
     inputContainer: {
@@ -13,7 +13,6 @@ const Input_Form = ({ control, name, label, required, keyboardType }) => {
       height: 40,
       padding: 10,
       borderRadius: 10,
-
       borderColor: '#ccc',
       borderWidth: 1,
     },
@@ -27,9 +26,10 @@ const Input_Form = ({ control, name, label, required, keyboardType }) => {
     rules.required = "This field is required!"
   }
   return (
-    <View style={{
-    }}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={[{
+      width: fullWidth && '100%'
+    }, style]}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value }, fieldState: { invalid, isTouched, isDirty, error } }) => {
