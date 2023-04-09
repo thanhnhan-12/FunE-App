@@ -20,6 +20,7 @@ import Carousel from 'react-native-snap-carousel';
 import { MEDIA_URL, individuals_URL } from '../config';
 import { commentRoomApi } from '../clients/comment_room_api';
 import PlayerSound from "./Post/components/PlayerSound";
+import PlayerVideo from "./Post/components/PlayerVideo";
 
 const HomeScreen = ({ navigation }) => {
     const route = useRoute();
@@ -58,7 +59,8 @@ const HomeScreen = ({ navigation }) => {
         } else if (item.type === 'video/mp4') {
             return (
                 <View style={styles.slide}>
-                    <Video source={{ uri: getIPFSLink(item.media) }} style={styles.video} />
+                    {/* <Video source={{ uri: getIPFSLink(item.media) }} style={styles.video} /> */}
+                    <PlayerVideo uri={getIPFSLink(item.media)} style={styles.video} />
                 </View>
             );
         } else if (item.type === 'audio/mpeg') {
