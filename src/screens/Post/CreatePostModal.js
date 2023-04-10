@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native'
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button } from 'react-native-paper';
 import Input_Form from '../../components/hook_form/Input_Form';
 import { objToForm } from '../../functions';
@@ -18,25 +18,25 @@ const CreatePostModal = ({ children }) => {
   const id_user = userInfo.id;
 
   const { control, handleSubmit } = useForm();
-  const onPressPhotoLibrary = () => {
-    const options = {
-      title: 'Select Media',
-      mediaType: 'mixed',
-      quality: 1,
-    };
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker')
-      } else if (response.errorMessage) {
-        console.log('ImagePicker Error: ', response.errorMessage)
-      } else {
-        // console.log(response.assets);
-        // setMediaSource(response.assets)
-        setMedias(response.assets)
-        // Do something with the captured file
-      }
-    });
-  }
+  // const onPressPhotoLibrary = () => {
+  //   const options = {
+  //     title: 'Select Media',
+  //     mediaType: 'mixed',
+  //     quality: 1,
+  //   };
+  //   ImagePicker.launchImageLibrary(options, (response) => {
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker')
+  //     } else if (response.errorMessage) {
+  //       console.log('ImagePicker Error: ', response.errorMessage)
+  //     } else {
+  //       // console.log(response.assets);
+  //       // setMediaSource(response.assets)
+  //       setMedias(response.assets)
+  //       // Do something with the captured file
+  //     }
+  //   });
+  // }
   const onSubmit = async (data) => {
     const { medias, ...restData } = data;
     const payload = { ...restData, id_user }

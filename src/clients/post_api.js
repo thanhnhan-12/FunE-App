@@ -17,4 +17,7 @@ export const postApi = {
       params: params
     });
   },
+  lovePost: async (payload) => {
+    return await instance.post('/post/love', payload);
+  },
 }

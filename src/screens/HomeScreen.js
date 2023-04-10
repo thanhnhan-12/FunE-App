@@ -43,7 +43,7 @@ const HomeScreen = () => {
     }
 
     async function fetchPost(limit, offset) {
-        const result = await postApi.getPosts({ limit, offset });
+        const result = await postApi.getPosts({ id_user, limit, offset });
         if (result.posts) {
             setPosts(result.posts);
         }

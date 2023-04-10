@@ -22,7 +22,7 @@ const MenuNavigation = () => {
         <Tab.Navigator
             initialRouteName="Home"
             activeColor="#e91e63"
-            barStyle={{ backgroundColor: '#fff' }}
+            barStyle={{ backgroundColor: '#fff', height: 70 }}
         >
             <Tab.Screen
                 name="Home"
