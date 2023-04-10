@@ -26,6 +26,7 @@ module.exports = {
     "no-unused-vars": 'warn',
     "react-native/no-inline-styles": 'off',
     "react-native/no-color-literals": 'off',
-    "react-native/sort-styles": 'off'
+    "react-native/sort-styles": 'off',
+    "no-undef": "error"
   }
 };

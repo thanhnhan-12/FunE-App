@@ -1,25 +1,29 @@
-import React from "react";
-import { Image, StatusBar, StyleSheet, Text, View, Dimensions, ImageBackground, TouchableOpacity } from "react-native";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import React, { useState, useContext } from "react";
+import { Image, StatusBar, StyleSheet, Text, View, Dimensions, ImageBackground, TouchableOpacity, Alert } from "react-native";
+// import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 import { MEDIA_URL, individuals_URL } from "../../../config";
 const { height: WINDOW_HEIGHT } = Dimensions.get("window");
-import { Divider } from "react-native-paper";
 import PlayerSound from "./PlayerSound";
 import PlayerVideo from "./PlayerVideo";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CommentModal from "./comments/CommentModal";
+import { postApi } from "../../../clients/post_api";
+import { AuthContext } from "../../../context/AuthContext";
 
 export default function MediaPlayer({ data, isActive }) {
-
-  const bottomTabHeight = 50/* useBottomTabBarHeight(); */
+  const bottomTabHeight = 70/* useBottomTabBarHeight(); */
   const statusBarHeight = StatusBar.currentHeight || 0;
-  const heightView = WINDOW_HEIGHT - bottomTabHeight - statusBarHeight;
+  const { userInfo } = useContext(AuthContext);
+  const id_user = userInfo.id;
+
   const getIPFSLink = (hash) => {
-    const gateway = MEDIA_URL;
     return MEDIA_URL + hash;
   };
+  const [isLove, setIsLove] = useState(data.isLove);
+  const [totalLoves, setTotalLoves] = useState(data.total_loves);
+
   return (
     <View
       style={[
@@ -72,13 +76,41 @@ export default function MediaPlayer({ data, isActive }) {
         <View style={styles.verticalBarItem}>
           <TouchableOpacity
             style={styles.verticalBarIcon}
+            onPress={async () => {
+
+              try {
+                if (data.id_post && id_user) {
+                  const result = await postApi.lovePost({ id_user, id_post: data.id_post, isLove: !isLove });
+                  console.log(result)
+                  if (result.message === 'OK') {
+                    setIsLove((isLove) => {
+                      setTotalLoves((total) => {
+                        if (isLove) {
+                          return total - 1
+                        } return total + 1
+                      });
+                      return !isLove;
+                    }
+                    );
+
+                  }
+                }
+                else {
+                  Alert.alert('please login or connect network !')
+                }
+              } catch (error) {
+                Alert.alert('sometime error !')
+              }
+
+            }}
           >
             <Ionicons
               name={'heart'}
               size={36}
-              color={data.isLove ? 'red' : '#fff'}
+              color={isLove ? 'red' : '#fff'}
             />
           </TouchableOpacity>
+          <Text style={{ color: '#fff', margin: 0, padding: 0 }}>{totalLoves}</Text>
         </View>
         <View style={styles.verticalBarItem}>
           <CommentModal

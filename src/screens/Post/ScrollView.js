@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { postApi } from '../../clients/post_api';
 import VideoPlayer from './components/MediaPlayer';
-import { FlatList, View, StyleSheet, Dimensions, Text } from 'react-native';
+import { FlatList, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { AuthContext } from '../../context/AuthContext';
 const ScrollView = () => {
+  const { userInfo } = useContext(AuthContext);
+  const id_user = userInfo.id;
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [posts, setPosts] = useState([]);
-  const bottomTabHeight = /* useBottomTabBarHeight() ||  */50;
+  const bottomTabHeight = /* useBottomTabBarHeight() ||  */70;
   const { height: WINDOW_HEIGHT } = Dimensions.get("window");
 
   async function fetchData(limit, offset) {
-    const result = await postApi.getPosts({ limit, offset });
+    const result = await postApi.getPosts({ limit, offset, id_user });
     if (result.posts) {
-      setPosts((prev) => [...prev, ...result.posts]);
+      setPosts((prev) => [...result.posts]);
     }
     else {
       Alert.alert("get category fail!");
@@ -33,11 +36,12 @@ const ScrollView = () => {
         pagingEnabled
         renderItem={({ item, index }) => {
           {
-            const { medias, id: id_post, description } = item;
-            const firstMedia = medias[0];
-            const { type, media, id_media, firstName, lastName, avatar } = firstMedia;
+            const { medias, id: id_post, description, total_loves } = item;
 
-            return <VideoPlayer data={{ type, media, id_media, id_post, description, firstName, lastName, avatar }} isActive={activeVideoIndex === index} />
+            const firstMedia = medias[0];
+            const { type, media, id_media, firstName, lastName, avatar, isLove } = firstMedia;
+            console.log(firstMedia.isLove)
+            return <VideoPlayer data={{ type, media, id_media, id_post, description, firstName, lastName, avatar, total_loves, isLove }} isActive={activeVideoIndex === index} />
 
           }
         }}
@@ -49,7 +53,7 @@ const ScrollView = () => {
         }}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5} // load more when the end is within half the visible length
-        keyExtractor={(item) => item.medias[0].id_media}
+        keyExtractor={(item) => item.id + item.medias[0].id_media}
       />
     </View>
   );
