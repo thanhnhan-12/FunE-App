@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-function CartItem({ name, description, price, onPress }) {
+function CartItem({ name, description, price, onPress, uri }) {
     const [quantity, setQuantity] = useState(1);
     const handleDecreaseQuantity = () => {
         if (quantity > 1) {
@@ -18,7 +18,7 @@ function CartItem({ name, description, price, onPress }) {
             <View style={styles.container}>
                 <View>
                     <Image
-                        source={require("../assets/images/Altos-Odyssey.jpeg")}
+                        source={{ uri: uri }}
                         style={styles.image}
                     />
                 </View>

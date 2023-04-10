@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     Dimensions,
     SafeAreaView,
@@ -8,11 +8,27 @@ import CartPayment from '../components/CartPayment';
 import Header from '../components/Header';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { useRoute } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
+import { MEDIA_URL } from '../config';
+import { cartApi } from '../clients/cart_api';
 
 const PaymentProduct = ({ navigation }) => {
-    const [sum, setSum] = useState(9);
-
+    const route = useRoute();
+    const total = route.params.total;
+    const { userInfo } = useContext(AuthContext);
+    const id_user = userInfo.id;
+    const [cart, setCart] = useState([]);
+    const getIPFSLink = (hash) => {
+        return MEDIA_URL + hash;
+    };
+    useEffect(() => {
+        async function fetchData() {
+            const item = await cartApi.gets({ id_user });
+            setCart(item.data);
+        }
+        fetchData();
+    }, [])
     return (
 
         <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
@@ -26,8 +42,21 @@ const PaymentProduct = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 style={{ padding: 15, width: '100%' }}>
                 <View>
-                    <CartPayment name={'Old Book'} description={'Truyện ngắn A.L.Tsekhop'} price={4} quantity={1} />
-                    <CartPayment name={'Old Book'} description={'Truyện ngắn A.L.Tsekhop'} price={5} quantity={1} />
+                    {cart && cart.length > 0 &&
+                        cart.map((item, index) => (
+                            <View key={index}>
+                                <CartPayment
+                                    name={item.cartData.name}
+                                    description={item.cartData.description}
+                                    price={item.cartData.pricing}
+                                    quantity={item.quantity}
+                                    uri={getIPFSLink(item.cartData.media)}
+                                />
+
+                            </View>
+                        ))
+                    }
+
                 </View>
                 <View
                     style={{
@@ -39,7 +68,7 @@ const PaymentProduct = ({ navigation }) => {
                         Order Total
                     </Text>
                     <TouchableOpacity onPress={() => { }}>
-                        <Text style={{ color: 'red', fontSize: 18 }}>$ {sum}.00</Text>
+                        <Text style={{ color: 'red', fontSize: 18 }}>$ {total}.00</Text>
                     </TouchableOpacity>
                 </View>
                 <View
@@ -194,14 +223,13 @@ const PaymentProduct = ({ navigation }) => {
                 </TouchableOpacity>
                 <View style={{ width: '30%', alignItems: 'center' }}>
                     <Text style={{ color: 'black', fontWeight: 700 }}>TOTAL</Text>
-                    <Text style={{ color: 'black', fontWeight: 700 }}>$ {sum}.00</Text>
+                    <Text style={{ color: 'black', fontWeight: 700 }}>$ {total}.00</Text>
                 </View>
             </View>
         </SafeAreaView >
     )
 }
 
-const screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     title: {
         color: 'black',

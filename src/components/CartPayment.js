@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-function CartPayment({ name, description, price, onPress }) {
-    const [quantity, setQuantity] = useState(1);
+function CartPayment({ name, description, price, onPress, uri, quantity }) {
 
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <View>
                     <Image
-                        source={require("../assets/images/Altos-Odyssey.jpeg")}
+                        source={{ uri: uri }}
                         style={styles.image}
                     />
                 </View>
