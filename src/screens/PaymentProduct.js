@@ -18,6 +18,7 @@ const PaymentProduct = ({ navigation }) => {
     const total = route.params.total;
     const { userInfo } = useContext(AuthContext);
     const id_user = userInfo.id;
+    const [reset, setReset] = useState(false);
     const [cart, setCart] = useState([]);
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
@@ -26,9 +27,10 @@ const PaymentProduct = ({ navigation }) => {
         async function fetchData() {
             const item = await cartApi.gets({ id_user });
             setCart(item.data);
+            setReset(true);
         }
         fetchData();
-    }, [])
+    }, [reset])
     return (
 
         <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
