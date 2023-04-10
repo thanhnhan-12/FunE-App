@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import axios from 'axios';
 import { BASE_URL } from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { cartApi } from "../clients/cart_api"
 
 export const AuthContext = createContext();
 
@@ -10,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [userInfo, setUserInfo] = useState([]);
     const [dataPost, setDataPost] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
 
     const register = async (firstName, lastName, email, password, birthday) => {
         setIsLoading(true);
@@ -57,9 +59,14 @@ export const AuthProvider = ({ children }) => {
         setDataPost(data);
     }
 
+    const addToCart = async (data) => {
+        await cartApi.create(data);
+        // setCartItems([...cartItems, product]);
+    };
+
     return (
         <AuthContext.Provider
-            value={{ register, login, logout, transmissionPropsPost, setUserInfo, isLoading, userInfo, dataPost }}
+            value={{ register, login, logout, transmissionPropsPost, setUserInfo, addToCart, isLoading, userInfo, dataPost }}
         >
             {children}
         </AuthContext.Provider>

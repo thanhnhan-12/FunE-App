@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Image, SafeAreaView,
-  ScrollView, StyleSheet, Text, TouchableOpacity, View, ImageBackground
+  ScrollView, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Alert
 } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useRoute } from '@react-navigation/native';
 import { MEDIA_URL } from '../config';
 import Header from '../components/Header';
+import { AuthContext } from '../context/AuthContext';
 
 const ProductDetail = ({ navigation }) => {
   const [quantity, setQuantity] = useState(1);
@@ -16,18 +17,13 @@ const ProductDetail = ({ navigation }) => {
   const [like, setLike] = useState(false);
   const [countLike, setCountLike] = useState(0);
   const route = useRoute();
+  const { addToCart, userInfo } = useContext(AuthContext);
   const getIPFSLink = (hash) => {
     return MEDIA_URL + hash;
   };
-  const handleOnClickLike = () => {
-    if (like == true) {
-      setLike(false);
-      setCountLike(countLike - 1)
-    } else {
-      setLike(true);
-      setCountLike(countLike + 1)
-    }
-  }
+
+  const id_user = userInfo.id;
+
   const handleDecreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1)
@@ -39,6 +35,13 @@ const ProductDetail = ({ navigation }) => {
   const fetchData = () => {
     setProduct(route.params.data);
     console.log(product)
+  }
+  const handleAddCart = () => {
+    const idProduct = product.id;
+    const idUser = id_user;
+    addToCart({ idProduct, idUser, quantity });
+    Alert.alert("Add item to cart successfully!");
+
   }
   useEffect(() => {
     fetchData();
@@ -268,7 +271,7 @@ const ProductDetail = ({ navigation }) => {
               <Text style={styles.buyNow}>BUY NOW</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text onPress={() => navigation.navigate('CartNavigation')} style={styles.addCart}>ADD TO CART</Text>
+              <Text onPress={() => handleAddCart()} style={styles.addCart}>ADD TO CART</Text>
             </TouchableOpacity>
           </View>
         </View>
