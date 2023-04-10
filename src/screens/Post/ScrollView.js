@@ -3,26 +3,28 @@ import { postApi } from '../../clients/post_api';
 import VideoPlayer from './components/MediaPlayer';
 import { FlatList, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+// import { useBottomTabBarHeight } from '@react-navigation/material-bottom-tabs';
+
 import { AuthContext } from '../../context/AuthContext';
 const ScrollView = () => {
   const { userInfo } = useContext(AuthContext);
   const id_user = userInfo.id;
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [posts, setPosts] = useState([]);
-  const bottomTabHeight = /* useBottomTabBarHeight() ||  */70;
+  const bottomTabHeight = useBottomTabBarHeight() || 70;
   const { height: WINDOW_HEIGHT } = Dimensions.get("window");
 
   async function fetchData(limit, offset) {
     const result = await postApi.getPosts({ limit, offset, id_user });
     if (result.posts) {
-      setPosts((prev) => [...result.posts]);
+      setPosts((prev) => [...prev, ...result.posts]);
     }
     else {
       Alert.alert("get category fail!");
     }
   }
   useEffect(() => {
-    fetchData(10, 0);
+    fetchData(3, 0);
   }, [])
   const handleLoadMore = () => {
     const offset = posts.length;

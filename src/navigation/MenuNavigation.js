@@ -1,28 +1,26 @@
 import React from 'react';
 
-import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import JoinRoom from '../screens/JoinRoom';
 import QRScanScreen from '../screens/QRScanScreen';
 
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { NavigationContainer } from '@react-navigation/native';
 import SearchNavigation from './SearchNavigation';
 import HomeNavigation from './HomeNavigation';
 import RoomNavigation from './RoomNavigation';
+// import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const MenuNavigation = () => {
     return (
-        // <NavigationContainer>
         <Tab.Navigator
             initialRouteName="Home"
             activeColor="#e91e63"
-            barStyle={{ backgroundColor: '#fff', height: 70 }}
+            barStyle={{ backgroundColor: '#fff' }}
+            screenOptions={{ headerShown: false }}
         >
             <Tab.Screen
                 name="Home"
@@ -78,7 +76,6 @@ const MenuNavigation = () => {
                 }}
             />
         </Tab.Navigator>
-        // </NavigationContainer>
     );
 };
 

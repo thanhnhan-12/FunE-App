@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Image, StatusBar, StyleSheet, Text, View, Dimensions, ImageBackground, TouchableOpacity, Alert } from "react-native";
-// import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+// import { useBottomTabBarHeight } from '@react-navigation/material-bottom-tabs';
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 import { MEDIA_URL, individuals_URL } from "../../../config";
-const { height: WINDOW_HEIGHT } = Dimensions.get("window");
 import PlayerSound from "./PlayerSound";
 import PlayerVideo from "./PlayerVideo";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,11 +13,11 @@ import { postApi } from "../../../clients/post_api";
 import { AuthContext } from "../../../context/AuthContext";
 
 export default function MediaPlayer({ data, isActive }) {
-  const bottomTabHeight = 70/* useBottomTabBarHeight(); */
+  const bottomTabHeight = useBottomTabBarHeight();
   const statusBarHeight = StatusBar.currentHeight || 0;
   const { userInfo } = useContext(AuthContext);
   const id_user = userInfo.id;
-
+  const { height: WINDOW_HEIGHT } = Dimensions.get("window");
   const getIPFSLink = (hash) => {
     return MEDIA_URL + hash;
   };

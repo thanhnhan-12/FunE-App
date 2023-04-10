@@ -4,11 +4,10 @@ import {
 } from '@react-navigation/native-stack'
 import HomeScreen from '../screens/HomeScreen'
 import ScrollView from '../screens/Post/ScrollView'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const HomeNavigation = () => {
   const Stack = createNativeStackNavigator()
   return (
-    <Stack.Navigator screenOptions={{ headerShown: true }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Group>
         <Stack.Screen
           name={'HomeScreen'}
