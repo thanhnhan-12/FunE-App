@@ -62,11 +62,11 @@ const CreatePostModal = ({ children }) => {
 
   const styles = StyleSheet.create({
     button: {
+      backgroundColor: '#ec5990',
       color: "#841584",
+      borderRadius: 10,
       marginTop: 40,
       padding: 5,
-      backgroundColor: '#ec5990',
-      borderRadius: 10,
       marginBottom: 100
     }
   })
@@ -127,7 +127,7 @@ const CreatePostModal = ({ children }) => {
               mode="contained"
               style={styles.button}
               onPress={handleSubmit(onSubmit)}>
-              Post
+              <Text>Post</Text>
             </Button>
           </Modal.Footer>
         </ScrollView>

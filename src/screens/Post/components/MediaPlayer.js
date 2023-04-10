@@ -9,6 +9,7 @@ import PlayerSound from "./PlayerSound";
 import PlayerVideo from "./PlayerVideo";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import CommentModal from "./comments/CommentModal";
 
 export default function MediaPlayer({ data, isActive }) {
 
@@ -44,11 +45,11 @@ export default function MediaPlayer({ data, isActive }) {
         <View style={styles.bottomRightSection}>
           <Image
             source={require("../../../assets/images/posts/floating-music-note.png")}
-            style={[styles.floatingMusicNote]}
+            style={styles.floatingMusicNote}
           />
           <Image
             source={require("../../../assets/images/posts/disc.png")}
-            style={[styles.musicDisc]}
+            style={styles.musicDisc}
           />
         </View>
       </View>
@@ -75,12 +76,12 @@ export default function MediaPlayer({ data, isActive }) {
             <Ionicons
               name={'heart'}
               size={36}
-              color={data?.isLove ? 'red' : '#fff'}
+              color={data.isLove ? 'red' : '#fff'}
             />
           </TouchableOpacity>
         </View>
         <View style={styles.verticalBarItem}>
-          <TouchableOpacity
+          <CommentModal
             style={styles.verticalBarIcon}
           >
             <Ionicons
@@ -88,7 +89,7 @@ export default function MediaPlayer({ data, isActive }) {
               size={36}
               color={'#fff'}
             />
-          </TouchableOpacity>
+          </CommentModal>
         </View>
         <View style={styles.verticalBarItem}>
           <TouchableOpacity
@@ -140,18 +141,7 @@ const styles = StyleSheet.create({
     color: "white",
     marginVertical: 8,
   },
-  musicNameContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  musicNameIcon: {
-    width: 12,
-    height: 12,
-    marginRight: 8,
-  },
-  musicName: {
-    color: "white",
-  },
+
   musicDisc: {
     width: 40,
     height: 40,
@@ -169,10 +159,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
   },
-  verticalBarText: {
-    color: "white",
-    marginTop: 4,
-  },
+
   avatarContainer: {
     marginBottom: 48,
   },
