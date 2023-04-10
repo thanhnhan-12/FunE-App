@@ -7,17 +7,16 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useRoute } from '@react-navigation/native';
 import { MEDIA_URL } from '../config';
+import { cartApi } from '../clients/cart_api';
 import Header from '../components/Header';
 import { AuthContext } from '../context/AuthContext';
 
 const ProductDetail = ({ navigation }) => {
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState([]);
-  const [comment, setComment] = useState(null);
-  const [like, setLike] = useState(false);
-  const [countLike, setCountLike] = useState(0);
+  const [cart, setCart] = useState([]);
   const route = useRoute();
-  const { addToCart, userInfo } = useContext(AuthContext);
+  const { addToCart, userInfo, countLengthCart } = useContext(AuthContext);
   const getIPFSLink = (hash) => {
     return MEDIA_URL + hash;
   };
@@ -32,16 +31,16 @@ const ProductDetail = ({ navigation }) => {
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1)
   }
-  const fetchData = () => {
+  async function fetchData() {
     setProduct(route.params.data);
-    console.log(product)
+    const item = await cartApi.gets({ id_user });
+    setCart(item.data);
   }
   const handleAddCart = () => {
     const idProduct = product.id;
     const idUser = id_user;
     addToCart({ idProduct, idUser, quantity });
     Alert.alert("Add item to cart successfully!");
-
   }
   useEffect(() => {
     fetchData();

@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [userInfo, setUserInfo] = useState([]);
     const [dataPost, setDataPost] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
+    const [lengthCart, setLengthCart] = useState(0);
 
     const register = async (firstName, lastName, email, password, birthday) => {
         setIsLoading(true);
@@ -59,6 +59,10 @@ export const AuthProvider = ({ children }) => {
         setDataPost(data);
     }
 
+    const countLengthCart = (data) => {
+        setLengthCart(data);
+    }
+
     const addToCart = async (data) => {
         await cartApi.create(data);
         // setCartItems([...cartItems, product]);
@@ -66,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ register, login, logout, transmissionPropsPost, setUserInfo, addToCart, isLoading, userInfo, dataPost }}
+            value={{ register, login, logout, transmissionPropsPost, setUserInfo, addToCart, countLengthCart, isLoading, userInfo, dataPost, lengthCart }}
         >
             {children}
         </AuthContext.Provider>
