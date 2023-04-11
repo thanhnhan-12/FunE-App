@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
     Dimensions,
     SafeAreaView,
-    ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput
+    ScrollView, StyleSheet, Text, TouchableOpacity, View, Button
 } from 'react-native';
 import CartPayment from '../components/CartPayment';
 import Header from '../components/Header';
@@ -11,28 +11,33 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useRoute } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 import { MEDIA_URL } from '../config';
-import { cartApi } from '../clients/cart_api';
+import { userApi } from '../clients/user_api';
 
 const PaymentProduct = ({ navigation }) => {
     const route = useRoute();
     const total = route.params.total;
+    const data = route.params.data;
+    const quantity = route.params.quantity;
     const { userInfo } = useContext(AuthContext);
-    const id_user = userInfo.id;
+    const [address, setAddress] = useState([]);
+    const id_address = parseInt(userInfo.address);
     const [reset, setReset] = useState(false);
     const [cart, setCart] = useState([]);
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
     };
+
     useEffect(() => {
         async function fetchData() {
-            const item = await cartApi.gets({ id_user });
-            setCart(item.data);
+            setCart(data);
+            const location = await userApi.getsAddressByUser({ id_address });
+            setAddress(location.data);
+            console.log(address);
             setReset(true);
         }
         fetchData();
     }, [reset])
     return (
-
         <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
             <Header
                 title={"Checkout"}
@@ -44,7 +49,7 @@ const PaymentProduct = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 style={{ padding: 15, width: '100%' }}>
                 <View>
-                    {cart && cart.length > 0 &&
+                    {cart && cart.length > 0 ?
                         cart.map((item, index) => (
                             <View key={index}>
                                 <CartPayment
@@ -57,6 +62,17 @@ const PaymentProduct = ({ navigation }) => {
 
                             </View>
                         ))
+                        :
+                        <View>
+                            <CartPayment
+                                name={cart.name}
+                                description={cart.description}
+                                price={cart.pricing}
+                                quantity={quantity}
+                                uri={getIPFSLink(cart.media)}
+                            />
+
+                        </View>
                     }
 
                 </View>
@@ -94,37 +110,41 @@ const PaymentProduct = ({ navigation }) => {
                         />
                     </TouchableOpacity>
                 </View>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: 10
-                    }}>
-                    <View>
-                        <Text style={{ fontSize: 16, color: '#181A1A', fontWeight: 600 }}>
-                            Quang Huy
-                        </Text>
-                        <Text style={{ fontSize: 16, color: '#181A1A' }}>
-                            10 7 6
-                        </Text>
-                        <Text style={{ fontSize: 16, color: '#181A1A' }}>
-                            No name
-                        </Text>
-                        <Text style={{ fontSize: 16, color: '#181A1A' }}>
-                            VIETNAM
-                        </Text>
-                    </View>
-                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { }}>
 
-                        <MaterialIcons
-                            name="chevron-right"
-                            size={24}
-                            color="gray"
-                            style={{ marginLeft: 5 }}
-                        />
-                    </TouchableOpacity>
-                </View>
+                {address &&
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: 10
+                        }}>
+                        <View>
+                            <Text style={{ fontSize: 16, color: '#181A1A', fontWeight: 600 }}>
+                                {userInfo.lastName} {userInfo.firstName}
+                            </Text>
+                            <Text style={{ fontSize: 16, color: '#181A1A' }}>
+                                {address.address}
+                            </Text>
+                            <Text style={{ fontSize: 16, color: '#181A1A' }}>
+                                {address.province}
+                            </Text>
+                            <Text style={{ fontSize: 16, color: '#181A1A' }}>
+                                {address.country}
+                            </Text>
+                        </View>
+                        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { navigation.navigate("MyAddress") }}>
+
+                            <MaterialIcons
+                                name="chevron-right"
+                                size={24}
+                                color="gray"
+                                style={{ marginLeft: 5 }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                }
+
                 <View style={{ height: 1, width: '100%', backgroundColor: '#ccc' }}></View>
                 <View
                     style={{
@@ -145,7 +165,7 @@ const PaymentProduct = ({ navigation }) => {
                             marginTop: 10
                         }}>
                         <Text style={{ fontSize: 14, color: 'red' }}>
-                            Selecta card payment
+                            Select card payment
                         </Text>
                     </View>
                     <View

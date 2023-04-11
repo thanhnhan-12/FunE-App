@@ -18,9 +18,15 @@ const MenuNavigation = () => {
     return (
         <Tab.Navigator
             initialRouteName="Home"
-            activeColor="#e91e63"
-            barStyle={{ backgroundColor: '#fff' }}
-            screenOptions={{ headerShown: false }}
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: '#e91e63',
+                tabBarInactiveTintColor: '#000',
+                tabBarStyle: {
+                    backgroundColor: "#fff",
+                    borderTopColor: 'rgba(225,225,225,0.2)'
+                },
+            }}
         >
             <Tab.Screen
                 name="Home"
@@ -41,6 +47,7 @@ const MenuNavigation = () => {
                         <Ionicons
                             name="search"
                             size={26}
+                            color={color}
                         />
                     ),
                 }}

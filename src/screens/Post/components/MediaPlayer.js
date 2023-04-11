@@ -81,7 +81,6 @@ export default function MediaPlayer({ data, isActive }) {
               try {
                 if (data.id_post && id_user) {
                   const result = await postApi.lovePost({ id_user, id_post: data.id_post, isLove: !isLove });
-                  console.log(result)
                   if (result.message === 'OK') {
                     setIsLove((isLove) => {
                       setTotalLoves((total) => {

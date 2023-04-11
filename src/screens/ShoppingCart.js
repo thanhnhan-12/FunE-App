@@ -10,7 +10,6 @@ import { cartApi } from '../clients/cart_api';
 import { MEDIA_URL } from '../config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
 const ShoppingCart = ({ navigation }) => {
     const { userInfo } = useContext(AuthContext);
     const id_user = userInfo.id;
@@ -116,7 +115,8 @@ const ShoppingCart = ({ navigation }) => {
             </ScrollView>
             <View style={styles.bottom}>
                 <TouchableOpacity style={styles.btnCheck} onPress={() => navigation.navigate('PaymentProduct', {
-                    total: total
+                    total: total,
+                    data: cart
                 })}>
                     <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>PROCEED TO CHECKOUT</Text>
                 </TouchableOpacity>

@@ -60,7 +60,6 @@ const RoomScreen = ({ navigation }) => {
         const result = await postRoomApi.getPosts({ limit, offset, idRoom });
         if (result.posts) {
             setPosts(result.posts);
-            console.log(posts);
         }
         else {
             console.log("get post fail!");

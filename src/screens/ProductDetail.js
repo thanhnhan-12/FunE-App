@@ -13,6 +13,8 @@ import { AuthContext } from '../context/AuthContext';
 
 const ProductDetail = ({ navigation }) => {
   const [quantity, setQuantity] = useState(1);
+  const [reset, setReset] = useState(false);
+  const [total, setTotal] = useState(0);
   const [product, setProduct] = useState([]);
   const [cart, setCart] = useState([]);
   const route = useRoute();
@@ -27,14 +29,18 @@ const ProductDetail = ({ navigation }) => {
     if (quantity > 1) {
       setQuantity(quantity - 1)
     }
+    setReset(!reset)
   }
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1)
+    setReset(!reset)
   }
   async function fetchData() {
     setProduct(route.params.data);
     const item = await cartApi.gets({ id_user });
     setCart(item.data);
+    setTotal(parseInt(product.pricing) * quantity);
+    setReset(!reset)
   }
   const handleAddCart = () => {
     const idProduct = product.id;
@@ -44,7 +50,7 @@ const ProductDetail = ({ navigation }) => {
   }
   useEffect(() => {
     fetchData();
-  }, [])
+  }, [reset])
   return (
     <>
       <Header
@@ -266,11 +272,15 @@ const ProductDetail = ({ navigation }) => {
             marginBottom: 20
           }}>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('PaymentProduct', {
+              total: total,
+              data: product,
+              quantity: quantity
+            })}>
               <Text style={styles.buyNow}>BUY NOW</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
-              <Text onPress={() => handleAddCart()} style={styles.addCart}>ADD TO CART</Text>
+            <TouchableOpacity onPress={() => handleAddCart()}>
+              <Text style={styles.addCart}>ADD TO CART</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -5,7 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const PlayerVideo = ({ style, isActive, uri }) => {
   const [viewControl, setViewControl] = useState(false);
   const [playing, setPlaying] = useState(!isActive);
-  console.log('dá', uri)
   return (
     <View style={styles.container}>
       <View style={styles.playBtn}>

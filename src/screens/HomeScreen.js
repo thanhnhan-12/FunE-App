@@ -23,7 +23,7 @@ import ListProduct from '../components/ListProduct';
 import { MEDIA_URL } from '../config';
 import SquareAlbum from '../components/SquareAlbum';
 
-const HomeScreen = () => {
+const HomeScreen = ({ route }) => {
 
     const navigation = useNavigation();
     const { userInfo } = useContext(AuthContext);
@@ -36,7 +36,7 @@ const HomeScreen = () => {
     const [opacityModal, setOpacityModal] = useState(false);
     const [posts, setPosts] = useState([]);
     const [products, setProducts] = useState([]);
-
+    console.log(route.params)
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
         setModalVisible(!modalVisible);
         setOpacityModal(!opacityModal);
@@ -60,13 +60,22 @@ const HomeScreen = () => {
     const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
 
     useEffect(() => {
-        async function fetchData() {
-            const productUser = await productApi.getProductByUserId(id_user);
-            setProducts(productUser.product);
+        if (route.params?.key === 'reset') {
+            async function fetchData() {
+                const productUser = await productApi.getProductByUserId(id_user);
+                setProducts(productUser.product);
+            }
+            fetchData();
+            fetchPost(10, 0);
+        } else {
+            async function fetchData() {
+                const productUser = await productApi.getProductByUserId(id_user);
+                setProducts(productUser.product);
+            }
+            fetchData();
+            fetchPost(10, 0);
         }
-        fetchData();
-        fetchPost(10, 0);
-    }, [modalVisible])
+    }, [route.params?.key, modalVisible])
     return (
         <>
             <Header

@@ -19,7 +19,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import Preview from '../components/MediaPicker/Preview';
 
 const CreateProduct = ({ navigation }) => {
-  const { userInfo, isLoading, logout } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const [categories, setCategories] = useState([])
   const [medias, setMedias] = useState([]);
   const id_user = userInfo.id;
@@ -83,14 +83,10 @@ const CreateProduct = ({ navigation }) => {
       formData.append('media', file);
     }
 
-    console.log("vo5", formData)
-
-
     const result = await productApi.createProduct(formData);
-    console.log(result)
     if (result.message) {
       Alert.alert("create product success");
-      navigation.navigate('Home')
+      navigation.navigate("Home", { key: 'reset' });
     }
     else {
       Alert.alert("create product fail!");
@@ -109,7 +105,6 @@ const CreateProduct = ({ navigation }) => {
   useEffect(() => {
     async function fetchData() {
       const result = await productApi.getCategories();
-      // console.log(result)
       if (result.categories) {
         setCategories(result.categories);
       }
@@ -205,7 +200,6 @@ const CreateProduct = ({ navigation }) => {
             {
               medias && medias.length > 0 &&
               medias.map((file) => {
-                // console.log("Media", file)
                 return <Preview style={{ width: '90%', height: 250, borderRadius: 10 }} key={file.fileName} file={file} />
               })
             }

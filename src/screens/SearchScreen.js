@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     View,
     Text,
@@ -15,12 +15,28 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import BannerSlider from '../components/BannerSlider';
 import { windowWidth } from '../utils/Dimensions';
 import { freeGames, paidGames, sliderData } from '../model/data';
+import { productApi } from '../clients/product_api';
+import { MEDIA_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
 import Header from '../components/Header';
 
 const SearchScreen = ({ navigation }) => {
     const renderBanner = ({ item, index }) => {
         return <BannerSlider data={item} />;
     };
+    const { userInfo } = useContext(AuthContext);
+    const [products, setProducts] = useState([]);
+
+    const getIPFSLink = (hash) => {
+        return MEDIA_URL + hash;
+    };
+    useEffect(() => {
+        async function fetchData() {
+            const result = await productApi.getProducts();
+            setProducts(result.products);
+        }
+        fetchData();
+    }, [])
 
     const [searchText, setSearchText] = useState('');
 
@@ -37,7 +53,7 @@ const SearchScreen = ({ navigation }) => {
                 trueReturn
                 navigation={navigation}
             />
-            <ScrollView style={{ padding: 20 }}>
+            <ScrollView style={{ padding: 20, marginBottom: 50 }}>
                 <View
                     style={{
                         flexDirection: 'row',
@@ -104,9 +120,11 @@ const SearchScreen = ({ navigation }) => {
                 </View>
                 <FlatList
                     horizontal={true}
-                    data={paidGames}
+                    data={products}
                     renderItem={({ item, index }) => {
-                        return <View key={index}>
+                        return <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', {
+                            data: item
+                        })} key={index}>
                             <Image
                                 style={{
                                     width: 100,
@@ -115,14 +133,14 @@ const SearchScreen = ({ navigation }) => {
                                     borderRadius: 10,
                                     marginRight: 20
                                 }}
-                                source={require('../assets/images/genshin-impact.jpeg')}
+                                source={{ uri: getIPFSLink(item.media) }}
                             />
-                            <Text>{item.price}</Text>
+                            <Text>$ {item.pricing}.00</Text>
                             <Text style={{
                                 fontSize: 14,
                                 fontWeight: 700,
-                            }}>{item.subtitle}</Text>
-                        </View>
+                            }}>{item.name}</Text>
+                        </TouchableOpacity>
                     }
                     }
                 >
@@ -242,9 +260,11 @@ const SearchScreen = ({ navigation }) => {
                 <View style={{ marginBottom: 20 }}>
                     <FlatList
                         horizontal={true}
-                        data={paidGames}
+                        data={products}
                         renderItem={({ item, index }) => {
-                            return <View key={index}>
+                            return <TouchableOpacity onPress={() => navigation.navigate('ProductDetail', {
+                                data: item
+                            })} key={index}>
                                 <Image
                                     style={{
                                         width: 100,
@@ -253,69 +273,71 @@ const SearchScreen = ({ navigation }) => {
                                         borderRadius: 10,
                                         marginRight: 20
                                     }}
-                                    source={require('../assets/images/god-of-war.jpeg')}
+                                    source={{ uri: getIPFSLink(item.media) }}
                                 />
-                                <Text>{item.price}</Text>
+                                <Text>$ {item.pricing}.00</Text>
                                 <Text style={{
                                     fontSize: 14,
                                     fontWeight: 700,
-                                }}>{item.subtitle}</Text>
-                            </View>
+                                }}>{item.name}</Text>
+                            </TouchableOpacity>
                         }
                         }
                     >
 
                     </FlatList>
                 </View>
-                <View style={{
-                    flex: 1,
-                    width: '100%',
-                    height: 130,
-                    opacity: 1,
-                    marginBottom: 30
-                }}>
-                    <ImageBackground source={backgroundIndividual} resizeMode="cover"
-                        style={
-                            {
-                                flex: 1,
-                                justifyContent: 'center',
-                                borderRadius: 10,
-                            }
-                        } imageStyle={{ borderRadius: 10 }}>
-                        <View style={{ height: '100%', marginLeft: 15, justifyContent: 'space-evenly' }}>
+                {userInfo && userInfo.roleId === "1" &&
+                    <View style={{
+                        flex: 1,
+                        width: '100%',
+                        height: 130,
+                        opacity: 1,
+                        marginBottom: 30
+                    }}>
+                        <ImageBackground source={backgroundIndividual} resizeMode="cover"
+                            style={
+                                {
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    borderRadius: 10,
+                                }
+                            } imageStyle={{ borderRadius: 10 }}>
+                            <View style={{ height: '100%', marginLeft: 15, justifyContent: 'space-evenly' }}>
 
-                            <View style={{
-                                width: '90%',
-                            }}>
-                                <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
-                                    Welcome to Fun E Global Selling
-                                </Text>
-                                <Text style={{
-                                    marginBottom: 10, marginLeft: 10, fontSize: 12, fontFamily: 'Roboto-Medium', color: 'white'
+                                <View style={{
+                                    width: '90%',
                                 }}>
-                                    Get access to 100 mln buyer worldwide.Start with creating an Fun E seller account.
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate('SellingGlobal')}
-                                    style={{
-                                        backgroundColor: '#36B81A',
-                                        padding: 5,
-                                        width: 100,
-                                        marginLeft: 10
-                                    }}>
-                                    <Text
-                                        style={{
-                                            textAlign: 'center',
-                                            fontSize: 12,
-                                            color: '#fff',
-                                        }}>
-                                        Start Selling
+                                    <Text style={{ marginBottom: 15, marginLeft: 10, fontSize: 14, fontFamily: 'Roboto-Medium', color: 'white', fontWeight: 'bold' }}>
+                                        Welcome to Fun E Global Selling
                                     </Text>
-                                </TouchableOpacity>
+                                    <Text style={{
+                                        marginBottom: 10, marginLeft: 10, fontSize: 12, fontFamily: 'Roboto-Medium', color: 'white'
+                                    }}>
+                                        Get access to 100 mln buyer worldwide.Start with creating an Fun E seller account.
+                                    </Text>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate('SellingGlobal')}
+                                        style={{
+                                            backgroundColor: '#36B81A',
+                                            padding: 5,
+                                            width: 100,
+                                            marginLeft: 10
+                                        }}>
+                                        <Text
+                                            style={{
+                                                textAlign: 'center',
+                                                fontSize: 12,
+                                                color: '#fff',
+                                            }}>
+                                            Start Selling
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    </ImageBackground>
-                </View>
+                        </ImageBackground>
+                    </View>
+                }
             </ScrollView>
         </SafeAreaView >
     )
