@@ -11,7 +11,7 @@ const ScrollView = () => {
   const id_user = userInfo.id;
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [posts, setPosts] = useState([]);
-  const bottomTabHeight = useBottomTabBarHeight() || 70;
+  const bottomTabHeight = useBottomTabBarHeight();
   const { height: WINDOW_HEIGHT } = Dimensions.get("window");
 
   async function fetchData(limit, offset) {
@@ -24,7 +24,7 @@ const ScrollView = () => {
     }
   }
   useEffect(() => {
-    fetchData(3, 0);
+    fetchData(10, 0);
   }, [])
   const handleLoadMore = () => {
     const offset = posts.length;
@@ -42,7 +42,6 @@ const ScrollView = () => {
 
             const firstMedia = medias[0];
             const { type, media, id_media, firstName, lastName, avatar, isLove } = firstMedia;
-            console.log(firstMedia.isLove)
             return <VideoPlayer data={{ type, media, id_media, id_post, description, firstName, lastName, avatar, total_loves, isLove }} isActive={activeVideoIndex === index} />
 
           }

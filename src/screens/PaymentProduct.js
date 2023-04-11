@@ -32,7 +32,6 @@ const PaymentProduct = ({ navigation }) => {
             setCart(data);
             const location = await userApi.getsAddressByUser({ id_address });
             setAddress(location.data);
-            console.log(address);
             setReset(true);
         }
         fetchData();
@@ -98,7 +97,9 @@ const PaymentProduct = ({ navigation }) => {
                     <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: 'red' }}>
                         SHIPPING ADDRESS
                     </Text>
-                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { }}>
+                    <TouchableOpacity style={{ flexDirection: 'row' }}
+                        onPress={() => navigation.navigate("AddAddress")}
+                    >
                         <Text style={{ color: 'black', fontSize: 14 }}>
                             Add Address
                         </Text>

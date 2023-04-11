@@ -36,7 +36,6 @@ const HomeScreen = ({ route }) => {
     const [opacityModal, setOpacityModal] = useState(false);
     const [posts, setPosts] = useState([]);
     const [products, setProducts] = useState([]);
-    console.log(route.params)
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
         setModalVisible(!modalVisible);
         setOpacityModal(!opacityModal);

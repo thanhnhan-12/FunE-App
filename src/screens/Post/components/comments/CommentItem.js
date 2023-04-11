@@ -19,7 +19,7 @@ const CommentItem = () => {
       />
       <View style={{ width: '65%' }}>
         <Text style={styles.username}>Phạm Thiên</Text>
-        <Text>Bài như cặc</Text>
+        <Text>Beautiful</Text>
         <View style={styles.info}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={{ marginRight: 20 }}>9-12</Text>

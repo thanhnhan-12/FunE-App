@@ -15,14 +15,14 @@ const SellingGlobal = ({ navigation }) => {
     const { userInfo, setUserInfo } = useContext(AuthContext);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
-    const [name, setName] = useState(false);
-    const [address, setAddress] = useState(false);
-    const [email, setEmail] = useState(false);
-    const [bankName, setBankName] = useState(false);
-    const [bankNumber, setBankNumber] = useState(false);
-    const [bankCode, setBankCode] = useState(false);
-    const [bankLocation, setBankLocation] = useState(false);
-    const [bankCurrency, setBankCurrency] = useState(false);
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [bankName, setBankName] = useState("");
+    const [bankNumber, setBankNumber] = useState("");
+    const [bankCode, setBankCode] = useState("");
+    const [bankLocation, setBankLocation] = useState("");
+    const [bankCurrency, setBankCurrency] = useState("");
     const [dobLabel, setDobLabel] = useState('Date of Birth');
     const [gender, setGender] = useState('Gender');
     const { handleSubmit } = useForm();
@@ -94,6 +94,7 @@ const SellingGlobal = ({ navigation }) => {
                                 style={{ marginRight: 10 }}
                             />
                             <TextInput
+                                value={name}
                                 placeholder="Seller Name*"
                                 onChangeText={text => setName(text)}
                                 placeholderTextColor="black"
@@ -317,6 +318,7 @@ const SellingGlobal = ({ navigation }) => {
                     </TouchableOpacity>
                     <TextInput
                         onChangeText={text => setBankNumber(text)}
+                        keyboardType={"numeric"}
                         style={{
                             flex: 1,
                             paddingVertical: 0,
@@ -348,6 +350,7 @@ const SellingGlobal = ({ navigation }) => {
                         </Text>
                     </TouchableOpacity>
                     <TextInput
+                        keyboardType={"numeric"}
                         onChangeText={text => setBankCode(text)}
                         style={{
                             flex: 1,

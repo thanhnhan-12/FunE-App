@@ -28,7 +28,7 @@ export default function MediaPlayer({ data, isActive }) {
     <View
       style={[
         styles.container,
-        { height: WINDOW_HEIGHT - bottomTabHeight - statusBarHeight },
+        { height: WINDOW_HEIGHT - bottomTabHeight },
       ]}
     >
       <StatusBar barStyle={"light-content"} />
@@ -43,7 +43,7 @@ export default function MediaPlayer({ data, isActive }) {
       }
       <View style={styles.bottomSection}>
         <View style={styles.bottomLeftSection}>
-          <Text style={styles.channelName}>{data.firstName ? `${data.firstName} ${data.lastName}` : "Văn Thiên"}</Text>
+          <Text style={styles.channelName}>{data.firstName ? `${data.lastName} ${data.firstName} ` : "Văn Thiên"}</Text>
           <Text style={styles.caption}>{data.description}</Text>
         </View>
         <View style={styles.bottomRightSection}>

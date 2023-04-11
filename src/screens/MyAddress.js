@@ -17,6 +17,7 @@ const MyAddress = ({ navigation, route }) => {
     const handleChooseAddress = async (id) => {
         await userApi.updateAddress({ id_user, address: id });
         setReset(!reset);
+        navigation.navigate('CartNavigation')
     }
     useEffect(() => {
         if (route.params?.key === 'reset') {

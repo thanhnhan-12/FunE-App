@@ -21,10 +21,10 @@ const EditProfileScreen = ({ navigation }) => {
     const { userInfo, setUserInfo } = useContext(AuthContext);
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
-    const [description, setDescription] = useState(false);
-    const [background, setBackground] = useState(false);
-    const [email, setEmail] = useState(false);
-    const [note, setNote] = useState(false);
+    const [description, setDescription] = useState("");
+    const [background, setBackground] = useState("");
+    const [email, setEmail] = useState("");
+    const [note, setNote] = useState("");
     const [dobLabel, setDobLabel] = useState('Date of Birth');
     const [gender, setGender] = useState('Gender');
     const { handleSubmit } = useForm();
@@ -178,7 +178,7 @@ const EditProfileScreen = ({ navigation }) => {
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{
+                    <View style={{
                         // backgroundColor: '#AD40AF',
                         padding: 10,
                         width: '95%',
@@ -194,8 +194,8 @@ const EditProfileScreen = ({ navigation }) => {
                             }}>
                             Update Cover Media
                         </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                    </View>
+                    <View
                         style={{
                             // backgroundColor: '#AD40AF',
                             padding: 20,
@@ -208,9 +208,9 @@ const EditProfileScreen = ({ navigation }) => {
                             borderWidth: 1,
                         }}
                     >
-                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }}>
+                        <View style={{ width: '100%', alignItems: 'center' }}>
                             <Ionicons name="cloud-upload-outline" color="black" size={60} />
-                        </TouchableOpacity>
+                        </View>
                         <View>
                             <Text
                                 style={{
@@ -278,7 +278,7 @@ const EditProfileScreen = ({ navigation }) => {
                                     <Image source={backgroundIndividual} style={{ width: "100%", height: 250 }} />
                             }
                         </View>
-                    </TouchableOpacity>
+                    </View>
                     <TouchableOpacity style={{
                         // backgroundColor: '#AD40AF',
                         padding: 10,
