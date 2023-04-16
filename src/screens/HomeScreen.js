@@ -7,6 +7,7 @@ import {
     Text,
     TouchableOpacity,
     StyleSheet,
+    Image
 } from 'react-native';
 import CustomSwitch from '../components/CustomSwitch';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -22,6 +23,7 @@ import { postApi } from '../clients/post_api';
 import ListProduct from '../components/ListProduct';
 import { MEDIA_URL } from '../config';
 import SquareAlbum from '../components/SquareAlbum';
+import { livestreamApi } from '../clients/livestream_api';
 
 const HomeScreen = ({ route }) => {
 
@@ -35,6 +37,7 @@ const HomeScreen = ({ route }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [opacityModal, setOpacityModal] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [livestreams, setLiveSteams] = useState([]);
     const [products, setProducts] = useState([]);
     const handleOnClickCloseModal = (modalVisible, setModalVisible, opacityModal, setOpacityModal) => {
         setModalVisible(!modalVisible);
@@ -63,6 +66,9 @@ const HomeScreen = ({ route }) => {
             async function fetchData() {
                 const productUser = await productApi.getProductByUserId(id_user);
                 setProducts(productUser.product);
+                const livestream = await livestreamApi.getsLive({ id_user });
+                setLiveSteams(livestream.data)
+                console.log("ABC", liveSteams)
             }
             fetchData();
             fetchPost(10, 0);
@@ -70,6 +76,9 @@ const HomeScreen = ({ route }) => {
             async function fetchData() {
                 const productUser = await productApi.getProductByUserId(id_user);
                 setProducts(productUser.product);
+                const livestream = await livestreamApi.getsLive({ id_user });
+                setLiveSteams(livestream.data)
+                console.log("ABC", livestreams)
             }
             fetchData();
             fetchPost(10, 0);
@@ -245,7 +254,7 @@ const HomeScreen = ({ route }) => {
                                             flexDirection: 'row',
                                             justifyContent: 'space-evenly',
                                             alignItems: 'center',
-                                            marginBottom: 20,
+                                            marginBottom: 10,
                                             flexWrap: 'wrap',
                                         }}>
                                             {products.map(item => (
@@ -256,6 +265,59 @@ const HomeScreen = ({ route }) => {
                                                         title={item.name}
                                                         price={item.pricing}
                                                     />
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                marginVertical: 15,
+                                                flexDirection: 'row',
+                                            }}>
+                                            <Text style={{ color: 'black', marginLeft: 15, fontWeight: 600, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                                LIVE Schedule
+                                            </Text>
+                                        </View>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-evenly',
+                                            alignItems: 'center',
+                                            marginBottom: 20,
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            {livestreams.map(item => (
+                                                <TouchableOpacity key={item.id}>
+                                                    <TouchableOpacity
+                                                        style={{ alignItems: 'center', marginBottom: 10, marginLeft: 5 }}>
+                                                        <View style={{
+                                                            position: 'absolute',
+                                                            top: 5,
+                                                            left: -10,
+                                                            right: 0,
+                                                            zIndex: 1,
+                                                            flexDirection: "row",
+                                                            paddingHorizontal: 20,
+                                                            width: "100%",
+                                                        }}>
+                                                            <Text style={{ color: "white", backgroundColor: "#365959", padding: 6 }}>LIVE</Text>
+                                                        </View>
+                                                        <View>
+                                                            <Image
+                                                                source={{ uri: getIPFSLink(item.media) }}
+                                                                style={{ width: 90, height: 100, borderRadius: 10, borderColor: 'black', borderWidth: 1 }}
+                                                            />
+                                                            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
+                                                                <Text
+                                                                    style={{
+                                                                        color: 'black',
+                                                                        fontFamily: 'Roboto-Medium',
+                                                                        fontSize: 12,
+                                                                    }}>
+                                                                    {item.description}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                    </TouchableOpacity>
                                                 </TouchableOpacity>
                                             ))}
                                         </View>
@@ -421,7 +483,7 @@ const HomeScreen = ({ route }) => {
                                             flexDirection: 'row',
                                             justifyContent: 'space-evenly',
                                             alignItems: 'center',
-                                            marginBottom: 20,
+                                            marginBottom: 10,
                                             flexWrap: 'wrap',
                                         }}>
                                             {products.map(item => (
@@ -431,6 +493,58 @@ const HomeScreen = ({ route }) => {
                                                         title={item.name}
                                                         price={item.pricing}
                                                     />
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                        <View
+                                            style={{
+                                                marginVertical: 15,
+                                                flexDirection: 'row',
+                                            }}>
+                                            <Text style={{ color: 'black', marginLeft: 15, fontWeight: 600, fontSize: 18, fontFamily: 'Roboto-Medium' }}>
+                                                LIVE Schedule
+                                            </Text>
+                                        </View>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-evenly',
+                                            alignItems: 'center',
+                                            marginBottom: 20,
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            {livestreams.map(item => (
+                                                <TouchableOpacity key={item.id}>
+                                                    <TouchableOpacity
+                                                        style={{ alignItems: 'center', marginBottom: 10, marginLeft: 5 }}>
+                                                        <View style={{
+                                                            position: 'absolute',
+                                                            top: 5,
+                                                            left: -10,
+                                                            right: 0,
+                                                            zIndex: 1,
+                                                            flexDirection: "row",
+                                                            paddingHorizontal: 20,
+                                                            width: "100%",
+                                                        }}>
+                                                            <Text style={{ color: "white", backgroundColor: "#365959", padding: 6 }}>LIVE</Text>
+                                                        </View>
+                                                        <View>
+                                                            <Image
+                                                                source={{ uri: getIPFSLink(item.media) }}
+                                                                style={{ width: 90, height: 100, borderRadius: 10, borderColor: 'black', borderWidth: 1 }}
+                                                            />
+                                                            <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
+                                                                <Text
+                                                                    style={{
+                                                                        color: 'black',
+                                                                        fontFamily: 'Roboto-Medium',
+                                                                        fontSize: 12,
+                                                                    }}>
+                                                                    {item.description}
+                                                                </Text>
+                                                            </View>
+                                                        </View>
+                                                    </TouchableOpacity>
                                                 </TouchableOpacity>
                                             ))}
                                         </View>

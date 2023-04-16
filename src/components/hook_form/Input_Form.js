@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
-const Input_Form = ({ control, name, label, required, keyboardType, fullWidth, style }) => {
+const Input_Form = ({ control, name, label, required, keyboardType, fullWidth, style, livestream }) => {
 
   const styles = StyleSheet.create({
     inputContainer: {
@@ -11,6 +11,14 @@ const Input_Form = ({ control, name, label, required, keyboardType, fullWidth, s
     input: {
       backgroundColor: 'white',
       height: 40,
+      padding: 10,
+      borderRadius: 10,
+      borderColor: '#ccc',
+      borderWidth: 1,
+    },
+    inputt: {
+      backgroundColor: 'white',
+      height: 120,
       padding: 10,
       borderRadius: 10,
       borderColor: '#ccc',
@@ -36,13 +44,23 @@ const Input_Form = ({ control, name, label, required, keyboardType, fullWidth, s
 
           return <View>
             <View style={{ ...styles.inputContainer, borderColor: invalid ? '#ef4146' : 'white' }}>
-              <TextInput
-                keyboardType={keyboardType}
-                style={styles.input}
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={value}
-              />
+              {livestream ?
+                <TextInput
+                  keyboardType={keyboardType}
+                  style={styles.inputt}
+                  onBlur={onBlur}
+                  onChangeText={value => onChange(value)}
+                  value={value}
+                />
+                :
+                <TextInput
+                  keyboardType={keyboardType}
+                  style={styles.input}
+                  onBlur={onBlur}
+                  onChangeText={value => onChange(value)}
+                  value={value}
+                />
+              }
             </View>
             <Text style={{ color: '#ef4146' }}>{error ? error.message : null}</Text>
           </View>

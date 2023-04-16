@@ -76,6 +76,11 @@ const ModalPost = ({ modalVisible, setModalVisible, opacityModal, setOpacityModa
                             flexDirection: 'row',
                             justifyContent: 'space-evenly',
                         }}
+                        onPress={() => {
+                            setOpacityModal(!opacityModal);
+                            setModalVisible(!modalVisible);
+                            navigation.navigate('AddLiveStream');
+                        }}
                     >
                         <Text
                             style={{

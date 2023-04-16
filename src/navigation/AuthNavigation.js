@@ -14,6 +14,10 @@ import AddAddress from "../screens/AddAddress";
 import MyWallet from "../screens/MyWallet";
 import CreatePayment from "../screens/CreatePayment";
 import Order from "../screens/Order";
+import LiveStream from "../screens/LiveStream";
+import AddLiveStream from "../screens/AddLiveStream";
+import ProductDetail from "../screens/ProductDetail";
+import PaymentProduct from "../screens/PaymentProduct";
 
 const Stack = createNativeStackNavigator();
 
@@ -80,6 +84,25 @@ const AuthNavigation = () => {
                                 <Stack.Screen
                                     name="Order"
                                     component={Order}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="LiveStream"
+                                    component={LiveStream}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="AddLiveStream"
+                                    component={AddLiveStream}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name={'ProductDetailLiveStream'}
+                                    component={ProductDetail}
+                                    options={{ headerShown: false }} />
+                                <Stack.Screen
+                                    name="PaymentProduct"
+                                    component={PaymentProduct}
                                     options={{ headerShown: false }}
                                 />
                             </>

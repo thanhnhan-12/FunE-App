@@ -203,7 +203,7 @@ const PaymentProduct = ({ navigation }) => {
                     <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: 'red' }}>
                         PAYMENT METHOD
                     </Text>
-                    {payment && payment.id > 0 ?
+                    {payment && payment.id ?
                         <View
                             style={{
                                 flexDirection: 'row',

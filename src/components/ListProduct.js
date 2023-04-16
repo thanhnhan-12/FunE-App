@@ -6,6 +6,7 @@ export default function ListProduct({ photo, title, onPress, price }) {
     return (
 
         <TouchableOpacity
+            onPress={onPress}
             style={{ alignItems: 'center', marginBottom: 10, marginLeft: 5 }}>
             <View>
                 <Image
