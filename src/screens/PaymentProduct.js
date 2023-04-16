@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-    Dimensions,
     SafeAreaView,
-    ScrollView, StyleSheet, Text, TouchableOpacity, View, Button
+    ScrollView, StyleSheet, Text, TouchableOpacity, View, Alert
 } from 'react-native';
 import CartPayment from '../components/CartPayment';
 import Header from '../components/Header';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 import { MEDIA_URL } from '../config';
 import { userApi } from '../clients/user_api';
+import { cartApi } from '../clients/cart_api';
 
 const PaymentProduct = ({ navigation }) => {
     const route = useRoute();
@@ -19,8 +20,11 @@ const PaymentProduct = ({ navigation }) => {
     const data = route.params.data;
     const quantity = route.params.quantity;
     const { userInfo } = useContext(AuthContext);
+    const id_user = userInfo.id;
     const [address, setAddress] = useState([]);
+    const [payment, setPayment] = useState([]);
     const id_address = parseInt(userInfo.address);
+    const id_payment = parseInt(userInfo.paymentId);
     const [reset, setReset] = useState(false);
     const [cart, setCart] = useState([]);
     const getIPFSLink = (hash) => {
@@ -33,9 +37,54 @@ const PaymentProduct = ({ navigation }) => {
             const location = await userApi.getsAddressByUser({ id_address });
             setAddress(location.data);
             setReset(true);
+            console.log(cart);
+            console.log(payment)
         }
         fetchData();
     }, [reset])
+
+    const handleSelectPayment = async () => {
+        const paymentId = await userApi.getPaymentByUser({ id_payment });
+        setPayment(paymentId.data);
+        console.log(payment)
+    }
+
+    const handleOrder = async () => {
+        if (cart.length > 0) {
+            for (const item of cart) {
+                await userApi.createOrder({
+                    id_user,
+                    idProduct: `${item.cartData.id}`,
+                    quantity: item.quantity,
+                    total,
+                    address: address.address + " - " + address.district + " - " + address.province + " - " + address.country,
+                    payment: `${payment.cartNumber}`,
+                });
+                await cartApi.deletes({
+                    idUser: id_user
+                });
+                setReset(true);
+                Alert.alert("Payment Succeed!");
+                navigation.navigate("Home");
+            }
+
+        } else {
+            await userApi.createOrder({
+                id_user,
+                idProduct: `${cart.id}`,
+                quantity: quantity,
+                total,
+                address: address.address + " - " + address.district + " - " + address.province + " - " + address.country,
+                payment: `${payment.cartNumber}`,
+            });
+            await cartApi.deletes({
+                idUser: id_user
+            });
+            setReset(true);
+            Alert.alert("Payment Succeed!");
+            navigation.navigate("Home");
+        }
+    }
     return (
         <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
             <Header
@@ -135,7 +184,6 @@ const PaymentProduct = ({ navigation }) => {
                             </Text>
                         </View>
                         <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { navigation.navigate("MyAddress") }}>
-
                             <MaterialIcons
                                 name="chevron-right"
                                 size={24}
@@ -155,20 +203,64 @@ const PaymentProduct = ({ navigation }) => {
                     <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: 'red' }}>
                         PAYMENT METHOD
                     </Text>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            borderColor: 'red',
-                            borderWidth: 1,
-                            borderRadius: 8,
-                            paddingHorizontal: 10,
-                            paddingVertical: 8,
-                            marginTop: 10
-                        }}>
-                        <Text style={{ fontSize: 14, color: 'red' }}>
-                            Select card payment
-                        </Text>
-                    </View>
+                    {payment && payment.id > 0 ?
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: 10,
+                                borderTopWidth: 1,
+                                borderBottomWidth: 1,
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                borderColor: '#ccc',
+                                marginTop: 10
+                            }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Fontisto
+                                    name="mastercard"
+                                    size={24}
+                                    color="#141466"
+                                    style={{ marginLeft: 5, marginRight: 10 }}
+                                />
+                                <Text style={{ fontWeight: 700, fontSize: 16, color: '#181A1A', fontWeight: 600 }}>
+                                    MASTERCARD ending **{payment.cartNumber.slice(-4)}
+                                </Text>
+                                <MaterialCommunityIcons
+                                    name="check-bold"
+                                    size={24}
+                                    color="green"
+                                    style={{ marginLeft: 5, marginRight: 10 }}
+                                />
+                            </View>
+                            <TouchableOpacity style={{ flexDirection: 'row' }} >
+
+                                <MaterialIcons
+                                    name="chevron-right"
+                                    size={24}
+                                    color="gray"
+                                    style={{ marginLeft: 5 }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <TouchableOpacity onPress={() => handleSelectPayment()}
+                            style={{
+                                flexDirection: 'row',
+                                borderColor: 'red',
+                                borderWidth: 1,
+                                borderRadius: 8,
+                                paddingHorizontal: 10,
+                                paddingVertical: 8,
+                                marginTop: 10
+                            }}>
+                            <Text style={{ fontSize: 14, color: 'red' }}>
+                                Select card payment
+                            </Text>
+                        </TouchableOpacity>
+                    }
+
                     <View
                         style={{
                             flexDirection: 'row',
@@ -193,7 +285,7 @@ const PaymentProduct = ({ navigation }) => {
                                 Promo code:
                             </Text>
                         </View>
-                        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => { }}>
+                        <TouchableOpacity style={{ flexDirection: 'row' }} >
 
                             <MaterialIcons
                                 name="chevron-right"
@@ -241,9 +333,25 @@ const PaymentProduct = ({ navigation }) => {
                 </View>
             </ScrollView>
             <View style={styles.bottom}>
-                <TouchableOpacity style={styles.btnCheck} >
-                    <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>PAYMENT</Text>
-                </TouchableOpacity>
+                {address.id && payment.id ?
+                    <TouchableOpacity style={styles.btnCheck}
+                        onPress={() => handleOrder()}
+                    >
+                        <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>PAYMENT</Text>
+                    </TouchableOpacity>
+                    :
+                    <View style={{
+                        backgroundColor: '#ccc',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        color: '#fff',
+                        borderRadius: 10,
+                        width: '70%'
+                    }}
+                    >
+                        <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>PAYMENT</Text>
+                    </View>
+                }
                 <View style={{ width: '30%', alignItems: 'center' }}>
                     <Text style={{ color: 'black', fontWeight: 700 }}>TOTAL</Text>
                     <Text style={{ color: 'black', fontWeight: 700 }}>$ {total}.00</Text>

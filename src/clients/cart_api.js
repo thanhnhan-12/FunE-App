@@ -12,4 +12,10 @@ export const cartApi = {
     gets: async (data) => {
         return await instance.get(`/cart/gets?id_user=${data.id_user}`);
     },
+    deletes: async (data) => {
+        return await instance.post(`/cart/deletes`, data);
+    },
+    deleteCart: async (data) => {
+        return await instance.post(`/cart/delete/cart`, data);
+    },
 }

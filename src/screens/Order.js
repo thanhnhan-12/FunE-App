@@ -7,32 +7,18 @@ import {
 import Header from '../components/Header';
 import { AuthContext } from '../context/AuthContext';
 import { cartApi } from '../clients/cart_api';
+import { userApi } from '../clients/user_api';
 import { MEDIA_URL } from '../config';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ShoppingCart = ({ navigation }) => {
     const { userInfo } = useContext(AuthContext);
     const id_user = userInfo.id;
-    const [cart, setCart] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [order, setOrder] = useState([]);
     const [reset, setReset] = useState(false);
     const getIPFSLink = (hash) => {
         return MEDIA_URL + hash;
     };
-    const handleDecreaseQuantity = async (idProduct) => {
-        await cartApi.decrease({
-            idProduct,
-            idUser: id_user
-        });
-        setReset(!reset);
-    }
-    const handleIncreaseQuantity = async (idProduct) => {
-        await cartApi.increase({ idProduct, idUser: id_user });
-        setReset(!reset);
-    }
-
-    const handleDeleteCart = async (idProduct) => {
+    const handleDeleteOrder = async (idOrder) => {
         Alert.alert(
             'Agree',
             'Are you sure you want to cancel?',
@@ -43,42 +29,32 @@ const ShoppingCart = ({ navigation }) => {
                 },
                 {
                     text: 'Agree',
-                    onPress: () => agreeDeleteCart(idProduct),
+                    onPress: () => agreeDeleteOrder(idOrder),
                 },
             ],
         );
+
     }
 
-    const agreeDeleteCart = async (idProduct) => {
-        await cartApi.deleteCart({ idProduct, idUser: id_user });
-        Alert.alert("Product has been cancelled");
+    const agreeDeleteOrder = async (idOrder) => {
+        await userApi.updateOrder({ idOrder });
+        Alert.alert("Order has been cancelled");
         setReset(!reset);
     }
 
     useEffect(() => {
         async function fetchData() {
-            const item = await cartApi.gets({ id_user });
-            setCart(item.data);
+            const item = await userApi.getsOrder({ id_user });
+            setOrder(item.data);
             setReset(true);
         }
-        function fetchTotal() {
-            if (cart.length > 0) {
-                let sum = 0;
-                cart.map((item) => {
-                    let money = parseInt(item.cartData.pricing) * parseInt(item.quantity);
-                    sum = sum + money;
-                })
-                setTotal(sum);
-            }
-        }
-        fetchTotal();
         fetchData();
     }, [reset])
     return (
 
         <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
             <Header
-                title={"Shopping Cart"}
+                title={"Order"}
                 trueCoin
                 trueReturn
                 navigation={navigation}
@@ -88,14 +64,14 @@ const ShoppingCart = ({ navigation }) => {
                 style={{ padding: 15, width: '100%' }}>
                 <View>
                     {
-                        cart && cart.length > 0 &&
-                        cart.map((item, index) => (
+                        order && order.length > 0 &&
+                        order.map((item, index) => (
                             <View key={index}>
                                 <View>
                                     <View style={styles.containerItem}>
                                         <View>
                                             <Image
-                                                source={{ uri: getIPFSLink(item.cartData.media) }}
+                                                source={{ uri: getIPFSLink(item.orderData.media) }}
                                                 style={styles.image}
                                             />
                                         </View>
@@ -106,9 +82,9 @@ const ShoppingCart = ({ navigation }) => {
                                             <View style={{
                                                 // width: '70%',
                                             }}>
-                                                <Text style={{ color: 'black', fontWeight: 700 }}>{item.cartData.name}</Text>
-                                                <Text style={{ color: 'black' }}>{item.cartData.description}</Text>
-                                                <Text>{`$ ${item.cartData.pricing}.00`}</Text>
+                                                <Text style={{ color: 'black', fontWeight: 700 }}>{item.orderData.name}</Text>
+                                                <Text style={{ color: 'black' }}>{item.orderData.description}</Text>
+                                                <Text>{`$ ${item.orderData.pricing}.00`}</Text>
                                                 <View style={{
                                                     flexDirection: 'row',
                                                     justifyContent: 'space-between',
@@ -117,40 +93,29 @@ const ShoppingCart = ({ navigation }) => {
                                                         flexDirection: 'row',
                                                         fontSize: 20
                                                     }}>
-                                                        <TouchableOpacity onPress={() => handleDecreaseQuantity(item.idProduct)}>
-                                                            <Ionicons
-                                                                style={{ fontSize: 22 }}
-                                                                name='remove-circle-outline'
-                                                                color='red'
-                                                            />
-                                                        </TouchableOpacity>
+                                                        <Text>Quantity:</Text>
                                                         <Text style={styles.quantity}>{item.quantity}</Text>
-                                                        <TouchableOpacity onPress={() => handleIncreaseQuantity(item.idProduct)}>
-                                                            <Ionicons
-                                                                style={{ fontSize: 22 }}
-                                                                name='add-circle'
-                                                                color='red'
-                                                            />
-                                                        </TouchableOpacity>
                                                     </View>
                                                     <Text style={{
                                                         marginLeft: 30,
                                                         color: "red"
-                                                    }}>{`$ ${item.cartData.pricing * item.quantity}.00`}</Text>
+                                                    }}>{`$ ${item.orderData.pricing * item.quantity}.00`}</Text>
                                                 </View>
                                             </View>
                                             <TouchableOpacity style={{
                                                 justifyContent: 'center',
                                                 alignItems: 'flex-end',
-                                                marginLeft: 35
+                                                marginLeft: 30
                                             }}
-                                                onPress={() => handleDeleteCart(item.idProduct)}
+                                                onPress={() => handleDeleteOrder(item.id)}
                                             >
-                                                <MaterialCommunityIcons
-                                                    name="delete"
-                                                    size={35}
-                                                    color="red"
-                                                />
+                                                <View>
+                                                    <Text style={{
+                                                        fontSize: 15,
+                                                        color: 'red',
+                                                        fontWeight: 700
+                                                    }}>Hủy</Text>
+                                                </View>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -161,18 +126,6 @@ const ShoppingCart = ({ navigation }) => {
                     }
                 </View>
             </ScrollView>
-            <View style={styles.bottom}>
-                <TouchableOpacity style={styles.btnCheck} onPress={() => navigation.navigate('PaymentProduct', {
-                    total: total,
-                    data: cart
-                })}>
-                    <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>PROCEED TO CHECKOUT</Text>
-                </TouchableOpacity>
-                <View style={{ width: '30%', alignItems: 'center' }}>
-                    <Text style={{ color: 'black', fontWeight: 700 }}>TOTAL</Text>
-                    <Text style={{ color: 'black', fontWeight: 700 }}>$ {total}.00</Text>
-                </View>
-            </View>
         </SafeAreaView >
     )
 }
@@ -223,7 +176,8 @@ const styles = StyleSheet.create({
     quantity: {
         fontSize: 16,
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        color: "black"
     },
     priceSum: {
         color: '#F63D69',

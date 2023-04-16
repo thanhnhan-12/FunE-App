@@ -2,30 +2,27 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { IP_CONFIG } from '@env';
-import { RadioButton } from 'react-native-paper';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import Header from '../components/Header';
 import { userApi } from '../clients/user_api';
 
-const MyAddress = ({ navigation, route }) => {
+const MyWallet = ({ navigation, route }) => {
     const { userInfo, setUserInfo } = useContext(AuthContext);
     const id_user = userInfo.id;
-    const id_address = parseInt(userInfo.address);
-    const [addresses, setAddresses] = useState([]);
+    const id_payment = parseInt(userInfo.paymentId);
+    const [payments, setPayments] = useState([]);
     const [reset, setReset] = useState(false);
-    const imageIndividual = { uri: `http://${IP_CONFIG}:3000/individuals/${userInfo.image}` };
-    const handleChooseAddress = async (id) => {
-        await userApi.updateAddress({ id_user, address: id });
+    const handleChoosePayment = async (id) => {
+        await userApi.updatePayment({ id_user, payment: id });
         setReset(!reset);
-        navigation.navigate('ShoppingCart')
     }
     useEffect(() => {
         if (route.params?.key === 'reset') {
             async function fetchData() {
                 const userById = await userApi.getUserByID(id_user);
                 setUserInfo(userById.users)
-                const address = await userApi.getsAddress({ id_user });
-                setAddresses(address.data);
+                const payment = await userApi.getsPayment({ id_user });
+                setPayments(payment.data);
             }
             fetchData();
         }
@@ -33,8 +30,8 @@ const MyAddress = ({ navigation, route }) => {
             async function fetchData() {
                 const userById = await userApi.getUserByID(id_user);
                 setUserInfo(userById.users)
-                const address = await userApi.getsAddress({ id_user });
-                setAddresses(address.data);
+                const payment = await userApi.getsPayment({ id_user });
+                setPayments(payment.data);
             }
             fetchData();
         }
@@ -59,40 +56,8 @@ const MyAddress = ({ navigation, route }) => {
                         backgroundColor: '#fff',
                         padding: 20
                     }}>
-                    <View
-                        style={{
-                            backgroundColor: 'white',
-                            flexDirection: 'row',
-                            height: 120,
-                            width: "100%",
-                        }}>
-                        <TouchableOpacity>
-                            <ImageBackground
-                                source={imageIndividual}
-                                style={{ width: 80, height: 80 }}
-                                imageStyle={{ borderRadius: 80 }}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            // backgroundColor: '#AD40AF',
-                            padding: 20,
-                            width: '90%',
-                            borderRadius: 10,
-                            marginBottom: 5,
-                            flexDirection: 'column',
-                            borderBottomColor: 'black',
-                        }}>
-                            <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: 'red' }}>
-                                {userInfo.lastName} {userInfo.firstName}
-                            </Text>
-                            <Text style={{ fontSize: 18, fontFamily: 'Roboto-Medium', color: 'red' }}>
-                                {userInfo.email}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={{ color: "red", fontWeight: 700, fontSize: 14 }}>SHIPPING ADDRESS</Text>
-                    {addresses && addresses.length > 0 &&
-                        addresses.map((item, index) => (
+                    {payments && payments.length > 0 &&
+                        payments.map((item, index) => (
                             <View style={{ marginTop: 15 }} key={index}>
                                 <View style={{ flexDirection: "row" }}>
                                     <View style={{
@@ -100,14 +65,13 @@ const MyAddress = ({ navigation, route }) => {
                                     }}>
                                         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                                             <View>
-                                                <Text style={{ color: "black" }}>{userInfo.firstName}</Text>
-                                                <Text style={{ color: "black" }}>{item.phone}</Text>
+                                                <Text style={{ color: "black", fontSize: 14, fontWeight: 700, marginBottom: 10 }}>Credit Card Number</Text>
                                             </View>
                                             <View>
                                                 {
-                                                    item.id === id_address ?
+                                                    item.id === id_payment ?
                                                         <TouchableOpacity style={{ flexDirection: "row" }}
-                                                            onPress={() => handleChooseAddress(item.id)}
+                                                            onPress={() => handleChoosePayment(item.id)}
                                                         >
                                                             <Text style={{ marginRight: 5 }}>Default</Text>
                                                             <MaterialCommunityIcons
@@ -118,7 +82,7 @@ const MyAddress = ({ navigation, route }) => {
                                                         </TouchableOpacity>
                                                         :
                                                         <TouchableOpacity style={{ flexDirection: "row" }}
-                                                            onPress={() => handleChooseAddress(item.id)}
+                                                            onPress={() => handleChoosePayment(item.id)}
                                                         >
                                                             <Text style={{ marginRight: 5 }}>Default</Text>
                                                             <MaterialCommunityIcons
@@ -136,8 +100,14 @@ const MyAddress = ({ navigation, route }) => {
                                             borderColor: "#ccc",
                                             padding: 10,
                                             borderRadius: 5,
+                                            justifyContent: "space-between"
                                         }}>
-                                            <Text>{item.address} - {item.district} - {item.province} - {item.country}</Text>
+                                            <Text style={{ color: "black" }}>***************{item.cartNumber.slice(-4)}</Text>
+                                            <Fontisto
+                                                name="mastercard"
+                                                size={22}
+                                                color="#180C40"
+                                            />
                                         </View>
                                     </View>
                                     <View style={{
@@ -170,7 +140,7 @@ const MyAddress = ({ navigation, route }) => {
                 alignItems: 'center',
             }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("AddAddress")}
+                    onPress={() => navigation.navigate("CreatePayment")}
                     style={{
                         backgroundColor: '#D62965',
                         alignItems: 'center',
@@ -179,7 +149,7 @@ const MyAddress = ({ navigation, route }) => {
                         padding: 10,
                         borderRadius: 10,
                     }} >
-                    <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>Add Another Address</Text>
+                    <Text style={{ color: 'white', fontWeight: 700, width: '100%', textAlign: 'center' }}>Add Another Method</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView >
@@ -199,4 +169,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MyAddress;
+export default MyWallet;

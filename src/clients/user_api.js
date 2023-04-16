@@ -26,5 +26,26 @@ export const userApi = {
     updateAddress: async (data) => {
         return await instance.post(`/address/update`, data);
     },
+    createPayment: async (data) => {
+        return await instance.post(`/payment/create`, data);
+    },
+    getsPayment: async (data) => {
+        return await instance.get(`/payment/gets?id_user=${data.id_user}`);
+    },
+    getPaymentByUser: async (data) => {
+        return await instance.get(`/payment/gets/byuser?payment=${data.id_payment}`);
+    },
+    updatePayment: async (data) => {
+        return await instance.post(`/payment/update`, data);
+    },
+    createOrder: async (data) => {
+        return await instance.post(`/order/create`, data);
+    },
+    getsOrder: async (data) => {
+        return await instance.get(`/order/gets?id_user=${data.id_user}`);
+    },
+    updateOrder: async (data) => {
+        return await instance.post(`/order/update`, data);
+    },
 
 }

@@ -11,6 +11,9 @@ import CreateProduct from "../screens/CreateProduct";
 import SellingGlobal from "../screens/SellingGlobal";
 import MyAddress from "../screens/MyAddress";
 import AddAddress from "../screens/AddAddress";
+import MyWallet from "../screens/MyWallet";
+import CreatePayment from "../screens/CreatePayment";
+import Order from "../screens/Order";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,8 +63,23 @@ const AuthNavigation = () => {
                                     options={{ headerShown: false }}
                                 />
                                 <Stack.Screen
+                                    name="MyWallet"
+                                    component={MyWallet}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
                                     name="AddAddress"
                                     component={AddAddress}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="CreatePayment"
+                                    component={CreatePayment}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="Order"
+                                    component={Order}
                                     options={{ headerShown: false }}
                                 />
                             </>

@@ -558,6 +558,72 @@ const ProfileScreen = ({ navigation }) => {
                                 borderBottomColor: 'black',
                                 borderBottomWidth: 1,
                             }}
+                            onPress={() => navigation.navigate('Order')}
+                        >
+                            <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <MaterialCommunityIcons name="wallet-giftcard" color="black" size={26} style={{ marginRight: 10 }} />
+                                <Text
+                                    style={{
+                                        color: 'black',
+                                        fontSize: 18,
+                                        textAlign: 'center',
+                                        fontWeight: 600,
+                                        fontFamily: 'Roboto-MediumItalic',
+                                    }}>
+                                    Order
+                                </Text>
+                            </View>
+
+                            <MaterialIcons name="arrow-forward-ios" size={18} color="black" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={{
+                                // backgroundColor: '#AD40AF',
+                                padding: 20,
+                                width: '90%',
+                                borderRadius: 10,
+                                marginBottom: 5,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                borderBottomColor: 'black',
+                                borderBottomWidth: 1,
+                            }}
+                            onPress={() => navigation.navigate('MyWallet')}
+                        >
+                            <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Ionicons name="wallet" color="black" size={26} style={{ marginRight: 10 }} />
+                                <Text
+                                    style={{
+                                        color: 'black',
+                                        fontSize: 18,
+                                        textAlign: 'center',
+                                        fontWeight: 600,
+                                        fontFamily: 'Roboto-MediumItalic',
+                                    }}>
+                                    My Wallet
+                                </Text>
+                            </View>
+
+                            <MaterialIcons name="arrow-forward-ios" size={18} color="black" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={{
+                                // backgroundColor: '#AD40AF',
+                                padding: 20,
+                                width: '90%',
+                                borderRadius: 10,
+                                marginBottom: 5,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                borderBottomColor: 'black',
+                                borderBottomWidth: 1,
+                            }}
                         >
                             <View style={{
                                 flexDirection: 'row'

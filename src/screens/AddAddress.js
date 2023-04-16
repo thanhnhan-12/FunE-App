@@ -7,7 +7,7 @@ import { userApi } from '../clients/user_api';
 import InputField from '../components/InputField';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const MyAddress = ({ navigation }) => {
+const AddAddress = ({ navigation }) => {
     const { userInfo } = useContext(AuthContext);
     const id_user = userInfo.id;
     const [address, setAddress] = useState("");
@@ -142,16 +142,4 @@ const MyAddress = ({ navigation }) => {
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    welcome: {
-        fontSize: 18,
-        marginBottom: 8,
-    },
-});
-
-export default MyAddress;
+export default AddAddress;
