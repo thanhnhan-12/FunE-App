@@ -7,7 +7,7 @@ import ScrollView from '../screens/Post/ScrollView'
 const HomeNavigation = () => {
   const Stack = createNativeStackNavigator()
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Group>
         <Stack.Screen
           name={'HomeScreen'}

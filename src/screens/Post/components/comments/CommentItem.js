@@ -5,11 +5,11 @@ import { AuthContext } from '../../../../context/AuthContext';
 import { Avatar } from "react-native-paper";
 import images from '../../../../assets/images';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
+const CommentItem = ({ onReply, setComment, comment }) => {
 
-const CommentItem = () => {
-  const { userInfo } = useContext(AuthContext);
-  const imageIndividual = userInfo.image ? { uri: `${individuals_URL}${userInfo.image}` } : images.avatar;
+  const imageIndividual = comment.image ? { uri: `${individuals_URL}${comment.image}` } : images.avatar;
   return (
     <View style={styles.container}>
       <Avatar.Image
@@ -18,12 +18,18 @@ const CommentItem = () => {
         marginRight={10}
       />
       <View style={{ width: '65%' }}>
-        <Text style={styles.username}>Phạm Thiên</Text>
-        <Text>Beautiful</Text>
+        <Text style={styles.username}>{comment.fullname}</Text>
+        <View style={{ flexDirection: 'row' }}>{comment.parent && <Text style={{ color: 'blue' }}>@{comment.parent.parentName} </Text>}<Text>{comment.comment || 'llll'}</Text></View>
         <View style={styles.info}>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ marginRight: 20 }}>9-12</Text>
-            <TouchableOpacity><Text style={{ fontWeight: 700 }}>Reply</Text></TouchableOpacity>
+
+            <Text style={{ marginRight: 20 }}>{moment(comment.updatedAt).format('MM/DD/YYYY')}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setComment("@" + comment.fullname.replaceAll(" ", "") + " ");
+                onReply(comment.id);
+              }}
+            ><Text style={{ fontWeight: 700 }}>Reply</Text></TouchableOpacity>
           </View>
 
           <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', width: 26, height: 26 }} >

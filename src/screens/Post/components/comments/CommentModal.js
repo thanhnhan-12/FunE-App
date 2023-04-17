@@ -9,30 +9,54 @@ import Input_Form from '../../../../components/hook_form/Input_Form';
 import { Modal } from '../../../../components/Modal';
 import { AuthContext } from '../../../../context/AuthContext';
 import CommentItem from './CommentItem';
+import { postApi } from '../../../../clients/post_api';
 
 
-const CommentModal = ({ children }) => {
+const CommentModal = ({ id_post, children }) => {
   const navigation = useNavigation();
   const { userInfo, isLoading, logout } = useContext(AuthContext);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const id_user = userInfo.id;
-  const { control, handleSubmit } = useForm();
-  const [comments, setComments] = useState([{
-    id_comment: '1',
-    name: 'thiên',
-    comment: 'bài như cặt',
-    datetime: '2/2/2022'
-  }, {
-    id_comment: '2',
-    name: 'thiên',
-    comment: 'bài như cặt',
-    datetime: '2/2/2022'
-  }, {
-    id_comment: '3',
-    name: 'thiên',
-    comment: 'bài như cặt',
-    datetime: '2/2/2022'
-  }])
+  const { control, handleSubmit, setValue, reset } = useForm({ defaultValues: { comment: '', realComment: '' } });
+  const [id_parent, setId_parent] = useState(0);
+  const [comments, setComments] = useState([])
+  async function fetchData(limit, offset) {
+    const result = await postApi.getCommentsByPostID({ limit, offset, id_post });
+    if (result.comments) {
+      setComments((prev) => [...prev, ...result.comments]);
+    }
+    else {
+      Alert.alert("get category fail!");
+    }
+  }
+  useEffect(() => {
+    fetchData(10, 0);
+  }, [])
+  const setComment = (value) => {
+    if (value && value.trim() != '')
+      setValue('comment', value);
+  }
+
+  const onSubmit = async (data) => {
+    const { comment } = data;
+    console.log(comment, id_post, id_user);
+    if (comment && id_post && id_user) {
+      let match = comment.match(/@[^ ]+\s?/);
+      const parentName = match ? match[0].replace("@", "") : null;
+      const newComment = comment.replace(/@[^ ]+\s?/, "");
+      const result = await postApi.createPostComment({ id_parent, id_post, id_user, comment: newComment });
+      if (result.comment) {
+        const commentResult = { ...result.comment, fullname: userInfo.lastName + userInfo.firstName };
+        if (parentName) commentResult.parent = { parentName }
+        setComments((prev) => [...prev, commentResult]);
+        reset();
+      }
+      else {
+        Alert.alert("get category fail!");
+      }
+    }
+
+  }
   return <SafeAreaView>
     <TouchableOpacity style={{
       alignItems: 'center',
@@ -57,7 +81,12 @@ const CommentModal = ({ children }) => {
           <ScrollView>
             <View>
               <View>
-                {comments.map((comment) => <CommentItem key={comment.id_comment} />)}
+                {comments.map((comment) => <CommentItem
+                  comment={comment}
+                  setComment={setComment}
+                  onReply={setId_parent}
+                  key={comment.id}
+                />)}
               </View>
             </View>
           </ScrollView>
@@ -67,14 +96,14 @@ const CommentModal = ({ children }) => {
             <View style={styles.form}>
               <Input_Form
                 style={styles.input}
-                name='description'
+                name='comment'
                 required
                 control={control}
               />
               <Button
                 mode="contained"
                 style={styles.button}
-              // onPress={handleSubmit(onSubmit)}
+                onPress={handleSubmit(onSubmit)}
               >
                 <Text>Send</Text>
               </Button>
@@ -101,6 +130,7 @@ const styles = StyleSheet.create({
 
   body: {
     minHeight: 300,
+    maxHeight: 400
   },
   form: {
     flexDirection: 'row',

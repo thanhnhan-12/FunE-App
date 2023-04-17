@@ -28,10 +28,10 @@ export default function MediaPlayer({ data, isActive }) {
     <View
       style={[
         styles.container,
-        { height: WINDOW_HEIGHT - bottomTabHeight },
+        { height: WINDOW_HEIGHT - bottomTabHeight - statusBarHeight },
       ]}
     >
-      <StatusBar barStyle={"light-content"} />
+      {/* <StatusBar backgroundColor="#FF6347" /> */}
       {
         data.type.startsWith('video') ?
           <PlayerVideo uri={getIPFSLink(data.media)} isActive={isActive} style={styles.video} />
@@ -113,6 +113,7 @@ export default function MediaPlayer({ data, isActive }) {
         </View>
         <View style={styles.verticalBarItem}>
           <CommentModal
+            id_post={data.id_post}
             style={styles.verticalBarIcon}
           >
             <Ionicons

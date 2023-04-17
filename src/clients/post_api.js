@@ -12,6 +12,14 @@ export const postApi = {
   getPosts: (payload) => {
     return instance.get(`/post/gets`, { params: payload })
   },
+  getCommentsByPostID: (params) => {
+    return instance.get(`/post/comment/gets`, {
+      params: params
+    });
+  },
+  createPostComment: async (payload) => {
+    return await instance.post('/post/comment/create', payload);
+  },
   getPostByID: (params) => {
     return instance.get(`/post/get`, {
       params: params
